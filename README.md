@@ -1,153 +1,126 @@
-<img src="icon_pro5.png" width="120">
+<img src="icon_pro3.jpg" width="320">
 
-# **Facturador PRO 5**
+# **Facturador PRO5**
+
+[TERMINOS Y CONDICIONES](https://docs.google.com/document/d/1TrM37WdCfOv-StSHRRifGClAkl7RtSBdFBX03CHbpGU/edit?usp=sharing "Clic")
 
 
-## Términos y condiciones del uso de este repositorio
+### Manuales de Instalación
 
-1.- Este repositorio es de código abierto pero de acceso privado, se permite la distribución y/o modificaciones si se hace referencio a la casa matriz del desarrollo de este es software es [https://facturaloperu.com](https://facturaloperu.com)
-
-2.- Esta sección de términos y condiciones no puede ser removida al compartir o distribuir el repositorio de alguna forma, de hacerlo, [https://facturaloperu.com](https://facturaloperu.com) se reserva el derecho de remover el acceso y limitar el uso a quien lo distribuya de esa forma o a quien se atribuya el desarrollo del mismo.
-
-3.- Si desea distribuir el código fuente como propio, debe tener al menos un 30% de modificaciones en todo el código, y previamente debe validarse dicho % por [https://facturaloperu.com](https://facturaloperu.com)
-
-4.- El uso del software a nivel funcional es marca blanca, sin embargo a nivel de distribución del código fuente, debe contener esta sección de términos y condiciones.
-
-5.- [https://facturaloperu.com](https://facturaloperu.com) no se hace responsable por los daños o perjuicios del uso del código de este software cuando no ha sido distribuido directamente por [https://facturaloperu.com](https://facturaloperu.com)
-
-## Manuales de Instalación
-
-[Windows - Linux](https://docs.google.com/document/d/1izr-fbKyOAAQDG46SpMAZtLytMxGEUdCEVh2VWGik_E/edit "Clic")
+[Instalación PC Windows - Linux](https://docs.google.com/document/d/1hmAriecd3es0lBOlLDfzkua7iIdovF96jwc7u-8TxXc/edit?usp=sharing "Clic")
 <br>
-[Docker - Linux](https://docs.google.com/document/d/1eKZwozEZkDKjYMSkQG_oFdMbnMVYlMfkQK-BfCNTm5w/edit?usp=sharing "Clic")
+[Servidor WEB- Instancia VPS Docker - Linux](https://docs.google.com/document/d/1MKlmiFcx-05KSbhyp8-jLxnjwlNuCz-y0oYF-rYTWu8/edit?usp=sharing "Clic")
 <br>
-[Docker - Linux - SSL](https://docs.google.com/document/d/1V54AoYPSNqgi2M9ddck6gh3AgQspZ-eH37_1BU7Gpuo/edit?usp=sharingg "Clic")
+[Valet - Linux](https://docs.google.com/document/d/1tolcsiWCiuSQ8lF8jI227o6MaiITzw0DgPcg20Nx1P4/edit?usp=sharing "Clic")
 <br>
-[Valet - Linux](https://docs.google.com/document/d/1x1SZnhzDITta6k-pOQC75xQKWowCgSUSRoa434gglQA/edit?usp=sharing "Clic")
-<br>
-[Linux - gestión externa de SSL](https://docs.google.com/document/d/1D87YJ9fq9yHiAauu6SGVugiC3m_i42DrFUt6VKYXuDI/edit?usp=sharing "Clic")
+[Linux - gestión externa de SSL](https://docs.google.com/document/d/1qJZerdJh8W0l-W21DiXtOTSEk3A25OZG03x7zHmpOrI/edit?usp=sharing "Clic")
 
 
-### Scripts de instalación con Docker
+### APP RESTAURANTE
 
-Linux - Ubuntu 18 - Docker - SSL opcional<br>
-[Guia](https://gitlab.com/b.mendoza/facturadorpro3/snippets/1971490 "Clic")<br>
-[Script](https://gitlab.com/b.mendoza/facturadorpro3/snippets/1971490/raw "Clic")<br>
+[Documentación y acceso](https://docs.google.com/document/d/1mhPEUZBpciSsTdFE9o3-L7oiuvoCoFWQqQlvjZ-ZIX8/edit?usp=sharing "Clic")
+<br>
+
+
+### APP Facturación Electrónica
+
+[Descarga de APP para celular]( https://drive.google.com/file/d/1KKTuENO8k6578FscXmZTS0KSt5lQ9hKs/view?usp=sharing "Clic")
+<br>
+[Manual de Uso de APP para celular](https://docs.google.com/document/d/1R44Gvh6XzDDpIarIQOqpEY6UXjgFhA6CWDjvO4Lql7I/edit?usp=sharing"Clic")
+<br>
+
+### Módulo Producción - Insumos
+
+[Configuración de Módulo Produccón]( https://docs.google.com/document/d/1-ojQ0sk8vzppe7NBIejpitksTPiW9PQJLOaoLSeMNj0/edit?usp=sharing "Clic")
 
 
 ### Manuales de actualización
 
 * Docker - Comandos manuales
 
-[Con Docker](https://docs.google.com/document/d/1ekGySBjGHspbPEE3OLkMGlWwjLvudmyLKo9Et-Cxejk/edit "Clic")
+[Con Docker + Gitlab](https://docs.google.com/document/d/16h7PTiaK4AQqSqljUuAKcJEM5WVeYOqaFytFfRWmUPM/edit?usp=sharing "Clic")
 <br>
 
-* Docker - Script automático
+[SSL + Docker](https://docs.google.com/document/d/1Gau1fH7zB9dcQa9WiJPREdTjYTUU4JoK6X3V8GDHBFQ/edit?usp=sharing "Clic")<br>
 
-[Pasos para la ejecución](https://gitlab.com/b.mendoza/facturadorpro3/-/wikis/Script-Update-Docker)<br>
-[Script](blob/master/script-update.sh)<br>
-
-
-### Manuales de actualización de SSL gratuito
-
-* Docker
-
-[SSL](https://docs.google.com/document/d/1kcgtIDrOWnGKQbWO3sW2KEkUoNdadIB5YHBgaSb87uA/edit "Clic")
-
+[Restauración MySQL - Docker](https://docs.google.com/document/d/1mnWjdjgEozZk7IoS4PPNZaMiY6Do-kVD8HprwJW9f6Q/edit?usp=sharing "Clic")<br>
 
 ### Manuales de Usuario
 
-[Manual de usuario](https://docs.google.com/document/d/1i7yKGy3rIvv9TrnwRWZifTuZMMnZ8dbWpqcjPZ3ClmE/edit "Clic")<br>
-[Manual de Tareas Programadas](https://docs.google.com/document/d/1Cu3Kpgv9HvMAV4fwVNbR-CFc0uTu_-qEVLT-MIuxBTQ/edit?usp=sharing "Clic")<br>
-[Manual de Cambio de Entorno (Usuario secundario)](https://docs.google.com/document/d/1IBXczY4b1YvSnGdFlIklpb8HGlQcP1lN44rpXbtYyUc/edit "Clic")<br>
-[Manual de Pruebas](https://docs.google.com/document/d/1ht9JS7VdXiZrPmsqe3Dz-325lN_qEHDVVbieYU4Kay8/edit "Clic")
+[Plataforma Administrativa](https://docs.google.com/document/d/1ag3ff4oY5PXm6X49S8vUkubt1zR0bOlSzKfWQyqMIL0/edit?usp=sharing "Clic")<br>
+[Manejo del Sistema](https://docs.google.com/document/d/19P6zHQsJTiM7NtTBUSRd61YAJwwM4q47PI3q-Fnjne4/edit?usp=sharing "Clic")<br>
+[Manual de Tareas Programadas](https://docs.google.com/document/d/1nvhUiQZQps3hMGvIkofR1DBTJrCKfcLfyV49Ul3D90s/edit?usp=sharing "Clic")<br>
+[Manual Configuración Modulo Farmacia](https://docs.google.com/document/d/1RBqIgunBl7zGhxprFJZggB1xAkBGoFPxRC2171Cq2Vc/edit?usp=sharing "Clic")<br>
+[Manual Consulta Validez de CPE con API SUNAT](https://docs.google.com/document/d/1dY04rC63OAIqJAuGaMBcnsuWMqdTnkFtYTjrgQqaCvk/edit?usp=sharing "Clic")<br>
+[Manual Instalación Supervisor - NO DESCARGA REPORTE](https://docs.google.com/document/d/1P3tXXx64KWd46Fabtv71NhKo5zdgMipQ8DNDvKvfqsc/edit?usp=sharing "Clic")<br>
+
+### Plugin Wordpress - Woocommerce
+
+[Manual de Integración](https://docs.google.com/document/d/1nskYtpbgd7zuuSrMecdNA65YUmg_HeCSWQkan0fa6oE/edit?usp=sharing "Clic")<br>
+[Manual de Usuario](https://docs.google.com/document/d/1ISJOSHCxtg0luHS56PitcnV9riXNfmy6CsCTFd4jx5w/edit?usp=sharing "Clic")<br>
+[Manual de Plugin-Wordpress-Woocommerce](https://docs.google.com/document/d/1l1YGMu1ihljaRuXNY03T7XgKydt8KlL4jVhauQuujKU/edit?usp=sharing "Clic")<br>
+[Descarga de Plugin](https://drive.google.com/file/d/1ZERTISGhJ-Z7VlsGmjzYElDm8IgdoJcr/view?usp=sharing "Clic")<br>
+
 
 ## API
 
-[Descargar colección para Postman](https://drive.google.com/file/d/1MhFHT0UF4CayjZfHkCqi5VMpqN34PGkV/view?usp=sharing "Clic")<br>
-[Documentación - Ver json con respuestas](https://docs.google.com/document/d/1QO3H2nhV6dubGFc-IOrXY1X1hobmKkSmutfrtKbelTw/edit "Clic")<br>
-[Documentación - Ver ejemplos para Lenguajes](https://documenter.getpostman.com/view/1431398/U16onhgw "Clic")<br>
+[Descargar Colección Postman](https://drive.google.com/file/d/15w6lB6945xkhGlt3PcxgTMl3yZ4K1GH8/view "Clic")<br>
+[Documentación - json con respuestas](https://docs.google.com/document/d/1U8NnTBm5isJdoeFKlnc4UJ52alwg_g-FDORQf0q9cpI/edit "Clic")<br>
+[Documentación - Ejemplos para Lenguajes](https://documenter.getpostman.com/view/1431398/U16onhgw "Clic")<br>
 
-## Pruebas online
-
-### Panel de administración
-
-[URL](https://facturalo.pro "Clic")
-<br>
-Usuario: admin@gmail.com<br>
-Contraseña: 123456
-
-### Panel de cliente
-
-[URL](https://demo.facturalo.pro "Clic")
-<br>
-Usuario: demo@gmail.com<br>
-Contraseña: 123456
 
 
 ## Manuales adicionales
 
 ### Conexión
-Conexión remota al servidor: [Guía](https://docs.google.com/document/d/1m7xmQ_yLBO2MQVew6ZrlCdvIMLNg2_EzEJmntDM_Jms/edit?usp=sharing "Clic")<br>
-Guía acceso SSH - Putty: [Guía](https://docs.google.com/document/d/1PmQejvNd_dkXVm8DPUYlQTag0wvES46tMpxX3MPhkNY/edit# "Clic")<br>
-Conexión servidor Winscp: [Guía](https://docs.google.com/document/d/1Xpri2102N4b5C-dG-FVPXW5ZWjEz5S4iDjpvl7Zwq2E/edit# "Clic")<br>
-Montar proyecto en /home: [Guía](https://docs.google.com/document/d/12o5dp0eccGgraKj3P-ly_wWmIcl2G0gUTZEgVi-AFtk/edit?usp=sharing "Clic")<br>
+Conexión remota al servidor SSH: [Guía](https://docs.google.com/document/d/1oBDSwV2PTiT6GmD3Dplr8WjXEpm3oX_irK_pPgND5_o/edit?usp=sharing "Clic")<br>
+Guía acceso SSH - Putty: [Guía](https://docs.google.com/document/d/1TMQdOXvJA2vTnjmM1qsD2R5JOAo0vgAVlLeH-17Ndt8/edit?usp=sharing "Clic")<br>
+Conexión servidor Winscp: [Guía](https://docs.google.com/document/d/1peppfRDaD3-qgZdlgaDSZrZATRvVZ-WZROtt4Y7NVSI/edit?usp=sharing "Clic")<br>
+Acceso Red Local LARAGON: [Guía](https://docs.google.com/document/d/1KsAclRydULmsmt_pB7Ec-u_usI75e7tJ1iRHetRlGvc/edit?usp=sharing "Clic")<br>
+Manual de configuración APIPERU: [Guía](https://docs.google.com/document/d/1AvWtmqhD-iFSPESCURMAsHTrpZFBAQ-EyVgHnD7lV4k/edit?usp=sharing "Clic")<br>
+Validador de documentos en SUNAT: [Guía](https://docs.google.com/document/d/1GvU79nfaiavPxwx5ViZdrIKyY0ajdJ6HenGEfp_pc70/edit?usp=sharing "Clic")<br>
+Subir Plantilla PDF Personalizada al sistema: [Guía](https://docs.google.com/document/d/1M2Wi6Q7RTgn26Sn2li5dskU5me0i2rIBYAhTayTpfV8/edit?usp=sharing "Clic")<br>
+Repositorio espejo - mirrow [Guía]( https://docs.google.com/document/d/11BiWJ3TuLv62MX8X031ZpCv3FnNtzh9wj7TwT_2Lq3s/edit?usp=drivesdk "clic")<br>
 
 ### Manipulación de archivos dentro del servidor
-Documentación del archivo .ENV: [Guía](https://docs.google.com/document/d/1XpNPg32CrihM1wYWjttwON-2R6nln7-70vBLZnD1UjE/edit?usp=sharing "Clic")<br>
-Incrementar recursos - servidor: [Guía](https://drive.google.com/open?id=1IQad7UnljZEPd4hYWx5ZlR3LJliFGT25AjiI4-TlcJU "Clic")<br>
-Incrementar recursos - aplicación: [Guía](https://drive.google.com/open?id=1_A06M8AKR514XdctOpi8yIHOQd2cMIzm1BAdNCLUoew "Clic")<br>
-Configuracion de correo electrónico emisor: [Guía](https://docs.google.com/document/d/1sBXGgKZwcgKZTMTT_qQldpRT13jzEL4Q1S_yPpY-nOo/edit?usp=sharing "Clic")<br>
-Configuracion de correo emisor por cliente: [Guía](https://docs.google.com/document/d/1ix2vPsiqSoK9jNAOF2gPjWhNa3BdajU5x8I5aBvEz0o/edit?usp=sharing "Clic")<br>
-Manual - Cambio de dominio: [Guía](https://docs.google.com/document/d/14rbElqQ6Ru6hh3UCZm4wTKIUCm_hPbMNYz9EH8fcPRo/edit?usp=sharing "Clic")<br>
-Linux - Eliminar temporales: [Guía](https://docs.google.com/document/d/17-9F9xrQepGfSkZIiCcty-B0GAjeJnN5KO8p0rOBYxY/edit?usp=sharing "Clic")<br>
-Linux - Eliminar archivos por extensión: [Guía](https://docs.google.com/document/d/1M1s6EYF7sA89JccrXh7d_UhLB367F7Kk41yKCpSIzdo/edit#heading=h.ghi3ru1xdrna "Clic")<br>
-Configuración servidor alterno SUNAT: [Guía](https://docs.google.com/document/d/1pr-9ewFYY7JFtYg-0V5MY4R16OGv-02VH5MqXjeUCh0/edit#heading=h.nezjsyganf1w "Clic")<br>
-Habilitar debug: [Guía](https://drive.google.com/open?id=1OdU-rDjr_cxM7t3fujBxPnEQn7qMoxIO6KZNjiKzyvU "Clic")<br>
-Configuración de API RUC/DNI (APIPERU): [Guía](https://docs.google.com/document/d/15_MjQBamZI20UC08p-zC9N3yrMhIqh8iObikZ_eNKKg/edit?usp=sharing "Clic")<br>
-Configuración de tareas programadas (crontab-LAMP): [Guía](https://docs.google.com/document/d/1fv_wWZSbbhEBo_uHiIE80y7PcU3m-A-HhPTPgQBth3Y/edit?usp=sharing "Clic")<br>
+
+Incrementar recursos - servidor: [Guía](https://docs.google.com/document/d/1p_KOT34x9dbx-owVVYS6Dgiqh6MjAk85kEwAX2EEW1w/edit?usp=sharing "Clic")<br>
+Incrementar recursos - aplicación: [Guía](https://docs.google.com/document/d/1jEXAtR8qekp0XFYxJf8GZnpYt_XxtXpauY-vcXdPPKA/edit?usp=sharing "Clic")<br>
+Configuracion de correo electrónico cliente: [Guía](https://docs.google.com/document/d/13qmq6dXR5SjvtQgnSGAyUwvQZBXyqAoQQuekAGefeY8/edit?usp=sharing "Clic")<br>
+Manual - Cambio de dominio: [Guía](https://docs.google.com/document/d/1Yp7wQY5oKlyY6YUCwCfnKgKZWScQHDnIUrMyERHO-Is/edit?usp=sharing "Clic")<br>
+Configuración servidor alterno SUNAT: [Guía](https://docs.google.com/document/d/1CtqWj6yGqWsf9IDmV3xT8IVIJyUGnU-RUv52f-XPtks/edit?usp=sharing "Clic")<br>
+Configuración de tareas programadas (crontab-LAMP): [Guía](https://docs.google.com/document/d/19x7g0OzgCgTBMO1M3-fHgl4iZEAPK4TxR5T4gWY01g4/edit?usp=sharing "Clic")<br>
 
 ### Base de datos
-Guía acceso a base de datos: [Guía](https://drive.google.com/open?id=1uZ_qt34I8HucJYmt_RfI2orgfl9_dpqIh8RukwiG1uM "Clic")<br>
-Cambiar Contraseña root: [enlace](https://gist.github.com/rordi/ab55c92848fd06884172ed22ae88d7df "clic")<br>
+Guía acceso a base de datos: [Guía](https://docs.google.com/document/d/1SDo2SSn4CRDgLZQAuT2TRUsVNCSPMtR-IhYGmS-JQvY/edit?usp=sharing "Clic")<br>
 
 ### Docker
-Iniciar servicios docker: [Guía](https://docs.google.com/document/d/1MMuyeYE53RjDaOR2OLPsCtpxicDzqowlvoMTWpkBaSM/edit# "Clic")<br>
-Guía generar backup: [Guía](https://drive.google.com/open?id=15dD0KPmDPIeM5y6QdLJivEI-ryS75s2uuJJlusNTr1g "Clic")<br>
-Restauración de Mysql|Docker: [Guía](https://docs.google.com/document/d/1Aze-O_a0aseyjaDXsD1iHflPr6ptZ8Cq6BWRrs6GhsM/edit?usp=sharing "Clic")<br>
+Guía generar backup: [Guía](https://docs.google.com/document/d/130MmxOSv71gYnDTMuUs6fE0JoPqT9tfuXrXM3XZerYc/edit?usp=sharing "Clic")<br>
+Restauración de Mysql|Docker: [Guía](https://docs.google.com/document/d/1gx6zIFHuDxeH4OBBjQHLhQLFI8VgjkBzUmu3CLTpWLA/edit?usp=sharing "Clic")<br>
 
 ### Servidores
-Guía incrementar espacio disco: [Guía](https://docs.google.com/document/d/1hpEQUs9OFha_35yyLb1cMKeluD-dEku5lQsQ3TJFib8/edit "Clic")<br>
-Limpiar inodes: [Guía](https://drive.google.com/open?id=1foPKDI3V3Z9uKTjRc2SPSoztVSOBevPAluT2BqFbfxA "Clic")<br>
-Migración servidor: [Guía](https://docs.google.com/document/d/1HjAoa2d6mPDVY5lrDxprwfteKrP6n100LeSox_g34Eg/edit "Clic")<br>
-Manual de configuración offline: [Guía](https://drive.google.com/open?id=1s9VE08nVjqyKGQ2BiupfQ0yODVBfTfhkSjjZuZLyv38 "Clic")<br>
-Habilitar puertos en Google Cloud: [Manual](https://docs.google.com/document/d/1pbCXJyRyR4VOaQ2BE3aJp-3_vhFIp-b6RXnT_6rtw1o/edit?usp=sharing "clic")<br>
+Guía incrementar espacio disco: [Guía](https://docs.google.com/document/d/1V_C8EKPhhcsNVaUtic3kYMA7WWxxjpvGiqzRdxl4rX8/edit?usp=sharing "Clic")<br>
+Migración servidor: [Guía](https://docs.google.com/document/d/1VjTR4C-Hez7Nc727Bu0DTeDtaHe0LCtqoQT54UFS6_U/edit?usp=sharing "Clic")<br>
+Manual de configuración offline: [Guía](https://docs.google.com/document/d/1M8peLP4OmLa4IXzQ_ejixxuRZobnA4TqBJWEke1BjCQ/edit?usp=sharing "Clic")<br>
+Habilitar puertos en Google Cloud: [Manual](https://docs.google.com/document/d/1MpOkkg4eMQbCKiY5TV9SsnyJHLFxVGGHmFBUsxir7BI/edit?usp=sharing "clic")<br>
 
-### Funcionalidades
+### Funcionalidad
+ICBPER en POS: [Guía](https://docs.google.com/document/d/1C__si4StVC81bdLuOK9KBcUpFKUfvFM_B5pHXVuckTQ/edit?usp=sharing "Clic")<br>
+Recreación de documentos: [Guía](https://docs.google.com/document/d/100xkpjhkAn-rwMVQc3z5_RDWU11Esm8k06T3gN9nINM/edit?usp=sharing "Clic")<br>
 
-ICBPER en POS: [Guía](https://docs.google.com/document/d/1laSobotFxZy7FlKfALxCoIz7OOT_xiid-QuQP2HD68g/edit?usp=sharing "Clic")<br>
-
-### Laragon
-Acceso red local - laragon: [Guía](https://docs.google.com/document/d/13kOE5N5LJtCJIr3hswrfNgBYxi9wx07YwUCrAfgyCoQ/edit "Clic")<br>
 
 ### Errores comunes
-Procedimiento para solucionar error 1033 SUNAT: [Guía](https://docs.google.com/document/d/1V9xyhH4JRJqFf-8zFBG9lOlmy07ts9dZCcJlQFEcFf8/edit# "Clic")<br>
+Procedimiento para solucionar error 1033 SUNAT: [Guía](https://docs.google.com/document/d/1LXZM7zRJshzWjJ1leVg0DF_Ema8NgeVZ14E1TfjQiM4/edit?usp=sharing "Clic")<br>
 
-### No clasificados
-Recreación de documentos: [Guía](https://drive.google.com/open?id=1_ZvNpA3_IyvEiQ2NSaiW_rsBhVNbK7YD-_l1kbrEGwQ "Clic")<br>
-Manual de cambios privados: [Guía](https://drive.google.com/open?id=1ePniWwGvylJDzHTcPOj6E_nQtD_eO6PCReB_xwzOn98 "Clic")<br>
-Validador documentos: [Guía](https://docs.google.com/document/d/1v6XpJrEwCx3suRzRsa4-3-kcAghRvS9DHS5esb89SuI/edit "Clic")<br>
+Regenerar documentos NO ACEPTADOS POR SUNAT: [Guía](https://docs.google.com/document/d/1PTHaX0ZYuPaM6bGnYacUbi0KAnwn2UT3UJ_wI_ZVkpQ/edit?usp=sharing "Clic")<br>
 
 ## Soporte
 
-* Use Issues como sistema de tickets para añadir sus sugerencias, problemas o inquietudes
-* Inconvenientes con facturación serán atendidos con prioridad
-* Una vez obtiene acceso al repositorio tendrá un año de vigencia, pasado el año debe renovar su contrato
-* Toda instalación es gestionada mediante los canales de Slack
-* Nuevas instalaciones o actualizaciones deben ser programadas y gestionadas, para ser ejecutada el mismo día debe haber un problema previo
+* Se recomienda programar backup frecuentes en las instancias para salvaguardar la documentación importante de las plataformas de facturación; para ello se recomienda EXPORTAR todos los sistemas (clientes - tenancy) desde la bases de datos además de ello descargar la carpeta STORAGE desde la raiz del sistema accediendo mediante FTP.
 
-## FacturaloPeru
 
-[facturaloperu.com](http://facturaloperu.com "Clic")<br>
-soporte@facturaloperu.com<br>
-wsapp: 930 973 902<br>
+
+## R&R SOLUCIONES CONTABLES
+
+factusolution@gmail.com<br>
+wsapp: 938 169 434<br>
