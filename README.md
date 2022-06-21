@@ -64,8 +64,8 @@
 
 ## API
 
-[Descargar Colección Postman](https://drive.google.com/file/d/15w6lB6945xkhGlt3PcxgTMl3yZ4K1GH8/view "Clic")<br>
-[Documentación - json con respuestas](https://docs.google.com/document/d/1U8NnTBm5isJdoeFKlnc4UJ52alwg_g-FDORQf0q9cpI/edit "Clic")<br>
+[Descargar Colección Postman](https://drive.google.com/file/d/1MhFHT0UF4CayjZfHkCqi5VMpqN34PGkV/view "Clic")<br>
+[Documentación - json con respuestas](https://docs.google.com/document/d/1szmUQg9Ce5JoS1ubiPeZA459q58fJrBpSTnMayxZqH4/edit?usp=sharing "Clic")<br>
 [Documentación - Ejemplos para Lenguajes](https://documenter.getpostman.com/view/1431398/U16onhgw "Clic")<br>
 
 
