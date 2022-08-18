@@ -14,6 +14,8 @@
 [Valet - Linux](https://docs.google.com/document/d/1tolcsiWCiuSQ8lF8jI227o6MaiITzw0DgPcg20Nx1P4/edit?usp=sharing "Clic")
 <br>
 [Linux - gestión externa de SSL](https://docs.google.com/document/d/1qJZerdJh8W0l-W21DiXtOTSEk3A25OZG03x7zHmpOrI/edit?usp=sharing "Clic")
+[Linux - Ubuntu 18 - Docker - SSL opcional] (https://gitlab.com/snippets/2366331.git "Clic")
+<br>
 
 
 ### APP RESTAURANTE
@@ -41,9 +43,16 @@
 [Servidor Docker + Gitlab](https://docs.google.com/document/d/1d4IZ2zyjPr7XK-vqdW2aZAsFbZLrE9PaHs5CwSuzjww/edit?usp=sharing "Clic")
 <br>
 
+### Manuales de actualización de SSL gratuito
+
+* Docker
+
+[SSL](https://docs.google.com/document/d/1kcgtIDrOWnGKQbWO3sW2KEkUoNdadIB5YHBgaSb87uA/edit "Clic")
+[Script](https://gitlab.com/b.mendoza/facturadorpro3/-/snippets/1955372/raw/master/updateSSL.sh "Clic")
+[Video](https://www.loom.com/share/577a32e168a44cc7afc6e2919589de56 "Clic")
 [SSL + Docker](https://docs.google.com/document/d/1Gau1fH7zB9dcQa9WiJPREdTjYTUU4JoK6X3V8GDHBFQ/edit?usp=sharing "Clic")<br>
 
-[Restauración MySQL - Docker](https://docs.google.com/document/d/1mnWjdjgEozZk7IoS4PPNZaMiY6Do-kVD8HprwJW9f6Q/edit?usp=sharing "Clic")<br>
+
 
 ### Manuales de Usuario
 
@@ -81,6 +90,7 @@ Manual de configuración APIPERU: [Guía](https://docs.google.com/document/d/1Av
 Validador de documentos en SUNAT: [Guía](https://docs.google.com/document/d/1GvU79nfaiavPxwx5ViZdrIKyY0ajdJ6HenGEfp_pc70/edit?usp=sharing "Clic")<br>
 Subir Plantilla PDF Personalizada al sistema: [Guía](https://docs.google.com/document/d/1M2Wi6Q7RTgn26Sn2li5dskU5me0i2rIBYAhTayTpfV8/edit?usp=sharing "Clic")<br>
 Repositorio espejo - mirrow [Guía]( https://docs.google.com/document/d/11BiWJ3TuLv62MX8X031ZpCv3FnNtzh9wj7TwT_2Lq3s/edit?usp=drivesdk "clic")<br>
+[Restauración MySQL - Docker](https://docs.google.com/document/d/1mnWjdjgEozZk7IoS4PPNZaMiY6Do-kVD8HprwJW9f6Q/edit?usp=sharing "Clic")<br>
 
 ### Manipulación de archivos dentro del servidor
 
