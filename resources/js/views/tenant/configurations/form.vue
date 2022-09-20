@@ -1559,7 +1559,7 @@
                             <div class="col-md-6 mt-4">
                                 <label class="control-label">Habilitar busqueda con escáner de código de barras
                                     <el-tooltip class="item"
-                                                content="Disponible POS"
+                                                content="Disponible POS y Venta rápida"
                                                 effect="dark"
                                                 placement="top-start">
                                         <i class="fa fa-info-circle"></i>
@@ -1840,6 +1840,33 @@
                                         <small v-if="errors.enabled_sales_agents"
                                             class="form-control-feedback"
                                             v-text="errors.enabled_sales_agents[0]"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-6 mt-4">
+                                <div class="form-group">
+                                    <label>
+                                        Modificar tipo de afectación
+                                        <el-tooltip class="item"
+                                                    effect="dark"
+                                                    placement="top-start">
+                                            <div slot="content">
+                                                Permite modificar el tipo de afectación Gravado a Exonerado o viceversa - Disponible en POS/Venta rápida
+                                            </div>
+                                            <i class="fa fa-info-circle"></i>
+                                        </el-tooltip>
+                                    </label>
+                                    <div :class="{'has-danger': errors.change_affectation_exonerated_igv}"
+                                        class="form-group">
+                                        <el-switch v-model="form.change_affectation_exonerated_igv"
+                                                active-text="Si"
+                                                inactive-text="No"
+                                                @change="submit"></el-switch>
+                                        <small v-if="errors.change_affectation_exonerated_igv"
+                                            class="form-control-feedback"
+                                            v-text="errors.change_affectation_exonerated_igv[0]"></small>
                                     </div>
                                 </div>
                             </div>
@@ -2236,6 +2263,7 @@ export default {
                 restrict_seller_discount: false,
                 sellers_discount_limit: 0,
                 enabled_sales_agents: false,
+                change_affectation_exonerated_igv: false,
             };
         },
         UpdateFormPurchase(e) {
