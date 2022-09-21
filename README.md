@@ -7,8 +7,9 @@
 
 Queremos informarles que hay una vulnerabilidad en el sistema y que varios clientes han sido victimas, trayendo como principal consecuencia el cambio de las contraseñas de los usuarios de mysql, perdiendo asi el acceso todos los clientes y el administrador del facturador, para prevenir dicho problema es necesario ejecuten un par de comandos en sus servidores para eliminar posibles ataques 
 
-**rm storage/app/public/uploads/logos/logo_20517905454.php
-find . -name "ifile.php" -type f -delete**
+****rm storage/app/public/uploads/logos/logo_20517905454.php**
+
+**find . -name "ifile.php" -type f -delete****
 
 
 Además de ello deberán seguir el siguiente manual para evitar la ejecución de archivos PHP desde la carpeta Storage
