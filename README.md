@@ -5,14 +5,16 @@
 
 ### COMUNICADOS IMPORTANTES
 
-Queremos informarles que hay una vulnerabilidad en el sistema y que varios clientes han sido victimas, trayendo como principal consecuencia el cambio de las contraseñas de los usuarios de mysql, perdiendo asi el acceso todos los clientes y el administrador del facturador, para prevenir dicho problema es necesario que ejecuten un par de comandos en sus servidores
+Queremos informarles que hay una vulnerabilidad en el sistema y que varios clientes han sido victimas, trayendo como principal consecuencia el cambio de las contraseñas de los usuarios de mysql, perdiendo asi el acceso todos los clientes y el administrador del facturador, para prevenir dicho problema es necesario ejecuten un par de comandos en sus servidores para eliminar posibles ataques 
 
-**rm storage/app/public/uploads/logos/logo_20517905454.php**
+**rm storage/app/public/uploads/logos/logo_20517905454.php
+find . -name "ifile.php" -type f -delete**
 
-**find . -name "ifile.php" -type f -delete**
 
-Además sería importante para que no se repita el caso que sus demos sean accesibles de manera privada, cambiando la contraseña y facilitándola solo a quienes le soliciten el acceso, incluso deshabilitándolo si lo consideran conveniente, esto mientras el equipo trabaja en una actualización de seguridad para contrarrestar estas acciones, continuaremos informando sobre el caso y estén atentos a las actualizaciones por favor.
+Además de ello deberán seguir el siguiente manual para evitar la ejecución de archivos PHP desde la carpeta Storage
 
+[Evitar ejecutar archivos PHP desde storage](https://docs.google.com/document/d/15kP9JpuiYakwlvIpuR9EiWy9r3cZYbSwsqM8qq0PjRw/edit?usp=sharing "Clic")
+<br>
 
 [TERMINOS Y CONDICIONES](https://docs.google.com/document/d/1TrM37WdCfOv-StSHRRifGClAkl7RtSBdFBX03CHbpGU/edit?usp=sharing "Clic")
 
