@@ -41,7 +41,7 @@ Además de ello deberán seguir el siguiente manual para evitar la ejecución de
 
 ### APP Facturación Electrónica
 
-[Descarga de APP para celular](https://drive.google.com/file/d/1axYegRiYFOvzq5RG_cMy3IWadOUF-L4k/view?usp=sharing "Clic")
+[Descarga de APP para celular](https://drive.google.com/file/d/1IkmvYE3gw4HXnveLopeQ1O8h-DKGBXNr/view?usp=sharing "Clic")
 <br>
 [Manual de Uso de APP para celular](https://docs.google.com/document/d/1R44Gvh6XzDDpIarIQOqpEY6UXjgFhA6CWDjvO4Lql7I/edit?usp=sharing"Clic")
 <br>
