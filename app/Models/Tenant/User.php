@@ -33,7 +33,6 @@ use Modules\Sale\Models\UserCommission;
 use App\Models\Tenant\Configuration;
 use Modules\Restaurant\Models\RestaurantRole;
 use Modules\MobileApp\Models\AppModule;
-use Modules\LevelAccess\Models\SystemActivityLog;
 use Modules\LevelAccess\Models\AuthorizedDiscountUser;
 
 
@@ -187,8 +186,6 @@ class User extends Authenticatable
         'edit_purchase',
         'annular_purchase',
         'delete_purchase',
-
-        'last_password_update',
 
         // 'email_verified_at',
         // 'api_token',
@@ -1114,38 +1111,6 @@ $withEstablishment = true){
             'establishment',
         ]);
     }
-
-        
-    /**
-     * 
-     * Retorna nombre de la conexión
-     *
-     * @return string
-     */
-    public function getDbConnectionName()
-    {
-        return $this->getConnection()->getName();
-    }
-    
-
-    public function system_activity_logs()
-    {
-        return $this->morphMany(SystemActivityLog::class, 'origin');
-    }
-
-    
-    /**
-     * 
-     * Filtro para no incluir relaciones en consulta y obtener el nombre de usuario
-     *
-     * @param Builder $query
-     * @return Builder
-     */  
-    public function scopeFilterOnlyUsername($query)
-    {
-        return $query->whereFilterWithOutRelations()->select('id', 'name');
-    }
-
 
 
     public function getDataOnlyAuthUser()

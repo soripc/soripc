@@ -23,15 +23,8 @@ class Configuration extends Model
         'token_apiruc',
         'apk_url',
         'login',
-        'use_login_global',
-        'regex_password_client',
+        'use_login_global'
     ];
-
-    
-    protected $casts = [
-        'regex_password_client' => 'boolean',
-    ];
-
 
     public static function boot()
     {

@@ -7,8 +7,6 @@ use App\Models\Tenant\Catalogs\CurrencyType;
 use App\Models\Tenant\Catalogs\DocumentType;
 use App\Models\Tenant\Catalogs\PerceptionType;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
-
 
 /**
  * Class Perception
@@ -20,7 +18,6 @@ class Perception extends ModelTenant
 {
     // protected $with = ['user', 'establishment', 'soap_type', 'state_type', 'document_type', 'series',
     //                    'customer', 'currency_type', 'system_code_perception', 'details'];
-
 
     protected $fillable = [
         'user_id',
@@ -204,19 +201,6 @@ class Perception extends ModelTenant
             $facturalo = new Facturalo();
             return $facturalo->loadDocument($model->id, 'perception');
         });
-    }
-
-    
-    /**
-     *
-     * Filtro para no incluir relaciones en consulta
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWhereFilterWithOutRelations($query)
-    {
-        return $query;
     }
 
 }

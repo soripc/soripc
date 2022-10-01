@@ -636,12 +636,7 @@ export default {
         },
         isUpdateItem(){
             return !_.isEmpty(this.recordItem)
-        },
-        enabledSearchFactoryCodeItems()
-        {
-            if(this.configuration) return this.configuration.search_factory_code_items ? 1 : 0
-            return 0
-        },
+        }
     },
     methods: {
         ...mapActions([
@@ -743,8 +738,7 @@ export default {
                 this.loading_search = true
                 const params = {
                     'input': input,
-                    'search_by_barcode': this.search_item_by_barcode ? 1 : 0,
-                    'search_factory_code_items' : this.enabledSearchFactoryCodeItems
+                    'search_by_barcode': this.search_item_by_barcode ? 1 : 0
                 }
                 await this.$http.get(`/${this.resource}/search-items/`, {params})
                     .then(response => {

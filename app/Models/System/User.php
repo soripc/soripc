@@ -26,16 +26,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password', 'remember_token',
     ];
 
-    
-    /**
-     * 
-     * Retorna nombre de la conexión
-     *
-     * @return string
-     */
-    public function getDbConnectionName()
-    {
-        return $this->getConnection()->getName();
-    }
-
 }

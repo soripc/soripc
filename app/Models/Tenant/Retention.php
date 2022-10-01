@@ -7,8 +7,6 @@ use App\Models\Tenant\Catalogs\CurrencyType;
 use App\Models\Tenant\Catalogs\DocumentType;
 use App\Models\Tenant\Catalogs\RetentionType;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
-
 
 /**
  * Class Retention
@@ -18,7 +16,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Retention extends ModelTenant
 {
-
     protected $with = ['user', 'soap_type', 'state_type', 'document_type', 'retention_type', 'currency_type', 'documents'];
 
     protected $fillable = [
@@ -237,18 +234,4 @@ class Retention extends ModelTenant
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];
     }
-
-    
-    /**
-     *
-     * Filtro para no incluir relaciones en consulta
-     *
-     * @param Builder $query
-     * @return Builder
-     */
-    public function scopeWhereFilterWithOutRelations($query)
-    {
-        return $query->withOut(['user', 'soap_type', 'state_type', 'document_type', 'retention_type', 'currency_type', 'documents']);
-    }
-
 }
