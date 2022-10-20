@@ -2597,5 +2597,87 @@ class Item extends ModelTenant
     }
 
 
+    /**
+     *
+     * Filtrar por almacen
+     *
+     * @param  Builder $query
+     * @param  int $warehouse_id
+     * @return Builder
+     */
+    public function scopeFilterByWarehouseId($query, $warehouse_id)
+    {
+        if(!is_null($warehouse_id) && $warehouse_id != 'all')
+        {
+            $query->whereHas('warehouses', function ($query) use ($warehouse_id) {
+                return $query->where('warehouse_id', $warehouse_id);
+            });
+        }
+
+        return $query;
+    }
+    
+
+    /**
+     * 
+     * Filtro por coincidencia para X campo
+     *
+     * @param  Builder $query
+     * @param  string $column
+     * @param  string $input
+     * @return Builder
+     */
+    public function scopeWhereColumnFilterLike($query, $column, $input)
+    {
+        return $query->where($column, 'like', "%{$input}%");
+    }
+
+
+    /**
+     * 
+     * Filtro por coincidencia para X campo de una tabla relacionada
+     *
+     * @param  Builder $query
+     * @param  string $relation
+     * @param  string $column
+     * @param  string $input
+     * @return Builder
+     */
+    public function scopeFilterLikeCustomRelation($query, $relation, $column, $input)
+    {
+        return $query->whereHas($relation, function($q) use($column, $input){
+            return $q->where($column, 'like', "%{$input}%");
+        });
+    }
+
+
+    /**
+     * 
+     * Filtro para reporte ajuste stock - inventario
+     *
+     * @param  Builder $query
+     * @param  string $column
+     * @param  string $input
+     * @return Builder
+     */
+    public function scopeFilterRecordsStockReport($query, $column, $input)
+    {
+        switch($column) 
+        {
+            case 'description':
+            case 'internal_id':
+            case 'model':
+                $query->whereColumnFilterLike($column, $input);
+                break;
+
+            case 'category':
+            case 'brand':
+                $query->filterLikeCustomRelation($column, 'name', $input);
+                break;
+        }
+
+        return $query;
+    }
+
 }
 
