@@ -433,7 +433,7 @@ class Facturalo
             //ajustes para footer amazonia
 
             if($this->configuration->legend_footer AND $format_pdf === 'ticket') {
-                $height_legend = 15;
+                $height_legend = 1;
             } elseif($this->configuration->legend_footer AND $format_pdf === 'ticket_58') {
                 $height_legend = 30;
             } elseif($this->configuration->legend_footer AND $format_pdf === 'ticket_50') {
@@ -680,6 +680,18 @@ class Facturalo
         else {
             $pdf->WriteHTML($stylesheet, HTMLParserMode::HEADER_CSS);
             $pdf->WriteHTML($html, HTMLParserMode::HTML_BODY);
+
+            $helper_facturalo = new HelperFacturalo();
+
+            if($helper_facturalo->isAllowedAddDispatchTicket($format_pdf, $this->type, $this->document))
+            {
+                $helper_facturalo->addDocumentDispatchTicket($pdf, $this->company, $this->document, [
+                    $template,
+                    $base_pdf_template,
+                    $width,
+                    ($quantity_rows * 8) + $extra_by_item_description
+                ]);
+            }
         }
 
         // echo $html_header.$html.$html_footer; exit();
@@ -687,9 +699,10 @@ class Facturalo
         return $this;
     }
 
-    
+
+
     /**
-     * 
+     *
      * Agregar altura para ticket de guia
      *
      * @param  float $append_height
@@ -729,7 +742,7 @@ class Facturalo
             if($document->driver->number)  $driver += 5;
             if($document->driver->license)  $driver += 5;
         }
-        
+
         $append_height += $base_height + $observations + $data_affected_document + $transfer_reason_type + $transport_mode_type + $driver
                             + $license_plate + $secondary_license_plates;
 
