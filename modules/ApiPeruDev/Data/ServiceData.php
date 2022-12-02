@@ -126,7 +126,7 @@
                     $res_data = [
                         'name' => $data['nombre_completo'],
                         'trade_name' => '',
-                        'location_id' => $district_id,
+                        'location_id' => $data['ubigeo'],
                         'address' => $address,
                         'department_id' => $department_id,
                         'province_id' => $province_id,
