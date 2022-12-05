@@ -15,7 +15,7 @@
 [Valet - Linux](https://docs.google.com/document/d/1tolcsiWCiuSQ8lF8jI227o6MaiITzw0DgPcg20Nx1P4/edit?usp=sharing "Clic")
 <br>
 [Linux - gestión externa de SSL](https://docs.google.com/document/d/1qJZerdJh8W0l-W21DiXtOTSEk3A25OZG03x7zHmpOrI/edit?usp=sharing "Clic")
-[Linux - Ubuntu 18 - Docker - SSL opcional] (https://gitlab.com/snippets/2366331.git "Clic")
+[Linux - Ubuntu 18 - Docker - SSL opcional]
 <br>
 
 
@@ -63,6 +63,7 @@
 [Manual Configuración Modulo Farmacia](https://docs.google.com/document/d/1RBqIgunBl7zGhxprFJZggB1xAkBGoFPxRC2171Cq2Vc/edit?usp=sharing "Clic")<br>
 [Manual Consulta Validez de CPE con API SUNAT](https://docs.google.com/document/d/1dY04rC63OAIqJAuGaMBcnsuWMqdTnkFtYTjrgQqaCvk/edit?usp=sharing "Clic")<br>
 [Manual Instalación Supervisor - NO DESCARGA REPORTE](https://docs.google.com/document/d/1P3tXXx64KWd46Fabtv71NhKo5zdgMipQ8DNDvKvfqsc/edit?usp=sharing "Clic")<br>
+[Generación Token envío Guías de Remisión OSE](https://docs.google.com/document/d/1jjnEYSBthMdaNGO1NqSdAL5yLrBDybnpl0r564xGwXE/edit?usp=share_link "Clic")<br>
 
 ### Plugin Wordpress - Woocommerce
 
