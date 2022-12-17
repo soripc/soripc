@@ -75,7 +75,7 @@
 
 ## API
 
-[Descargar Colección Postman](https://drive.google.com/file/d/1MhFHT0UF4CayjZfHkCqi5VMpqN34PGkV/view "Clic")<br>
+[Descargar Colección Postman](https://drive.google.com/file/d/1-SAGfGuUQx0sm43kNRPZeoP1kx2JisxJ/view "Clic")<br>
 [Documentación - json con respuestas](https://docs.google.com/document/d/1szmUQg9Ce5JoS1ubiPeZA459q58fJrBpSTnMayxZqH4/edit?usp=sharing "Clic")<br>
 [Documentación - Ejemplos para Lenguajes](https://documenter.getpostman.com/view/1431398/U16onhgw "Clic")<br>
 
