@@ -27,6 +27,8 @@ use Modules\Inventory\Http\Resources\InventoryResource;
 use Modules\Inventory\Http\Resources\InventoryCollection;
 use App\Imports\StockImport;
 use Maatwebsite\Excel\Excel;
+use Modules\Inventory\Http\Requests\RemoveRequest;
+
 
 class InventoryController extends Controller
 {
@@ -507,10 +509,10 @@ class InventoryController extends Controller
 			$quantity_real = $request->input('quantity_real');
 			$lots = ($request->has('lots')) ? $request->input('lots') : [];
 
-			if ($quantity_real <= 0) {
+			if ($quantity_real < 0) {
 				return  [
 					'success' => false,
-					'message' => 'La cantidad de stock real debe ser mayor a 0'
+					'message' => 'La cantidad de stock real debe ser mayor o igual a 0'
 				];
 			}
 			$type=1;
@@ -559,9 +561,8 @@ class InventoryController extends Controller
 				$warehouse_id = $item['warehouse_id'];
 				$quantity = $item['quantity'];
 				$quantity_real = $item['quantity_real'];
-				if ($quantity_real <= 0) {
-					throw new Exception("La cantidad del producto {$item['item_description']} a modificar debe ser mayor a 0", 500);
-				}
+
+				if ($quantity_real < 0) throw new Exception("La cantidad del producto {$item['item_description']} a modificar debe ser mayor o igual a 0", 500);
 
 				$type=1;
 				$quantity_new=0;
@@ -714,7 +715,7 @@ class InventoryController extends Controller
         return $result;
     }
 
-    public function remove(Request $request)
+    public function remove(RemoveRequest $request)
     {
         $result = DB::connection('tenant')->transaction(function () use ($request) {
             // dd($request->all());
@@ -792,6 +793,8 @@ class InventoryController extends Controller
                 }
             }
 
+            $this->removeItemLotsGroup($request);
+
             return [
                 'success' => true,
                 'message' => 'Producto trasladado con éxito'
@@ -800,6 +803,29 @@ class InventoryController extends Controller
 
         return $result;
     }
+
+    
+    /**
+     * Remover lotes
+     *
+     * @param  RemoveRequest $request
+     * @return void
+     */
+    public function removeItemLotsGroup($request)
+    {
+        $selected_lots_group = $request->selected_lots_group ?? null;
+
+        if($selected_lots_group) 
+        {
+            foreach ($selected_lots_group as $lots_group) 
+            {
+                $lot = $this->getItemLotsGroupById($lots_group['id']);
+                $lot->quantity = $lot->quantity - $lots_group['compromise_quantity'];
+                $lot->save();
+            }
+        }
+    }
+
 
     public function initialize()
     {
