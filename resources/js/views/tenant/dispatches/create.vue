@@ -28,15 +28,15 @@
                             <div :class="{'has-danger': errors.series}"
                                  class="form-group">
                                 <label class="control-label">Serie<span class="text-danger"> *</span></label>
-                                <el-select v-model="form.series" :disabled="generalDisabledSeries()">
+                                <el-select v-model="form.series_id" :disabled="generalDisabledSeries()">
                                     <el-option v-for="option in series"
-                                               :key="option.number"
+                                               :key="option.id"
                                                :label="option.number"
-                                               :value="option.number"></el-option>
+                                               :value="option.id"></el-option>
                                 </el-select>
-                                <small v-if="errors.series"
+                                <small v-if="errors.series_id"
                                        class="form-control-feedback"
-                                       v-text="errors.series[0]"></small>
+                                       v-text="errors.series_id[0]"></small>
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -356,16 +356,11 @@
                     <div class="row">
                         <template v-if="form.transport_mode_type_id === '01'">
                             <div class="col-lg-6">
-                                <label class="control-label font-bold">
-                                    Datos del transportista
-                                    <a v-if="can_add_new_product"
-                                       href="#"
-                                       @click.prevent="showDialogDispatcherForm = true">[+ Nuevo]</a>
-                                </label>
+                                <label class="control-label font-bold">Datos transportista</label>
                                 <span class="text-danger"> *</span>
-                                <div :class="{'has-danger': errors.dispatcher_id}"
+                                <div :class="{'has-danger': errors.dispatcher}"
                                      class="form-group">
-                                    <el-select v-model="form.dispatcher_id"
+                                    <el-select v-model="dispatcher"
                                                clearable
                                                placeholder="Seleccionar transportista">
                                         <el-option
@@ -374,24 +369,19 @@
                                             :label="option.number +' - '+ option.name +' - '+ option.number_mtc"
                                             :value="option.id"></el-option>
                                     </el-select>
-                                    <small v-if="errors.dispatcher_id"
+                                    <small v-if="errors.dispatcher"
                                            class="form-control-feedback"
-                                           v-text="errors.dispatcher_id[0]"></small>
+                                           v-text="errors.dispatcher[0]"></small>
                                 </div>
                             </div>
                         </template>
                         <template v-if="form.transport_mode_type_id === '02'">
                             <div class="col-lg-6">
-                                <label class="control-label font-bold">
-                                    Datos del conductor
-                                    <a v-if="can_add_new_product"
-                                       href="#"
-                                       @click.prevent="showDialogDriverForm = true">[+ Nuevo]</a>
-                                </label>
+                                <label class="control-label font-bold">Datos conductor</label>
                                 <span class="text-danger"> *</span>
-                                <div :class="{'has-danger': errors.driver_id}"
+                                <div :class="{'has-danger': errors.driver}"
                                      class="form-group">
-                                    <el-select v-model="form.driver_id"
+                                    <el-select v-model="driver"
                                                clearable
                                                placeholder="Seleccionar conductor">
                                         <el-option
@@ -406,25 +396,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <div :class="{'has-danger': errors.transport_id}"
+                                <div :class="{'has-danger': errors.license_plate}"
                                      class="form-group">
-                                    <label class="control-label">Datos del vehículo
-                                        <a v-if="can_add_new_product"
-                                           href="#"
-                                           @click.prevent="showDialogTransportForm = true">[+ Nuevo]</a>
-                                    </label>
-                                    <el-select v-model="form.transport_id"
-                                               clearable
-                                               placeholder="Seleccionar vehículo">
-                                        <el-option
-                                            v-for="option in transports"
-                                            :key="option.id"
-                                            :label="option.plate_number +' - '+ option.model+' - '+ option.brand"
-                                            :value="option.id"></el-option>
-                                    </el-select>
-                                    <small v-if="errors.transport_id"
+                                    <label class="control-label">Numero de placa del vehiculo</label>
+                                    <span class="text-danger"> *</span>
+                                    <el-input v-model="form.license_plate"
+                                              :maxlength="8"
+                                              placeholder="Numero de placa del vehiculo..."></el-input>
+                                    <small v-if="errors.license_plate"
                                            class="form-control-feedback"
-                                           v-text="errors.transport_id[0]"></small>
+                                           v-text="errors.license_plate[0]"></small>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -691,14 +672,63 @@ export default {
             series: [],
             current_item: null,
             quantity: 1,
-            errors: {},
-            form: {},
+            errors: {
+                errors: {}
+            },
+            form: {
+                operation_type_id: null,
+                driver: {
+                    number: null,
+                    name: null,
+                    license: null,
+                    identity_document_type_id: null,
+                },
+                dispatcher: {
+                    number: null,
+                    name: null,
+                    identity_document_type_id: null,
+                },
+                establishment_id: null,
+                document_type_id: '09',
+                series_id: null,
+                number: '#',
+                date_of_issue: moment().format('YYYY-MM-DD'),
+                time_of_issue: moment().format('HH:mm:ss'),
+                date_of_shipping: moment().format('YYYY-MM-DD'),
+                customer_id: null,
+                // customer_address_id: null,
+                observations: '',
+                transport_mode_type_id: null,
+                transfer_reason_type_id: null,
+                transfer_reason_description: null,
+                transshipment_indicator: false,
+                port_code: null,
+                unit_type_id: null,
+                total_weight: 0,
+                packages_number: null,
+                container_number: null,
+                delivery: {
+                    country_id: 'PE',
+                    location_id: [],
+                    address: null,
+                },
+                origin: {
+                    country_id: 'PE',
+                    location_id: [],
+                    address: null,
+                },
+                items: [],
+                reference_order_form_id: null,
+                license_plate: null,
+                secondary_license_plates: {
+                    semitrailer: null
+                }
+            },
             recordId: null,
             company: {},
             customerAddresses: [],
             showWarehousesDetail: false,
             warehousesDetail: [],
-            transports: []
         }
     },
     created() {
@@ -729,8 +759,7 @@ export default {
             this.locations = response.data.locations;
             this.seriesAll = response.data.series;
             this.drivers = response.data.drivers;
-            this.dispatchers = response.data.dispatchers;
-            this.transports = response.data.transports;
+            this.dispatchers = response.data.dispachers;
             if (itemsFromSummary) {
                 this.onLoadItemsFromSummary(response.data.itemsFromSummary, JSON.parse(itemsFromSummary));
             }
@@ -743,12 +772,10 @@ export default {
             this.form = Object.assign({}, this.form, this.document);
             await this.reloadDataCustomers(this.form.customer_id);
             this.changeCustomer();
-            this.changeEstablishment()
         } else {
             this.searchRemoteCustomers('')
-            this.changeEstablishment()
-            this.changeSeries();
         }
+        this.changeEstablishment()
 
         // this.searchRemoteCustomers('');
         // this.createFromOrderForm();
@@ -1061,13 +1088,13 @@ export default {
         setDefaultSerie() {
             let series_id = parseInt(this.config.user.serie);
             if (isNaN(series_id)) series_id = null;
-            let searchSerie = _.find(this.series, {
+            let searchSerie = _.filter(this.series, {
                 'establishment_id': this.form.establishment_id,
                 'document_type_id': this.form.document_type_id,
                 'id': series_id
             });
             if (searchSerie !== undefined && searchSerie.length > 0) {
-                this.form.series = searchSerie.number;
+                this.form.series_id = series_id;
             }
         },
         initForm() {
@@ -1080,7 +1107,7 @@ export default {
             this.form = {
                 establishment_id: establishment_id,
                 document_type_id: '09',
-                series: null,
+                series_id: null,
                 number: '#',
                 date_of_issue: moment().format('YYYY-MM-DD'),
                 time_of_issue: moment().format('HH:mm:ss'),
@@ -1094,14 +1121,15 @@ export default {
                 port_code: null,
                 unit_type_id: this.config.unit_type_id,
                 total_weight: 1,
-                packages_number: 1,
+                packages_number: 0,
                 container_number: null,
-                dispatcher_id: null,
-                dispatcher: {},
-                driver_id: null,
-                driver: {},
-                transport_id: null,
-                transport: {},
+                dispatcher: {
+                    identity_document_type_id: null
+                },
+                driver: {
+                    identity_document_type_id: null,
+                    license: null,
+                },
                 delivery: {
                     country_id: 'PE',
                     location_id: [],
@@ -1129,9 +1157,8 @@ export default {
                 'establishment_id': this.form.establishment_id,
                 'document_type_id': this.form.document_type_id
             });
-        },
-        changeSeries() {
-            this.form.series = null;
+            // this.code = this.form.establishment_id;
+            this.form.series_id = null;
             this.setDefaultSerie();
             this.setOriginAddressByEstablishment()
             this.generalSetDefaultSerieByDocumentType('09')
@@ -1258,15 +1285,11 @@ export default {
                 this.form.terms_condition = this.config.terms_condition_sale;
             }
             if (this.form.transport_mode_type_id === '02') {
-                this.form.dispatcher_id = null;
                 this.form.dispatcher = null;
-                if (!this.form.driver_id) {
+                if (!this.driver) {
                     return this.$message.error('El conductor es requerido')
                 }
-                if (!this.form.transport_id) {
-                    return this.$message.error('El vehículo es requerido')
-                }
-                let v = _.find(this.drivers, {'id': this.form.driver_id})
+                let v = _.find(this.drivers, {'id': this.driver})
                 this.form.driver.name = v.name;
                 this.form.driver.number = v.number;
                 this.form.driver.license = v.license;
@@ -1291,12 +1314,11 @@ export default {
                 this.form.driver.lastnames = this.form.driver.name;
             }
             if (this.form.transport_mode_type_id === '01') {
-                this.form.driver_id = null;
                 this.form.driver = null;
-                if (!this.form.dispatcher_id) {
+                if (!this.dispatcher) {
                     return this.$message.error('El transportista es requerido')
                 }
-                let v = _.find(this.dispatchers, {'id': this.form.dispatcher_id})
+                let v = _.find(this.dispatchers, {'id': this.dispatcher})
                 this.form.dispatcher.identity_document_type_id = v.identity_document_type_id;
                 this.form.dispatcher.number = v.number;
                 this.form.dispatcher.name = v.name;
@@ -1350,6 +1372,29 @@ export default {
                 this.setDefaultCustomer();
                 this.loading_submit = false;
             });
+        },
+        clean() {
+            this.form = {
+                time_of_issue: moment().format('HH:mm:ss'),
+                dispatcher: {
+                    identity_document_type_id: null
+                },
+                driver: {
+                    identity_document_type_id: null
+                },
+                document_type_id: '09',
+                delivery: {
+                    country_id: 'PE'
+                },
+                origin: {
+                    country_id: 'PE'
+                },
+                number: '#',
+                items: [],
+                total_weight: null,
+                packages_number: null,
+                container_number: null
+            }
         },
         close() {
             location.href = '/dispatches';

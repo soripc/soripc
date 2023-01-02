@@ -19,57 +19,63 @@
                 <data-table :resource="resource">
                     <tr slot="heading">
                         <th>#</th>
-                        <th class="text-left">Nro. de Placa</th>
-                        <th class="text-left">Modelo</th>
-                        <th class="text-left">Marca</th>
+                        <th>Nombre</th>
+                        <th class="text-center">Tipo de documento</th>
+                        <th class="text-center">Número</th>
+                        <th class="text-center">Licencia</th>
                         <th class="text-right">Acciones</th>
                     <tr>
                     <tr slot-scope="{ index, row }">
                         <td>{{ index }}</td>
-                        <td class="text-left">{{ row.plate_number }}</td>
-                        <td class="text-left">{{ row.model }}</td>
-                        <td class="text-left">{{ row.brand }}</td>
+                        <td>{{ row.name }}</td>
+                        <td class="text-center">{{ row.document_type }}</td>
+                        <td class="text-center">{{ row.number }}</td>
+                        <td class="text-center">{{ row.license }}</td>
                         <td class="text-right">
+
                             <button type="button" class="btn waves-effect waves-light btn-xs btn-info"
                                     @click.prevent="clickCreate(row.id)">Editar
                             </button>
+
                             <template v-if="typeUser === 'admin'">
                                 <button type="button" class="btn waves-effect waves-light btn-xs btn-danger"
                                         @click.prevent="clickDelete(row.id)">Eliminar
                                 </button>
                             </template>
+
                         </td>
                     </tr>
                 </data-table>
             </div>
 
-            <transport-form :showDialog.sync="showDialog"
-                            :recordId="recordId"></transport-form>
+            <drivers-form :showDialog.sync="showDialog"
+                          :recordId="recordId"></drivers-form>
+
+
         </div>
     </div>
 </template>
 
 <script>
 
-import TransportForm from './form'
+import DriversForm from './form.vue'
 import DataTable from '@components/DataTable.vue'
 import {deletable} from '@mixins/deletable'
 
 export default {
-    name: 'DispatchTransportIndex',
     mixins: [deletable],
     props: ['typeUser'],
-    components: {TransportForm, DataTable},
+    components: {DriversForm, DataTable},
     data() {
         return {
             title: null,
             showDialog: false,
-            resource: 'transports',
+            resource: 'drivers',
             recordId: null,
         }
     },
     created() {
-        this.title = 'Vehículos'
+        this.title = 'Conductores'
     },
     methods: {
         clickCreate(recordId = null) {

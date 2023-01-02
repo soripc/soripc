@@ -81,7 +81,6 @@
     import {serviceNumber} from '@mixins/functions'
 
     export default {
-        name: 'DispatchDispatcherForm',
         mixins: [serviceNumber],
         props: ['showDialog', 'recordId', 'external'],
         data() {

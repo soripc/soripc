@@ -1,21 +1,21 @@
 <?php
+namespace Modules\Order\Http\Controllers;
 
-namespace App\Http\Controllers\Tenant;
-
-use Modules\Order\Http\Requests\DispatcherRequest;
-use Modules\Order\Http\Resources\DispatcherCollection;
-use Modules\Order\Http\Resources\DispatcherResource;
+use App\Models\Tenant\Configuration;
+use Modules\Order\Http\Requests\DriverRequest;
+use Modules\Order\Http\Resources\DriverCollection;
+use Modules\Order\Http\Resources\DriverResource;
 use App\Models\Tenant\Catalogs\IdentityDocumentType;
 use App\Http\Controllers\Controller;
-use Modules\Order\Models\Dispatcher;
+use Modules\Order\Models\Driver;
 use Illuminate\Http\Request;
 
-class DispatcherController extends Controller
+class DriverController extends Controller
 {
 
     public function index()
     {
-        return view('tenant.dispatches.dispatchers.index');
+        return view('order::drivers.index');
     }
 
     public function columns()
@@ -29,39 +29,39 @@ class DispatcherController extends Controller
     public function records(Request $request)
     {
 
-        $records = Dispatcher::where($request->column, 'like', "%{$request->value}%")
+        $records = Driver::where($request->column, 'like', "%{$request->value}%")
                             ->orderBy('name');
 
-        return new DispatcherCollection($records->paginate(config('tenant.items_per_page')));
+        return new DriverCollection($records->paginate(config('tenant.items_per_page')));
     }
 
 
     public function tables()
     {
         $identity_document_types = IdentityDocumentType::whereActive()->get();
-        // $api_service_token = config('configuration.api_service_token');
         $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
+
         return compact('identity_document_types', 'api_service_token');
     }
 
     public function record($id)
     {
-        $record = new DispatcherResource(Dispatcher::findOrFail($id));
+        $record = new DriverResource(Driver::findOrFail($id));
 
         return $record;
     }
 
-    public function store(DispatcherRequest $request)
+    public function store(DriverRequest $request)
     {
 
         $id = $request->input('id');
-        $record = Dispatcher::firstOrNew(['id' => $id]);
+        $record = Driver::firstOrNew(['id' => $id]);
         $record->fill($request->all());
         $record->save();
 
         return [
             'success' => true,
-            'message' => ($id)?'Transportista editado con éxito':'Transportista registrado con éxito',
+            'message' => ($id)?'Conductor editado con éxito':'Conductor registrado con éxito',
             'id' => $record->id
         ];
     }
@@ -69,12 +69,12 @@ class DispatcherController extends Controller
     public function destroy($id)
     {
 
-        $record = Dispatcher::findOrFail($id);
+        $record = Driver::findOrFail($id);
         $record->delete();
 
         return [
             'success' => true,
-            'message' => 'Transportista eliminado con éxito'
+            'message' => 'Conductor eliminado con éxito'
         ];
 
     }

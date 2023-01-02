@@ -125,7 +125,6 @@
 import {serviceNumber} from '@mixins/functions'
 
 export default {
-    name: 'DispatchDriverForm',
     mixins: [serviceNumber],
     props: ['showDialog', 'recordId', 'external'],
     data() {

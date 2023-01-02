@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenant;
+namespace Modules\Order\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,17 +24,17 @@ class DriverRequest extends FormRequest
             ],
             'identity_document_type_id' => [
                 'required',
-            ],
+            ], 
             'name' => [
                 'required',
             ],
             'license' => [
                 'required'
-            ],
+            ], 
             'telephone' => [
                 'required',
             ],
-
+            
         ];
     }
 

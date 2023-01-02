@@ -48,40 +48,57 @@
             </div>
         </div>
 
-        <template v-if="(response_sunat_status_ticket && response_sunat_status_ticket.success) || !sendSunat">
+        <template v-if="response_sunat_status_ticket && response_sunat_status_ticket.success">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
-                    <button class="btn btn-lg btn-info waves-effect waves-light"
-                            type="button"
-                            @click="clickDownload('a4')">
-                        <i class="fa fa-file-alt"></i>
-                    </button>
-                    <p>Descargar A4</p>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
-                    <button class="btn btn-lg btn-info waves-effect waves-light"
-                            type="button"
-                            @click="clickDownload('ticket')">
-                        <i class="fa fa-file-alt"></i>
-                    </button>
-                    <p>80MM</p>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
-                    <button class="btn btn-lg btn-info waves-effect waves-light"
-                            type="button"
-                            @click="clickDownload('ticket_58')">
-                        <i class="fa fa-file-alt"></i>
-                    </button>
-                    <p>58MM</p>
-                </div>
-                <div v-if="sendSunat" class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
-                    <button class="btn btn-lg btn-info waves-effect waves-light"
-                            type="button"
-                            @click="clickDownloadCdr()">
-                        <i class="fa fa-file-download"></i>
-                    </button>
-                    <p>Descargar CDR</p>
-                </div>
+                <template v-if="form.has_cdr">
+                    <div v-if="form && form.external_id && form.external_id != null"
+                         class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
+                        <button class="btn btn-lg btn-info waves-effect waves-light"
+                                type="button"
+                                @click="clickDownload('a4')">
+                            <i class="fa fa-file-alt"></i>
+                        </button>
+                        <p>Descargar A4</p>
+                    </div>
+                    <!-- se agregaron templates con el issue #1435 -->
+                    <div v-if="form && form.external_id && form.external_id != null"
+                         class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
+                        <button class="btn btn-lg btn-info waves-effect waves-light"
+                                type="button"
+                                @click="clickDownload('ticket')">
+                            <i class="fa fa-file-alt"></i>
+                        </button>
+                        <p>80MM</p>
+                    </div>
+                    <div v-if="form && form.external_id && form.external_id != null"
+                         class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
+                        <button class="btn btn-lg btn-info waves-effect waves-light"
+                                type="button"
+                                @click="clickDownload('ticket_58')">
+                            <i class="fa fa-file-alt"></i>
+                        </button>
+                        <p>58MM</p>
+                    </div>
+                    <div v-if="form && form.external_id && form.external_id != null"
+                         class="col-lg-6 col-md-6 col-sm-6 text-center font-weight-bold mt-3">
+                        <button class="btn btn-lg btn-info waves-effect waves-light"
+                                type="button"
+                                @click="clickDownloadCdr()">
+                            <i class="fa fa-file-download"></i>
+                        </button>
+                        <p>Descargar CDR</p>
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center font-weight-bold mt-3">
+                        <button class="btn btn-lg btn-info waves-effect waves-light"
+                                type="button"
+                                @click="clickDownload()">
+                            <i class="fa fa-file-alt"></i>
+                        </button>
+                        <p>Descargar A4</p>
+                    </div>
+                </template>
             </div>
             <div class="row mt-3">
                 <div class="col-md-12">
@@ -136,11 +153,7 @@
 
 <script>
 export default {
-    props: ['showDialog',
-        'recordId',
-        'sendSunat',
-        'showClose'
-    ],
+    props: ['showDialog', 'recordId', 'showClose'],
     name: 'DispatchFinish',
     data() {
         return {
@@ -216,22 +229,19 @@ export default {
             return new Promise(resolve => setTimeout(resolve, ms));
         },
         async create() {
-            this.initForm();
             this.loading_sunat_send = true;
             await this.$http.get(`/${this.resource}/record/${this.recordId}`).then(response => {
                 this.form = response.data.data;
                 this.titleDialog = 'Guía: ' + this.form.number;
             });
-            if (this.sendSunat) {
-                await this.$http.get(`/service/dispatch/send/${this.form.external_id}`)
-                    .then(response => {
-                        this.response_sunat_send = response.data;
-                    });
+            await this.$http.get(`/service/dispatch/send/${this.form.external_id}`)
+                .then(response => {
+                    this.response_sunat_send = response.data;
+                });
 
-                if (this.response_sunat_send.success) {
-                    await this.timeout(3000);
-                    await this.clickStatusTicket();
-                }
+            if (this.response_sunat_send.success) {
+                await this.timeout(3000);
+                await this.clickStatusTicket();
             }
             this.loading_sunat_send = false;
         },
