@@ -20,19 +20,20 @@
                     <tr slot="heading">
                         <th>#</th>
                         <th>Nombre</th>
-                        <th class="text-center">Tipo de documento</th>
-                        <th class="text-center">Número</th>
-                        <th class="text-center">Licencia</th>
+                        <th class="text-left">Tipo de documento</th>
+                        <th class="text-left">Número</th>
+                        <th class="text-left">MTC</th>
+                        <th class="text-center">Predeterminado</th>
                         <th class="text-right">Acciones</th>
                     <tr>
                     <tr slot-scope="{ index, row }">
                         <td>{{ index }}</td>
                         <td>{{ row.name }}</td>
-                        <td class="text-center">{{ row.document_type }}</td>
-                        <td class="text-center">{{ row.number }}</td>
-                        <td class="text-center">{{ row.license }}</td>
+                        <td class="text-left">{{ row.document_type }}</td>
+                        <td class="text-left">{{ row.number }}</td>
+                        <td class="text-left">{{ row.number_mtc }}</td>
+                        <td class="text-center">{{ row.is_default }}</td>
                         <td class="text-right">
-
                             <button type="button" class="btn waves-effect waves-light btn-xs btn-info"
                                     @click.prevent="clickCreate(row.id)">Editar
                             </button>
@@ -48,34 +49,34 @@
                 </data-table>
             </div>
 
-            <drivers-form :showDialog.sync="showDialog"
-                          :recordId="recordId"></drivers-form>
-
-
+            <dispatchers-form :showDialog.sync="showDialog"
+                              :recordId="recordId"
+                              @success="successCreate"></dispatchers-form>
         </div>
     </div>
 </template>
 
 <script>
 
-import DriversForm from './form.vue'
+import DispatchersForm from './form.vue'
 import DataTable from '@components/DataTable.vue'
 import {deletable} from '@mixins/deletable'
 
 export default {
+    name: 'DispatchDispatcherIndex',
     mixins: [deletable],
     props: ['typeUser'],
-    components: {DriversForm, DataTable},
+    components: {DispatchersForm, DataTable},
     data() {
         return {
             title: null,
             showDialog: false,
-            resource: 'drivers',
+            resource: 'dispatchers',
             recordId: null,
         }
     },
     created() {
-        this.title = 'Conductores'
+        this.title = 'Transportistas'
     },
     methods: {
         clickCreate(recordId = null) {
@@ -87,6 +88,9 @@ export default {
                 this.$eventHub.$emit('reloadData')
             )
         },
+        successCreate() {
+            this.$eventHub.$emit('reloadData')
+        }
     }
 }
 </script>

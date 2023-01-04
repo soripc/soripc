@@ -20,17 +20,19 @@
                     <tr slot="heading">
                         <th>#</th>
                         <th>Nombre</th>
-                        <th class="text-center">Tipo de documento</th>
-                        <th class="text-center">Número</th>
-                        <th class="text-center">MTC</th>
+                        <th class="text-left">Tipo de documento</th>
+                        <th class="text-left">Número</th>
+                        <th class="text-left">Licencia</th>
+                        <th class="text-center">Predeterminado</th>
                         <th class="text-right">Acciones</th>
                     <tr>
                     <tr slot-scope="{ index, row }">
                         <td>{{ index }}</td>
                         <td>{{ row.name }}</td>
-                        <td class="text-center">{{ row.document_type }}</td>
-                        <td class="text-center">{{ row.number }}</td>
-                        <td class="text-center">{{ row.number_mtc }}</td>
+                        <td class="text-left">{{ row.document_type }}</td>
+                        <td class="text-left">{{ row.number }}</td>
+                        <td class="text-left">{{ row.license }}</td>
+                        <td class="text-center">{{ row.is_default }}</td>
                         <td class="text-right">
 
                             <button type="button" class="btn waves-effect waves-light btn-xs btn-info"
@@ -48,8 +50,9 @@
                 </data-table>
             </div>
 
-            <dispatchers-form :showDialog.sync="showDialog"
-                              :recordId="recordId"></dispatchers-form>
+            <drivers-form :showDialog.sync="showDialog"
+                          :recordId="recordId"
+                          @success="successCreate"></drivers-form>
 
 
         </div>
@@ -58,24 +61,25 @@
 
 <script>
 
-import DispatchersForm from './form.vue'
+import DriversForm from './form.vue'
 import DataTable from '@components/DataTable.vue'
 import {deletable} from '@mixins/deletable'
 
 export default {
+    name: 'DispatchDriverIndex',
     mixins: [deletable],
     props: ['typeUser'],
-    components: {DispatchersForm, DataTable},
+    components: {DriversForm, DataTable},
     data() {
         return {
             title: null,
             showDialog: false,
-            resource: 'dispatchers',
+            resource: 'drivers',
             recordId: null,
         }
     },
     created() {
-        this.title = 'Transportistas'
+        this.title = 'Conductores'
     },
     methods: {
         clickCreate(recordId = null) {
@@ -87,6 +91,9 @@ export default {
                 this.$eventHub.$emit('reloadData')
             )
         },
+        successCreate() {
+            this.$eventHub.$emit('reloadData')
+        }
     }
 }
 </script>
