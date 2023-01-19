@@ -4,10 +4,10 @@
     "reportVersion": 1,
     "event": "Allocation failed - JavaScript heap out of memory",
     "trigger": "FatalError",
-    "filename": "report.20221214.005757.30440.0.001.json",
-    "dumpEventTime": "2022-12-14T00:57:57Z",
-    "dumpEventTimeStamp": "1670997477439",
-    "processId": 30440,
+    "filename": "report.20230118.155622.20784.0.001.json",
+    "dumpEventTime": "2023-01-18T15:56:22Z",
+    "dumpEventTimeStamp": "1674075382265",
+    "processId": 20784,
     "cwd": "F:\\laragon\\www\\pro5",
     "commandLine": [
       "node",
@@ -53,163 +53,163 @@
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 5427906,
+        "user": 5574859,
         "nice": 0,
-        "sys": 5516062,
-        "idle": 237718156,
-        "irq": 1472421
+        "sys": 4588500,
+        "idle": 281381968,
+        "irq": 1321859
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 3956515,
+        "user": 4421000,
         "nice": 0,
-        "sys": 1426296,
-        "idle": 243279140,
-        "irq": 111093
+        "sys": 1457953,
+        "idle": 285666203,
+        "irq": 54921
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 16245828,
+        "user": 18448828,
         "nice": 0,
-        "sys": 3398453,
-        "idle": 229017640,
-        "irq": 78750
+        "sys": 4898281,
+        "idle": 268198031,
+        "irq": 91187
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 4360109,
+        "user": 3814843,
         "nice": 0,
-        "sys": 941625,
-        "idle": 243360187,
-        "irq": 16156
+        "sys": 515625,
+        "idle": 287214671,
+        "irq": 18750
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 9281875,
+        "user": 8279375,
         "nice": 0,
-        "sys": 2692765,
-        "idle": 236687281,
-        "irq": 62140
+        "sys": 2597265,
+        "idle": 280668500,
+        "irq": 75171
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 5630359,
+        "user": 4957062,
         "nice": 0,
-        "sys": 1201343,
-        "idle": 241830218,
-        "irq": 22406
+        "sys": 725578,
+        "idle": 285862500,
+        "irq": 26687
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 9989343,
+        "user": 8824000,
         "nice": 0,
-        "sys": 2713156,
-        "idle": 235959421,
-        "irq": 52359
+        "sys": 1705625,
+        "idle": 281015515,
+        "irq": 58468
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 10719750,
+        "user": 5401078,
         "nice": 0,
-        "sys": 3151734,
-        "idle": 234790437,
-        "irq": 32343
+        "sys": 762187,
+        "idle": 285381875,
+        "irq": 51984
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 7541437,
+        "user": 7436140,
         "nice": 0,
-        "sys": 2150296,
-        "idle": 238970187,
-        "irq": 64140
+        "sys": 1507890,
+        "idle": 282601109,
+        "irq": 61421
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 4229406,
+        "user": 3970171,
         "nice": 0,
-        "sys": 1015531,
-        "idle": 243416984,
-        "irq": 16703
+        "sys": 588031,
+        "idle": 286986921,
+        "irq": 21171
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 8375250,
+        "user": 6392593,
         "nice": 0,
-        "sys": 2418562,
-        "idle": 237868093,
-        "irq": 59828
+        "sys": 2039000,
+        "idle": 283113515,
+        "irq": 79671
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 7264062,
+        "user": 4270765,
         "nice": 0,
-        "sys": 1898203,
-        "idle": 239499640,
-        "irq": 19703
+        "sys": 497640,
+        "idle": 286776703,
+        "irq": 14734
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 7467156,
+        "user": 6817859,
         "nice": 0,
-        "sys": 2685062,
-        "idle": 238509687,
-        "irq": 51656
+        "sys": 2363265,
+        "idle": 282363984,
+        "irq": 84812
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 6860281,
+        "user": 3122062,
         "nice": 0,
-        "sys": 1926546,
-        "idle": 239875078,
-        "irq": 13640
+        "sys": 1039328,
+        "idle": 287383718,
+        "irq": 15609
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 12678234,
+        "user": 7445312,
         "nice": 0,
-        "sys": 5059828,
-        "idle": 230923843,
-        "irq": 53203
+        "sys": 3562046,
+        "idle": 280537750,
+        "irq": 89109
       },
       {
         "model": "11th Gen Intel(R) Core(TM) i7-11700F @ 2.50GHz",
         "speed": 2496,
-        "user": 12386546,
+        "user": 5693703,
         "nice": 0,
-        "sys": 4468500,
-        "idle": 231806859,
-        "irq": 19765
+        "sys": 1134531,
+        "idle": 284716875,
+        "irq": 24687
       }
     ],
     "networkInterfaces": [
       {
-        "name": "Wi-Fi",
+        "name": "Ethernet",
         "internal": false,
-        "mac": "60:a4:b7:01:96:ea",
-        "address": "fe80::93a:62ba:2fac:4a33",
+        "mac": "a8:a1:59:6f:ff:71",
+        "address": "fe80::6c6b:2841:ea7a:9403",
         "netmask": "ffff:ffff:ffff:ffff::",
         "family": "IPv6",
-        "scopeid": 12
+        "scopeid": 14
       },
       {
-        "name": "Wi-Fi",
+        "name": "Ethernet",
         "internal": false,
-        "mac": "60:a4:b7:01:96:ea",
-        "address": "192.168.18.17",
+        "mac": "a8:a1:59:6f:ff:71",
+        "address": "192.168.1.18",
         "netmask": "255.255.255.0",
         "family": "IPv4"
       },
@@ -241,71 +241,71 @@
   },
   "nativeStack": [
     {
-      "pc": "0x00007ff6ef9a6ed9",
+      "pc": "0x00007ff751706ed9",
       "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+10873"
     },
     {
-      "pc": "0x00007ff6ef9ab26c",
+      "pc": "0x00007ff75170b26c",
       "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+28172"
     },
     {
-      "pc": "0x00007ff6ef9aa218",
+      "pc": "0x00007ff75170a218",
       "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+23992"
     },
     {
-      "pc": "0x00007ff6efa95e6b",
+      "pc": "0x00007ff7517f5e6b",
       "symbol": "v8::base::CPU::has_sse+37691"
     },
     {
-      "pc": "0x00007ff6f02889ae",
+      "pc": "0x00007ff751fe89ae",
       "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
     },
     {
-      "pc": "0x00007ff6f0270951",
+      "pc": "0x00007ff751fd0951",
       "symbol": "v8::SharedArrayBuffer::Externalize+833"
     },
     {
-      "pc": "0x00007ff6f013ec8c",
+      "pc": "0x00007ff751e9ec8c",
       "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
     },
     {
-      "pc": "0x00007ff6f014812f",
+      "pc": "0x00007ff751ea812f",
       "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1279"
     },
     {
-      "pc": "0x00007ff6f0146614",
+      "pc": "0x00007ff751ea6614",
       "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
     },
     {
-      "pc": "0x00007ff6f013c263",
+      "pc": "0x00007ff751e9c263",
       "symbol": "v8::internal::Heap::CollectGarbage+1235"
     },
     {
-      "pc": "0x00007ff6f013ab04",
+      "pc": "0x00007ff751e9ab04",
       "symbol": "v8::internal::Heap::AddRetainedMap+2356"
     },
     {
-      "pc": "0x00007ff6f015a315",
+      "pc": "0x00007ff751eba315",
       "symbol": "v8::internal::Factory::NewFillerObject+53"
     },
     {
-      "pc": "0x00007ff6efec8fad",
+      "pc": "0x00007ff751c28fad",
       "symbol": "v8::internal::interpreter::JumpTableTargetOffsets::iterator::operator=+3981"
     },
     {
-      "pc": "0x00007ff6f06a224d",
+      "pc": "0x00007ff75240224d",
       "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+575565"
     },
     {
-      "pc": "0x0000005adce96b60",
+      "pc": "0x0000020f5af74e39",
       "symbol": ""
     }
   ],
   "javascriptHeap": {
-    "totalMemory": 2183348224,
-    "totalCommittedMemory": 2183348224,
-    "usedMemory": 2135189256,
-    "availableMemory": 16792064,
+    "totalMemory": 2197250048,
+    "totalCommittedMemory": 2197250048,
+    "usedMemory": 2169163832,
+    "availableMemory": 2890240,
     "memoryLimit": 2197815296,
     "heapSpaces": {
       "read_only_space": {
@@ -323,31 +323,31 @@
         "available": 1047264
       },
       "old_space": {
-        "memorySize": 581808128,
-        "committedMemory": 581808128,
-        "capacity": 543440680,
-        "used": 543440680,
+        "memorySize": 504475648,
+        "committedMemory": 504475648,
+        "capacity": 485055144,
+        "used": 485055144,
         "available": 0
       },
       "code_space": {
         "memorySize": 2260992,
         "committedMemory": 2260992,
-        "capacity": 1981344,
-        "used": 1981344,
+        "capacity": 1973856,
+        "used": 1973856,
         "available": 0
       },
       "map_space": {
-        "memorySize": 8916992,
-        "committedMemory": 8916992,
-        "capacity": 2201520,
-        "used": 2201520,
+        "memorySize": 7868416,
+        "committedMemory": 7868416,
+        "capacity": 2197680,
+        "used": 2197680,
         "available": 0
       },
       "large_object_space": {
-        "memorySize": 1586798592,
-        "committedMemory": 1586798592,
-        "capacity": 1586433896,
-        "used": 1586433896,
+        "memorySize": 1679081472,
+        "committedMemory": 1679081472,
+        "capacity": 1678805336,
+        "used": 1678805336,
         "available": 0
       },
       "code_large_object_space": {
@@ -367,17 +367,17 @@
     }
   },
   "resourceUsage": {
-    "userCpuSeconds": 264.125,
-    "kernelCpuSeconds": 39.312,
-    "cpuConsumptionPercent": 4.35785,
-    "maxRss": 2683789312,
+    "userCpuSeconds": 89,
+    "kernelCpuSeconds": 10.89,
+    "cpuConsumptionPercent": 2.06256,
+    "maxRss": 2670882816,
     "pageFaults": {
-      "IORequired": 30619868,
+      "IORequired": 8192990,
       "IONotRequired": 0
     },
     "fsActivity": {
-      "reads": 13754,
-      "writes": 272
+      "reads": 11604,
+      "writes": 93
     }
   },
   "libuv": [
@@ -387,7 +387,7 @@
     "aliases": "C:\\laragon\\bin\\cmder\\config\\user-aliases.cmd",
     "ALLOW_CLIENT_USE_OWN_APIPERU_TOKEN": "false",
     "ALLUSERSPROFILE": "C:\\ProgramData",
-    "ANSICON": "141x1000 (141x48)",
+    "ANSICON": "207x1000 (207x48)",
     "ANSICON_DEF": "7",
     "ANT_HOME": "c:\\ant",
     "APIPERUDEV_VALIDATOR_CPE": "true",
@@ -416,20 +416,20 @@
     "ConEmuAnsiLog": "",
     "ConEmuArgs": "/Icon \"C:\\laragon\\bin\\cmder\\icons\\cmder.ico\" /Title Cmder",
     "ConEmuArgs2": "",
-    "ConEmuBackHWND": "0x000A134C",
+    "ConEmuBackHWND": "0x00560DB6",
     "ConEmuBaseDir": "C:\\laragon\\bin\\cmder\\vendor\\conemu-maximus5\\ConEmu",
     "ConEmuBuild": "161206",
     "ConEmuConfig": "",
     "ConEmuDir": "C:\\laragon\\bin\\cmder\\vendor\\conemu-maximus5",
-    "ConEmuDrawHWND": "0x00470AE8",
+    "ConEmuDrawHWND": "0x004B076E",
     "ConEmuDrive": "C:",
     "ConEmuHooks": "Enabled",
-    "ConEmuHWND": "0x000617E0",
+    "ConEmuHWND": "0x002A0D9E",
     "ConEmuPalette": "Monokai",
-    "ConEmuPID": "20932",
-    "ConEmuServerPID": "31364",
+    "ConEmuPID": "22900",
+    "ConEmuServerPID": "2132",
     "ConEmuTask": "<Startup>",
-    "ConEmuWorkDir": "F:\\laragon\\www\\pvsoft9",
+    "ConEmuWorkDir": "F:\\laragon\\www\\intipos\\qsystem",
     "ConEmuWorkDrive": "F:",
     "DB_CONNECTION": "system",
     "DB_DATABASE": "pro5_db",
@@ -636,7 +636,7 @@
     "npm_package_devDependencies_lodash": "^4.17.15",
     "npm_package_devDependencies_popper_js": "^1.12",
     "npm_package_devDependencies_vue": "^2.5.7",
-    "npm_package_gitHead": "d9477fdbd1f844253a0dd62a988143f351b07668",
+    "npm_package_gitHead": "cead7c01c75aadcbb06cc7483758065f5e684e09",
     "npm_package_name": "",
     "npm_package_private": "true",
     "npm_package_readmeFilename": "README.md",
@@ -720,8 +720,8 @@
     "C:\\Windows\\System32\\WS2_32.dll",
     "C:\\Windows\\System32\\RPCRT4.dll",
     "C:\\Windows\\System32\\ADVAPI32.dll",
-    "C:\\Windows\\System32\\msvcrt.dll",
     "C:\\Windows\\SYSTEM32\\dbghelp.dll",
+    "C:\\Windows\\System32\\msvcrt.dll",
     "C:\\Windows\\System32\\sechost.dll",
     "C:\\Windows\\System32\\ucrtbase.dll",
     "C:\\Windows\\System32\\USER32.dll",
@@ -736,7 +736,6 @@
     "C:\\Windows\\SYSTEM32\\USERENV.dll",
     "C:\\Windows\\SYSTEM32\\WINMM.dll",
     "C:\\Windows\\System32\\IMM32.DLL",
-    "C:\\Program Files\\ESET\\ESET Security\\ebehmoni.dll",
     "C:\\laragon\\bin\\cmder\\vendor\\conemu-maximus5\\ConEmu\\ConEmuHk64.dll",
     "C:\\Windows\\SYSTEM32\\powrprof.dll",
     "C:\\Windows\\SYSTEM32\\UMPDC.dll",
