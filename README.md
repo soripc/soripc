@@ -64,6 +64,7 @@
 [Manual Consulta Validez de CPE con API SUNAT](https://docs.google.com/document/d/1dY04rC63OAIqJAuGaMBcnsuWMqdTnkFtYTjrgQqaCvk/edit?usp=sharing "Clic")<br>
 [Manual Instalación Supervisor - NO DESCARGA REPORTE](https://docs.google.com/document/d/1P3tXXx64KWd46Fabtv71NhKo5zdgMipQ8DNDvKvfqsc/edit?usp=sharing "Clic")<br>
 [Generación Token envío Guías de Remisión OSE](https://docs.google.com/document/d/1jjnEYSBthMdaNGO1NqSdAL5yLrBDybnpl0r564xGwXE/edit?usp=share_link "Clic")<br>
+[Emisión Guía de Remisión Transportista](https://docs.google.com/document/d/16rZoljrf-SvwX9t0OP-VJM9iTETW7bpX_d-HPUfBYvE/edit?usp=share_link "Clic")<br>
 
 ### Plugin Wordpress - Woocommerce
 
