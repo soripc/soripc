@@ -244,10 +244,8 @@
             <td class="text-left">{{ $brand }}</td>
             <td class="text-left">{{ $row->item->model ?? '' }}</td>
             <td class="text-center align-top">
-            {{--@if($row->item->lots_group)--}}
-			    {{--@inject('itemLotGroup', 'App\Services\ItemLotsGroupService')--}}
-                    {{--{{ $itemLotGroup->getLote($row->item->lots_group) }}--}}
-                    {{--@endif--}}
+                @inject('itemLotGroup', 'App\Services\ItemLotsGroupService')
+                {{ $itemLotGroup->getLote($row->item->lots_group) }}
             </td>
             <td class="text-right align-top">{{ number_format($row->unit_price, 2) }}</td>
             <td class="text-right align-top">
