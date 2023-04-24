@@ -60,6 +60,7 @@ class DispatchController extends Controller
         return ((new ServiceDispatchController())->send($external_id));
     }
 
+
     public function statusTicket(Request $request)
     {
         $external_id = $request->input('external_id');
@@ -73,6 +74,40 @@ class DispatchController extends Controller
             ];
         }
         $res = ((new ServiceDispatchController())->statusTicket($external_id));
+        (new Facturalo())->createPdf($record, 'dispatch', 'a4');
+        return $res;
+
+    }
+
+    public function statusTicketLS($external_id)
+    {
+        $record = Dispatch::query()
+            ->where('external_id', $external_id)
+            ->first();
+        if (!$record) {
+            return [
+                'success' => false,
+                'message' => 'El external id es incorrecto'
+            ];
+        }
+        $res = ((new ServiceDispatchController())->statusTicket($external_id));
+        (new Facturalo())->createPdf($record, 'dispatch', 'a4');
+        return $res;
+
+    }
+
+    public function statusTicketCarrier($id)
+    {
+        $record = Dispatch::query()
+            ->where('id', $id)
+            ->first();
+        if (!$record) {
+            return [
+                'success' => false,
+                'message' => 'El external id es incorrecto'
+            ];
+        }
+        $res = ((new ServiceDispatchController())->statusTicket($record->external_id));
         (new Facturalo())->createPdf($record, 'dispatch', 'a4');
         return $res;
 

@@ -2,15 +2,17 @@
 
 namespace App\Models\Tenant\Catalogs;
 
-use Hyn\Tenancy\Traits\UsesTenantConnection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Department extends ModelCatalog
 {
-    use UsesTenantConnection;
-
-//    protected $with = ['provinces'];
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $fillable = [
+        'id',
+        'description'
+    ];
 
     static function idByDescription($description)
     {
@@ -21,7 +23,7 @@ class Department extends ModelCatalog
         return '15';
     }
 
-    public function provinces()
+    public function provinces(): HasMany
     {
         return $this->hasMany(Province::class);
     }

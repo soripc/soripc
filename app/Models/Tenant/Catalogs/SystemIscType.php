@@ -3,20 +3,14 @@
 namespace App\Models\Tenant\Catalogs;
 
 use App\Models\Tenant\TechnicalServiceItem;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SystemIscType extends ModelCatalog
 {
-    use UsesTenantConnection;
-
     protected $table = "cat_system_isc_types";
     public $incrementing = false;
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public  function technical_service_item()
+    public function technical_service_item():HasMany
     {
         return $this->hasMany(TechnicalServiceItem::class, 'system_isc_type_id');
     }

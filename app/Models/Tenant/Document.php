@@ -8,7 +8,6 @@ use App\Models\Tenant\Catalogs\CurrencyType;
 use App\Models\Tenant\Catalogs\DocumentType;
 use App\Traits\SellerIdTrait;
 use Carbon\Carbon;
-use Eloquent;
 use ErrorException;
 use Exception;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
@@ -26,120 +25,12 @@ use Modules\BusinessTurn\Models\DocumentTransport;
 use Modules\Item\Models\WebPlatform;
 use Modules\Order\Models\OrderNote;
 use Modules\Sale\Models\TechnicalService;
-use phpDocumentor\Reflection\Utils;
 use Modules\Pos\Models\Tip;
 use Illuminate\Support\Facades\DB;
 use Modules\Sale\Models\Agent;
 
-
-/**
- * App\Models\Tenant\Document
- *
- * @property EloquentCollection|Note[] $affected_documents
- * @property int|null $affected_documents_count
- * @property EloquentCollection|DocumentFee[] $fee
- * @property string|null $grade
- * @property string|null $section
- * @property int|null $fee_count
- * @property mixed $additional_information
- * @property mixed $charges
- * @property mixed $company
- * @property mixed $customer
- * @property mixed $data_json
- * @property mixed $detraction
- * @property mixed $discounts
- * @property mixed $download_external_cdr
- * @property mixed $download_external_pdf
- * @property mixed $download_external_xml
- * @property mixed $establishment
- * @property mixed $guides
- * @property mixed $is_editable
- * @property mixed $legends
- * @property mixed $number_full
- * @property mixed $number_to_letter
- * @property mixed $perception
- * @property mixed $prepayments
- * @property string|null $payment_condition_id
- * @property string|null $payment_method_type_id
- * @property string|null $purchase_order
- * @property string|null $plate_number
- * @property int|null $quotation_id
- * @property int|null $sale_note_id
- * @property int|null $user_rel_suscription_plan_id
- * @property int|null $technical_service_id
- * @property int|null $order_note_id
- * @property int|null $dispatch_id
- * @property int|null $seller_id
- * @property float $exchange_rate_sale
- * @property Carbon|null $automatic_date_of_issue
- * @property string|null $type_period
- * @property int|null $quantity_period
- * @property bool $enabled_concurrency
- * @property bool $apply_concurrency
- * @property mixed $related
- * @property mixed $response_regularize_shipping
- * @property mixed $soap_shipping_response
- * @property DocumentHotel|null $hotel
- * @property EloquentCollection|InventoryKardex[] $inventory_kardex
- * @property int|null $inventory_kardex_count
- * @property Invoice|null $invoice
- * @property EloquentCollection|Kardex[] $kardex
- * @property int|null $kardex_count
- * @property Note|null $note
- * @property EloquentCollection|DocumentPayment[] $payments
- * @property int|null $payments_count
- * @property Person $person
- * @property EloquentCollection|Dispatch[] $reference_guides
- * @property int|null $reference_guides_count
- * @property SummaryDocument|null $summary_document
- * @property DocumentTransport|null $transport
- * @property CurrencyType $currency_type
- * @property DocumentType $document_type
- * @property Group $group
- * @property OrderNote $order_note
- * @property Quotation $quotation
- * @property SaleNote $sale_note
- * @property User $seller
- * @property SoapType $soap_type
- * @property StateType $state_type
- * @property User $user
- * @property EloquentCollection|Cash[] $cashes
- * @property Collection|Dispatch[] $dispatches
- * @property Collection|DocumentFee[] $document_fees
- * @property Collection|DocumentHotel[] $document_hotels
- * @property EloquentCollection|DocumentItem[] $items
- * @property int|null $items_count
- * @property Dispatch|null $dispatch
- * @property EloquentCollection|GuideFile[] $guide_files
- * @property int|null $guide_files_count
- * @property PaymentCondition|null $payment_condition
- * @property PaymentMethodType $payment_method_type
- * @property TechnicalService|null $technical_service
- * @property Collection|DocumentPayment[] $document_payments
- * @property Collection|DocumentTransport[] $document_transports
- * @property Collection|Invoice[] $invoices
- * @property Collection|Kardex[] $kardexes
- * @property Collection|Note[] $notes_where_affected_document
- * @property Collection|Note[] $notes
- * @property Collection|Summary[] $summaries
- * @property Collection|Voided[] $voideds
- * @method static EloquentBuilder|Document newModelQuery()
- * @method static EloquentBuilder|Document newQuery()
- * @method static EloquentBuilder|Document query()
- * @method static EloquentBuilder|Document whereAffectationTypePrepayment($type)
- * @method static EloquentBuilder|Document whereHasPrepayment()
- * @method static EloquentBuilder|Document whereNotSent()
- * @method static EloquentBuilder|Document whereRegularizeShipping()
- * @method static EloquentBuilder|Document whereStateTypeAccepted()
- * @method static EloquentBuilder|Document whereTypeUser()
- * @method static EloquentBuilder|Document WhereEstablishmentId()
- * @mixin Eloquent
- * @method static EloquentBuilder|Document whereValuedKardexFormatSunat($params)
- * @property mixed $retention
- */
 class Document extends ModelTenant
 {
-    use UsesTenantConnection;
     use SellerIdTrait;
 
     public const DOCUMENT_TYPE_TICKET = '03';
@@ -147,7 +38,6 @@ class Document extends ModelTenant
     public const GROUP_INVOICE = '01';
 
     public const GROUP_TICKET = '02';
-
 
     protected $with = [
         'user',
@@ -162,6 +52,7 @@ class Document extends ModelTenant
         'payments',
         'fee'
     ];
+
     protected $fillable = [
         'user_id',
         'external_id',
@@ -212,7 +103,6 @@ class Document extends ModelTenant
         'additional_data',
         'filename',
         'hash',
-        'qr',
         'has_xml',
         'has_pdf',
         'has_cdr',
@@ -1674,7 +1564,7 @@ class Document extends ModelTenant
         return $qrCode->displayPNGBase64($text);
     }
 
-                
+
     /**
      *
      * @param  string $format
@@ -1685,7 +1575,7 @@ class Document extends ModelTenant
         return url("print/document/{$this->external_id}/{$format}");
     }
 
-    
+
     /**
      *
      * Filtrar registro para envio de mensajes por whatsapp
@@ -1705,9 +1595,9 @@ class Document extends ModelTenant
                     ]);
     }
 
-    
+
     /**
-     * 
+     *
      * Placa para reporte de ventas
      *
      * @return string
@@ -1716,7 +1606,7 @@ class Document extends ModelTenant
     {
         return $this->plate_number;
     }
-    
+
 
     /**
      *
@@ -1729,7 +1619,7 @@ class Document extends ModelTenant
 
 
     /**
-     * 
+     *
      * Determina si es nota credito tipo 13
      *
      * @return bool
@@ -1747,9 +1637,9 @@ class Document extends ModelTenant
         return false;
     }
 
-        
+
     /**
-     * 
+     *
      * Tipo de transaccion para caja
      *
      * @return string
@@ -1761,7 +1651,7 @@ class Document extends ModelTenant
 
 
     /**
-     * 
+     *
      * Tipo de documento para caja
      *
      * @return string
@@ -1771,9 +1661,9 @@ class Document extends ModelTenant
         return $this->getTable();
     }
 
-    
+
     /**
-     * 
+     *
      * Datos para resumen diario de operaciones
      *
      * @return array
@@ -1799,7 +1689,7 @@ class Document extends ModelTenant
         return $this->payments()->filterCashPaymentWithoutDestination()->sum('payment');
     }
 
-    
+
     /**
      *
      * Obtener total de pagos en transferencia
@@ -1810,10 +1700,10 @@ class Document extends ModelTenant
     {
         return $this->payments()->filterTransferPayment()->sum('payment');
     }
-    
+
 
     /**
-     * 
+     *
      * Validar si tiene estado permitido para calculos/etc
      *
      * @return bool
@@ -1823,7 +1713,7 @@ class Document extends ModelTenant
         return in_array($this->state_type_id, self::STATE_TYPES_ACCEPTED, true);
     }
 
-    
+
     /**
      *
      * @return bool
@@ -1833,9 +1723,9 @@ class Document extends ModelTenant
         return $this->currency_type_id === self::NATIONAL_CURRENCY_ID;
     }
 
-    
+
     /**
-     * 
+     *
      * Obtener base imponible de la retencion en soles
      *
      * @return float

@@ -7,26 +7,9 @@
 namespace Modules\DocumentaryProcedure\Models;
 
 use App\Models\Tenant\ModelTenant;
-use Carbon\Carbon;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 
-/**
- * Class DocumentaryObservation
- *
- * @property int $id
- * @property int|null $doc_file_id
- * @property string|null $observation
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- *
- * @property DocumentaryFile|null $doc_file
- *
- *@package App\Models\Tenant\ModelTenant
-     * @mixin  \Eloquent
- */
 class DocumentaryObservation extends ModelTenant
 {
-    use UsesTenantConnection;
     protected $table = 'documentary_observation';
     protected $perPage = 25;
 

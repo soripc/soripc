@@ -28,14 +28,14 @@ return [
         'files' => [
             'routes/web' => 'Routes/web.php',
             'routes/api' => 'Routes/api.php',
-            'views/index' => 'Resources/views/index.blade.php',
-            'views/master' => 'Resources/views/layouts/master.blade.php',
-            'scaffold/config' => 'Config/config.php',
+//            'views/index' => 'Resources/views/index.blade.php',
+//            'views/master' => 'Resources/views/layouts/master.blade.php',
+//            'scaffold/config' => 'Config/config.php',
             'composer' => 'composer.json',
-            'assets/js/app' => 'Resources/assets/js/app.js',
-            'assets/sass/app' => 'Resources/assets/sass/app.scss',
-            'webpack' => 'webpack.mix.js',
-            'package' => 'package.json',
+//            'assets/js/app' => 'Resources/assets/js/app.js',
+//            'assets/sass/app' => 'Resources/assets/sass/app.scss',
+//            'webpack' => 'webpack.mix.js',
+//            'package' => 'package.json',
         ],
         'replacements' => [
             'routes/web' => ['LOWER_NAME', 'STUDLY_NAME'],
@@ -97,7 +97,8 @@ return [
         | Set the generate key to false to not generate that folder
         */
         'generator' => [
-            'config' => ['path' => 'Config', 'generate' => true],
+            'data-tables' => ['path' => 'DataTables', 'generate' => true],
+            'config' => ['path' => 'Config', 'generate' => false],
             'command' => ['path' => 'Console', 'generate' => false],
             'migration' => ['path' => 'Database/Migrations', 'generate' => false],
             'seeder' => ['path' => 'Database/Seeders', 'generate' => false],
@@ -108,8 +109,8 @@ return [
             'request' => ['path' => 'Http/Requests', 'generate' => true],
             'resources' => ['path' => 'Http/Resources', 'generate' => true],
             'provider' => ['path' => 'Providers', 'generate' => true],
-            'assets' => ['path' => 'Resources/assets', 'generate' => true],
-            'lang' => ['path' => 'Resources/lang', 'generate' => true],
+            'assets' => ['path' => 'Resources/assets', 'generate' => false],
+            'lang' => ['path' => 'Resources/lang', 'generate' => false],
             'views' => ['path' => 'Resources/views', 'generate' => true],
             'test' => ['path' => 'Tests', 'generate' => false],
             'repository' => ['path' => 'Repositories', 'generate' => false],
@@ -149,10 +150,10 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'nwidart',
+        'vendor' => 'qpos',
         'author' => [
-            'name' => 'Nicolas Widart',
-            'email' => 'n.widart@gmail.com',
+            'name' => 'QPos',
+            'email' => 'desarrollo@qpos.pe',
         ],
     ],
     /*

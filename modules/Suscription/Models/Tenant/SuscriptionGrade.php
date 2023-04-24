@@ -1,57 +1,39 @@
 <?php
 
+namespace Modules\Suscription\Models\Tenant;
 
-    namespace Modules\Suscription\Models\Tenant;
+use App\Models\Tenant\ModelTenant;
 
+class SuscriptionGrade extends ModelTenant
+{
+    protected $table = 'suscription_grade';
+    public $timestamps = false;
 
-    use App\Models\Tenant\ModelTenant;
-    use Hyn\Tenancy\Traits\UsesTenantConnection;
-    use Illuminate\Database\Eloquent\Builder;
+    protected $fillable = [
+        'name'
+    ];
 
     /**
-     * Class SuscriptionGrade
-     *
-     * @property int    $id
-     * @property string $name
-     * @package Modules\Suscription\Models\Tenant
-     * @method static Builder|SuscriptionGrade newModelQuery()
-     * @method static Builder|SuscriptionGrade newQuery()
-     * @method static Builder|SuscriptionGrade query()
-     * @mixin ModelTenant
-     * @mixin \Eloquent
+     * @return string
      */
-    class SuscriptionGrade extends ModelTenant
+    public function getName(): string
     {
-
-        use UsesTenantConnection;
-        protected $table = 'suscription_grade';
-        public $timestamps = false;
-
-        protected $fillable = [
-            'name'
-        ];
-
-        /**
-         * @return string
-         */
-        public function getName(): string
-        {
-            return $this->name;
-        }
-        
-        
-        /**
-         * 
-         * Obtener datos para el listado y edicion
-         *
-         * @return array
-         */
-        public function getRowResource()
-        {
-            return [
-                'id' => $this->id,
-                'name' => $this->name,
-            ];
-        }
-
+        return $this->name;
     }
+
+
+    /**
+     *
+     * Obtener datos para el listado y edicion
+     *
+     * @return array
+     */
+    public function getRowResource()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
+
+}

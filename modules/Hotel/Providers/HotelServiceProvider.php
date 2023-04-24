@@ -14,8 +14,6 @@ class HotelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
         $this->registerViews();
     }
 
@@ -27,22 +25,6 @@ class HotelServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            __DIR__ . '/../Config/config.php' => config_path('hotel.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__ . '/../Config/config.php',
-            'hotel'
-        );
     }
 
     /**
@@ -63,22 +45,6 @@ class HotelServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/hotel';
         }, \Config::get('view.paths')), [$sourcePath]), 'hotel');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/hotel');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'hotel');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'hotel');
-        }
     }
 
     /**

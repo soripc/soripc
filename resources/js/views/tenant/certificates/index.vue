@@ -4,17 +4,21 @@
             <h3 class="my-0">Certificado</h3>
         </div>
         <div class="card-body">
-            <div class="table-responsive" v-if="record">
+            <div class="table-responsive" v-if="record.certificate">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Archivo</th>
+                        <th>F.Emisión</th>
+                        <th>F.Vencimiento</th>
                         <th class="text-right">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>{{ record }}</td>
+                        <td>{{ record.certificate }}</td>
+                        <td>{{ record.certificate_date_of_issue }}</td>
+                        <td>{{ record.certificate_date_of_due }}</td>
                         <td class="text-right">
                             <button type="button" class="btn waves-effect waves-light btn-xs btn-danger"
                                     @click.prevent="clickDelete">Eliminar</button>
@@ -61,7 +65,7 @@
             getData() {
                 this.$http.get(`/${this.resource}/record`)
                     .then(response => {
-                        this.record = response.data.certificate
+                        this.record = response.data
                         this.config_system_env = response.data.config_system_env
                     })
             },
@@ -73,7 +77,7 @@
 
                     this.$eventHub.$emit('reloadData')
                     this.$eventHub.$emit('reloadDataCompany')
-                    
+
                 })
             }
         }

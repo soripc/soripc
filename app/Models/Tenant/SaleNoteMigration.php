@@ -1,11 +1,8 @@
 <?php
 
-
 namespace App\Models\Tenant;
 
-
 use Carbon\Carbon;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 
 /**
  * Class SaleNoteMigration
@@ -25,7 +22,6 @@ use Hyn\Tenancy\Traits\UsesTenantConnection;
  */
 class SaleNoteMigration extends ModelTenant
 {
-    use UsesTenantConnection;
     protected $table = 'sale_note_migration';
     protected $perPage = 25;
 

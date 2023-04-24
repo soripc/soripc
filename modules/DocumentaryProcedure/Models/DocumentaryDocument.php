@@ -3,20 +3,9 @@
 namespace Modules\DocumentaryProcedure\Models;
 
 use App\Models\Tenant\ModelTenant;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 
-/**
- * Modules\DocumentaryProcedure\Models\DocumentaryDocument
- *
- * @property-read mixed $active
- * @method static \Illuminate\Database\Eloquent\Builder|DocumentaryDocument newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|DocumentaryDocument newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|DocumentaryDocument query()
- * @mixin \Eloquent
- */
 class DocumentaryDocument extends ModelTenant
 {
-    use UsesTenantConnection;
     protected $table = 'documentary_documents';
 
 	protected $fillable = [

@@ -9,6 +9,20 @@ class GenerateCertificate
     public static function typePEM($pfx, $password)
     {
         $certificate = new X509Certificate($pfx, $password);
-        return $certificate->export(X509ContentType::PEM);
+        return [
+            'date_of_issue' => $certificate->getExpiration(),
+            'date_of_due' => $certificate->getValidFrom(),
+            'file_content' => $certificate->export(X509ContentType::PEM)
+        ];
+    }
+
+    public static function loadPEM($pem)
+    {
+        $certificate = new X509Certificate();
+        $certificate->loadPem($pem);
+        return [
+            'date_of_issue' => $certificate->getExpiration(),
+            'date_of_due' => $certificate->getValidFrom(),
+        ];
     }
 }

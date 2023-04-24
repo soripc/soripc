@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('restaurant')->group(function() {
     // para configuracion de productos a mostrar
     Route::get('/list/items', 'RestaurantController@list_items')->name('tenant.restaurant.list_items');
@@ -76,7 +78,7 @@ Route::prefix('restaurant')->group(function() {
         Route::get('tables', 'CashController@tables');
         Route::get('opening_cash', 'CashController@opening_cash');
         Route::get('opening_cash_check/{user_id}', 'CashController@opening_cash_check');
-        Route::post('cash', 'Tenant\CashController@store');
+        Route::post('cash', 'CashController@store');
         Route::post('cash_document', 'CashController@cash_document');
         Route::get('close/{cash}', 'CashController@close');
         Route::get('report/{cash}', 'CashController@report');
@@ -88,8 +90,6 @@ Route::prefix('restaurant')->group(function() {
         Route::get('search/customer/{id}', 'CashController@searchCustomerById');
         Route::get('report/products/{cash}', 'CashController@report_products');
         Route::get('report/products-excel/{cash}', 'CashController@report_products_excel');
-
-
     });
 
       //Waiters

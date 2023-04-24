@@ -1,10 +1,10 @@
 {
-    "name": "nwidart/hotel",
+    "name": "qpos/hotel",
     "description": "",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "QPos",
+            "email": "desarrollo@qpos.pe"
         }
     ],
     "extra": {
@@ -13,7 +13,7 @@
                 "Modules\\Hotel\\Providers\\HotelServiceProvider"
             ],
             "aliases": {
-                
+
             }
         }
     },

@@ -1,0 +1,25 @@
+{
+    "name": "qpos/person",
+    "description": "",
+    "authors": [
+        {
+            "name": "QPos",
+            "email": "desarrollo@qpos.pe"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Person\\Providers\\PersonServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Person\\": ""
+        }
+    }
+}

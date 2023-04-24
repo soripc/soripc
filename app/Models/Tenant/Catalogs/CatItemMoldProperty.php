@@ -1,48 +1,34 @@
 <?php
 
+namespace App\Models\Tenant\Catalogs;
 
-    namespace App\Models\Tenant\Catalogs;
+use App\Models\Tenant\ModelTenant;
 
-    use App\Models\Tenant\ModelTenant;
-    use Carbon\Carbon;
-    use Hyn\Tenancy\Traits\UsesTenantConnection;
+class CatItemMoldProperty extends ModelTenant
+{
+    protected $perPage = 25;
+
+    protected $fillable = [
+        'name'
+    ];
+
 
     /**
-     * Class CatItemMoldProperty
-     *
-     * @property int         $id
-     * @property string      $name
-     * @property Carbon|null $created_at
-     * @property Carbon|null $updated_at
-     * @package App\Models
+     * @return string
      */
-    class CatItemMoldProperty extends ModelTenant
+    public function getName(): string
     {
-        use UsesTenantConnection;
-
-        protected $perPage = 25;
-
-        protected $fillable = [
-            'name'
-        ];
-
-
-        /**
-         * @return string
-         */
-        public function getName(): string
-        {
-            return $this->name;
-        }
-
-        /**
-         * @param string $name
-         *
-         * @return $this
-         */
-        public function setName(string $name): CatItemMoldProperty
-        {
-            $this->name = ucfirst(trim($name));
-            return $this;
-        }
+        return $this->name;
     }
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName(string $name): CatItemMoldProperty
+    {
+        $this->name = ucfirst(trim($name));
+        return $this;
+    }
+}

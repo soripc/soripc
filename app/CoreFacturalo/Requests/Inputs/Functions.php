@@ -68,10 +68,19 @@ class Functions
 
     public static function identifier($soap_type_id, $date_of_issue, $model)
     {
-        $documents = $model::where('soap_type_id', $soap_type_id)
-                        ->where('date_of_issue', $date_of_issue)
-                        ->get();
-        $numeration = count($documents) + 1;
+        $record = $model::query()
+            ->where('soap_type_id', $soap_type_id)
+            ->where('date_of_issue', $date_of_issue)
+            ->latest()
+            ->first();
+
+        if (!$record) {
+            $numeration = 1;
+        } else {
+            $identifier_array = explode('-', $record->identifier);
+            $numeration = (int)$identifier_array[2] + 1;
+        }
+
         $path = explode('\\', $model);
         switch (array_pop($path)) {
             case 'Voided':

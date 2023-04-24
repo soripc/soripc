@@ -461,9 +461,9 @@ class DispatchCarrierController extends Controller
                 ];
             });
 
-        $countries = func_get_countries();
-        $locations = func_get_locations();
-        $identityDocumentTypes = func_get_identity_document_types();
+        $countries = func_get_table_countries();
+        $locations = func_get_table_locations();
+        $identityDocumentTypes = func_get_table_identity_document_types();
 
         $transferReasonTypes = TransferReasonType::whereActive()->get();
         $transportModeTypes = TransportModeType::whereActive()->get();

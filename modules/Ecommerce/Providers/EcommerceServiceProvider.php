@@ -17,13 +17,7 @@ class EcommerceServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerMiddleware();
-        $this->registerTranslations();
-        $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-
-
     }
 
     /**
@@ -34,21 +28,6 @@ class EcommerceServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('ecommerce.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'ecommerce'
-        );
     }
 
     /**
@@ -69,34 +48,6 @@ class EcommerceServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/ecommerce';
         }, \Config::get('view.paths')), [$sourcePath]), 'ecommerce');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/ecommerce');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'ecommerce');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'ecommerce');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
     }
 
     /**

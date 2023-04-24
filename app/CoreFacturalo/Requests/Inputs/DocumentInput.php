@@ -18,7 +18,6 @@ use Html2Text\Html2Text;
 use App\Models\Tenant\Configuration;
 use Modules\Finance\Helpers\UploadFileHelper;
 
-
 class DocumentInput
 {
     public static function set($inputs)
@@ -120,6 +119,9 @@ class DocumentInput
             'total_value' => $inputs['total_value'],
             'subtotal' => (Functions::valueKeyInArray($inputs, 'subtotal')) ? $inputs['subtotal'] : $inputs['total'],
             'total' => $inputs['total'],
+            'total_payable' => Functions::valueKeyInArray($inputs, 'total_payable', 0),
+            'total_paid' => Functions::valueKeyInArray($inputs, 'total_paid', 0),
+            'total_change' => Functions::valueKeyInArray($inputs, 'total_change', 0),
             'has_prepayment' => Functions::valueKeyInArray($inputs, 'has_prepayment', 0),
             'affectation_type_prepayment' => Functions::valueKeyInArray($inputs, 'affectation_type_prepayment'),
             'was_deducted_prepayment' => Functions::valueKeyInArray($inputs, 'was_deducted_prepayment', 0),
@@ -188,6 +190,51 @@ class DocumentInput
                     self::registerSeriesInvoiceXml($items_attributes, $row);
                 } 
 
+//                $unit_type_id = (key_exists('item', $row)) ? $row['item']['unit_type_id'] : $item->unit_type_id;
+
+                if(!key_exists('item', $row)) {
+                    $unit_type_id = $item->unit_type_id;
+                } else {
+                    if(!key_exists('unit_type_id', $row)) {
+                        $unit_type_id =  $row['item']['unit_type_id'];
+                    } else {
+                        $unit_type_id = $row['unit_type_id'];
+                    }
+                }
+
+
+                $quantity_factor = 1;
+                $presentation = (key_exists('item', $row)) ? (isset($row['item']['presentation']) ? $row['item']['presentation'] : []) : [];
+                if (!$presentation) {
+                    if (isset($row['quantity_factor'])) {
+                        if (key_exists('quantity_factor', $row)) {
+                            $quantity_factor = $row['quantity_factor'];
+                        }
+
+                        if ($row['quantity_factor'] !== 1) {
+                            $unit_type_id = $row['presentation_unit_type_id'];
+                            if(key_exists('presentation_description', $row)) {
+                                $presentation_description = $row['presentation_description'];
+                            } else {
+                                $presentation_description = $row['presentation_name'];
+                            }
+
+                            $presentation = [
+                                'description' => $presentation_description,
+                                'item_id' => $item->id,
+                                'price2' => $row['unit_price'],
+                                'price_default' => 2,
+                                'quantity_unit' => $quantity_factor,
+                                'unit_type_id' => $unit_type_id,
+                            ];
+                        }
+                    }
+                } else {
+                    if (key_exists('quantity_unit', $presentation)) {
+                        $quantity_factor = $presentation['quantity_unit'];
+                    }
+                }
+
                 $arayItem = [
                     'item_id' => $item->id,
                     'item' => [
@@ -197,7 +244,7 @@ class DocumentInput
                         'item_code' => trim($item->item_code),
                         'item_code_gs1' => $item->item_code_gs1,
                         'unit_type_id' => (key_exists('item', $row)) ? $row['item']['unit_type_id'] : $item->unit_type_id,
-                        'presentation' => (key_exists('item', $row)) ? (isset($row['item']['presentation']) ? $row['item']['presentation'] : []) : [],
+                        'presentation' => $presentation,
                         'amount_plastic_bag_taxes' => $item->amount_plastic_bag_taxes,
                         'is_set' => $item->is_set,
                         'lots' => self::lots($row),
@@ -240,7 +287,7 @@ class DocumentInput
                     'warehouse_id' => Functions::valueKeyInArray($row, 'warehouse_id'),
                     'additional_information' => Functions::valueKeyInArray($row, 'additional_information'),
                     'name_product_pdf' => Functions::valueKeyInArray($row, 'name_product_pdf'),
-                    'name_product_xml' => $name_product_xml,
+                    'name_product_xml' => $name_product_xml ?? null,
                     'update_description' => Functions::valueKeyInArray($row, 'update_description', false),
                     'additional_data' => Functions::valueKeyInArray($row, 'additional_data'),
 //                    'additional_data' => key_exists('additional_data', $row)?$row['additional_data']:null,
@@ -557,6 +604,19 @@ class DocumentInput
         return null;
     }
 
+
+    private static function detractionOther($inputs)
+    {
+        if (array_key_exists('detraction', $inputs)) {
+            $detraction = $inputs['detraction'];
+            if ($detraction) {
+                if (array_key_exists('detraction_type_id', $detraction) && !is_null($detraction['detraction_type_id'])) {
+                    return $detraction;
+                }
+            }
+        }
+        return null;
+    }
     private static function detraction($inputs)
     {
         if (array_key_exists('detraction', $inputs)) {

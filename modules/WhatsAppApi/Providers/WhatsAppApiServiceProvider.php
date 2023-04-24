@@ -14,11 +14,7 @@ class WhatsAppApiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
@@ -29,21 +25,6 @@ class WhatsAppApiServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('whatsappapi.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'whatsappapi'
-        );
     }
 
     /**
@@ -66,33 +47,7 @@ class WhatsAppApiServiceProvider extends ServiceProvider
         }, \Config::get('view.paths')), [$sourcePath]), 'whatsappapi');
     }
 
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/whatsappapi');
 
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'whatsappapi');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'whatsappapi');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
-    }
 
     /**
      * Get the services provided by the provider.

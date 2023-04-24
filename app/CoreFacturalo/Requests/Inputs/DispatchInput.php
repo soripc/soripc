@@ -106,7 +106,6 @@ class DispatchInput
         if (isset($inputs['data_affected_document'])) {
             $data['data_affected_document'] = $inputs['data_affected_document'];
         }
-
         return $data;
     }
 
@@ -390,21 +389,21 @@ class DispatchInput
     private static function getDriverId($inputs)
     {
         if (($inputs['document_type_id'] === '09' && $inputs['transport_mode_type_id'] === '02') || $inputs['document_type_id'] === '31') {
-            if (key_exists('driver_id', $inputs)) {
+//            if (key_exists('driver_id', $inputs)) {
                 return $inputs['driver_id'];
-            }
-            $driver = $inputs['driver'];
-            $record = Driver::query()
-                ->firstOrCreate([
-                    'identity_document_type_id' => $driver['identity_document_type_id'],
-                    'number' => $driver['number']
-                ], [
-                    'name' => $driver['name'],
-                    'license' => $driver['license'],
-                    'telephone' => $driver['telephone']
-                ]);
-
-            return $record->id;
+//            }
+//            $driver = $inputs['driver'];
+//            $record = Driver::query()
+//                ->firstOrCreate([
+//                    'identity_document_type_id' => $driver['identity_document_type_id'],
+//                    'number' => $driver['number']
+//                ], [
+//                    'name' => $driver['name'],
+//                    'license' => $driver['license'],
+//                    'telephone' => $driver['telephone']
+//                ]);
+//
+//            return $record->id;
         }
         return null;
     }

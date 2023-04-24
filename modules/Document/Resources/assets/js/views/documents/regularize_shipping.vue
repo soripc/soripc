@@ -74,7 +74,7 @@
 
 <script>
 
-    import DataTable from '@components/DataTableDocuments.vue'
+    import DataTable from '../../../../../../../resources/js/components/DataTableDocuments.vue'
 
     export default {
         props: ['isClient'],

@@ -7,29 +7,9 @@
 namespace Modules\DocumentaryProcedure\Models;
 
 use App\Models\Tenant\ModelTenant;
-use Carbon\Carbon;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 
-/**
- * Class DocumentaryProcessesRelOff
- *
- * @property int $id
- * @property int|null $doc_processes_id
- * @property int|null $doc_offices_id
- * @property bool  $active
- * @property int|null $order
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- *
- * @property DocumentaryOffice|null $doc_offices
- * @property DocumentaryProcess|null $doc_processes
- *
- *@package App\Models\Tenant\ModelTenant
-     * @mixin  \Eloquent
- */
 class DocumentaryProcessesRelOff extends ModelTenant
 {
-    use UsesTenantConnection;
     protected $table = 'documentary_processes_rel_off';
     protected $perPage = 25;
 

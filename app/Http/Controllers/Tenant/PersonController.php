@@ -68,7 +68,7 @@ class PersonController extends Controller
         $countries = Country::whereActive()->orderByDescription()->get();
         $identity_document_types = IdentityDocumentType::whereActive()->get();
         $person_types = PersonType::get();
-        $locations = func_get_locations();
+        $locations = func_get_table_locations();
         $zones = Zone::all();
         $sellers = $this->getSellers();
         $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();

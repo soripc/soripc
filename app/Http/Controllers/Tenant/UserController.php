@@ -53,23 +53,23 @@ class UserController extends Controller
         /** @var User $user */
         $user = User::find(1);
         $modulesTenant = $user->getCurrentModuleByTenant()
-                              ->pluck('module_id')
-                              ->all();
+            ->pluck('module_id')
+            ->all();
 
         $levelsTenant = $user->getCurrentModuleLevelByTenant()
-                             ->pluck('module_level_id')
-                             ->toArray();
+            ->pluck('module_level_id')
+            ->toArray();
 
 
         $modules = Module::with(['levels' => function ($query) use ($levelsTenant) {
             $query->whereIn('id', $levelsTenant);
         }])
-                         ->orderBy('order_menu')
-                         ->whereIn('id', $modulesTenant)
-                         ->get()
-                         ->each(function ($module) {
-                             return $this->prepareModules($module);
-                         });
+            ->orderBy('order_menu')
+            ->whereIn('id', $modulesTenant)
+            ->get()
+            ->each(function ($module) {
+                return $this->prepareModules($module);
+            });
         $establishments = Establishment::orderBy('description')->get();
         $documents = DocumentType::OnlyAvaibleDocuments()->get();
         $series = Series::FilterEstablishment()->FilterDocumentType()->get();
@@ -105,7 +105,7 @@ class UserController extends Controller
     }
 
 
-    public function store(UserRequest $request) 
+    public function store(UserRequest $request)
     {
         $id = $request->input('id');
 
@@ -134,7 +134,7 @@ class UserController extends Controller
                 $user->api_token = str_random(50);
                 $user->password = bcrypt($request->input('password'));
             } elseif ($request->has('password')) {
-                if (config('tenant.password_change')) {
+                if (!config('configuration.is_demo')) {
                     $user->password = bcrypt($request->input('password'));
                 }
             }
@@ -175,9 +175,9 @@ class UserController extends Controller
         ];
     }
 
-    
+
     /**
-     * 
+     *
      * Asignar datos
      *
      * @param  User $user
@@ -207,7 +207,7 @@ class UserController extends Controller
 
 
     /**
-     * 
+     *
      * Guardar imágen
      *
      * @param  User $user
@@ -218,7 +218,7 @@ class UserController extends Controller
     {
         $temp_path = $request->photo_temp_path;
 
-        if($temp_path) 
+        if($temp_path)
         {
             $old_filename = $request->photo_filename;
             $user->photo_filename = UploadFileHelper:: uploadImageFromTempFile('users', $old_filename, $temp_path, $user->id, true);
@@ -226,9 +226,9 @@ class UserController extends Controller
         }
     }
 
-    
+
     /**
-     * 
+     *
      * Guardar documentos por defecto
      *
      * @param  User $user
@@ -239,7 +239,7 @@ class UserController extends Controller
     {
         $user->default_document_types()->delete();
 
-        foreach ($request->default_document_types as $row) 
+        foreach ($request->default_document_types as $row)
         {
             $user->default_document_types()->create($row);
         }

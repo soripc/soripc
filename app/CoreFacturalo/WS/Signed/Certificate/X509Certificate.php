@@ -27,11 +27,13 @@ class X509Certificate
      * @param string $password
      * @throws \Exception
      */
-    public function __construct($pfx, $password)
+    public function __construct($pfx = null, $password = null)
     {
-        $this->pfx = $pfx;
-        $this->password = $password;
-        $this->parsePfx($pfx, $password);
+        if(!is_null($pfx) && !is_null($password)) {
+            $this->pfx = $pfx;
+            $this->password = $password;
+            $this->parsePfx($pfx, $password);
+        }
     }
 
     /**
@@ -177,6 +179,16 @@ class X509Certificate
         }
 
         $this->certs = $certs;
+    }
+
+    public function loadPem($pem)
+    {
+        $this->certs['cert'] = $pem;
+    }
+
+    public function getCerts()
+    {
+        return $this->certs;
     }
 
     private function loadSubject()

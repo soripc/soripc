@@ -2,15 +2,16 @@
 
 namespace App\Models\Tenant\Catalogs;
 
-use Hyn\Tenancy\Traits\UsesTenantConnection;
-
 class Province extends ModelCatalog
 {
-    use UsesTenantConnection;
-
-//    protected $with = ['districts'];
     public $incrementing = false;
     public $timestamps = false;
+
+    protected $fillable = [
+        'id',
+        'department_id',
+        'description'
+    ];
 
     static function idByDescription($description)
     {

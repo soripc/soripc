@@ -2,6 +2,9 @@
 
 namespace Modules\ApiPeruDev\Data;
 
+use App\Models\Tenant\Catalogs\Department;
+use App\Models\Tenant\Catalogs\District;
+use App\Models\Tenant\Catalogs\Province;
 use App\Models\Tenant\Company;
 use App\Models\Tenant\ExchangeRate;
 use GuzzleHttp\Client;
@@ -9,7 +12,6 @@ use App\Models\System\Configuration as SystemConfiguration;
 use App\Models\Tenant\Configuration as TenantConfig;
 use App\Models\System\TrackApiPeruServices as SystemTrackApiPeruService;
 use App\Models\Tenant\TrackApiPeruServices as TenantTrackApiPeruService;
-use Illuminate\Support\Facades\URL;
 
 class ServiceData
 {
@@ -123,6 +125,7 @@ class ServiceData
                     $district_id = $data['ubigeo'][2];
                     $address = $data['direccion'];
                 }
+                $update_location = $this->updateLocation($department_id, $province_id, $district_id, $data);
 
                 $res_data = [
                     'name' => $data['nombre_completo'],
@@ -138,6 +141,7 @@ class ServiceData
                     'district_id' => $district_id,
                     'condition' => '',
                     'state' => '',
+                    'update_location' => $update_location
                 ];
             }
 
@@ -160,6 +164,9 @@ class ServiceData
                     $address = $data['direccion'];
                 }
 
+                $update_location = $this->updateLocation($department_id, $province_id, $district_id, $data);
+                $is_agent_retention = ($data['es_agente_de_retencion'] === 'SI');
+
                 $res_data = [
                     'name' => $data['nombre_o_razon_social'],
                     'trade_name' => '',
@@ -170,6 +177,8 @@ class ServiceData
                     'location_id' => $data['ubigeo'],
                     'condition' => $data['condicion'],
                     'state' => $data['estado'],
+                    'update_location' => $update_location,
+                    'is_agent_retention' => $is_agent_retention,
                 ];
             }
             $response['data'] = $res_data;
@@ -250,12 +259,41 @@ class ServiceData
         ];
     }
 
-    public function printer_ticket($data)
+    private function updateLocation($department_id, $province_id, $district_id, $data)
     {
-        $this->parameters['form_params'] = $data;
-        $res = $this->client->request('POST', '/api/printer_ticket', $this->parameters);
-        $this->saveService(5);
+        $update_location = false;
+        if(strlen($district_id) === 6) {
+            $d = District::query()->where('id', $district_id)->first();
+            if (!$d) {
+                $update_location = true;
+                if(key_exists('departamento', $data)  && !is_null($data['departamento']) && ($data['departamento'] !== '')){
+                    Department::query()->updateOrCreate([
+                        'id' => $department_id
+                    ], [
+                        'description' => $data['departamento']
+                    ]);
+                    if(key_exists('provincia', $data)  && !is_null($data['provincia']) && ($data['provincia'] !== '')){
+                        Province::query()->updateOrCreate([
+                            'id' => $province_id,
+                            'department_id' => $department_id
+                        ], [
+                            'description' => $data['provincia']
+                        ]);
 
-        return json_decode($res->getBody()->getContents(), true);
+                        if(key_exists('distrito', $data)  && !is_null($data['distrito']) && ($data['distrito'] !== '')) {
+                            District::query()->updateOrCreate([
+                                'id' => $district_id,
+                                'province_id' => $province_id,
+                            ], [
+                                'description' => $data['distrito']
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return $update_location;
     }
 }

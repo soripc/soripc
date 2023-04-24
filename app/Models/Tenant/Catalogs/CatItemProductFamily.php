@@ -1,50 +1,35 @@
 <?php
 
+namespace App\Models\Tenant\Catalogs;
 
+use App\Models\Tenant\ModelTenant;
 
-    namespace App\Models\Tenant\Catalogs;
+class CatItemProductFamily extends ModelTenant
+{
+    protected $table = 'cat_item_product_family';
+    protected $perPage = 25;
 
-    use App\Models\Tenant\ModelTenant;
-    use Carbon\Carbon;
-    use Hyn\Tenancy\Traits\UsesTenantConnection;
+    protected $fillable = [
+        'name'
+    ];
 
     /**
-     * Class CatItemProductFamily
-     *
-     * @property int         $id
-     * @property string      $name
-     * @property Carbon|null $created_at
-     * @property Carbon|null $updated_at
-     * @package App\Models
+     * @return string
      */
-    class CatItemProductFamily extends ModelTenant
+    public function getName(): string
     {
-        use UsesTenantConnection;
-
-        protected $table = 'cat_item_product_family';
-        protected $perPage = 25;
-
-        protected $fillable = [
-            'name'
-        ];
-
-        /**
-         * @return string
-         */
-        public function getName(): string
-        {
-            return $this->name;
-        }
-
-
-        /**
-         * @param string $name
-         *
-         * @return $this
-         */
-        public function setName(string $name): CatItemProductFamily
-        {
-            $this->name = ucfirst(trim($name));
-            return $this;
-        }
+        return $this->name;
     }
+
+
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName(string $name): CatItemProductFamily
+    {
+        $this->name = ucfirst(trim($name));
+        return $this;
+    }
+}

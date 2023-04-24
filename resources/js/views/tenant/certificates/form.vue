@@ -1,30 +1,39 @@
 <template>
-    <el-dialog :title="titleDialog" :visible="showDialog" @close="close" @open="create" class="certificate-form">
+    <el-dialog :title="titleDialog"
+               :visible="showDialog"
+               :close-on-click-modal="false"
+               @close="close"
+               @open="create"
+               class="certificate-form">
         <div class="form-body">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-12">
+                    <div class="form-group" :class="{'has-danger': errors.certificate}">
+                        <label class="control-label">Certificado pfx, p12 o pem*</label>
+                        <el-upload
+                            ref="upload"
+                            :headers="headers"
+                            :data="{'password': form.password}"
+                            action="/certificates/uploads"
+                            :show-file-list="false"
+                            :auto-upload="false"
+                            :multiple="false"
+                            :on-error="errorUpload"
+                            :on-success="successUpload">
+                            <el-button slot="trigger" type="primary">Selecciona un archivo</el-button>
+                        </el-upload>
+                        <small class="form-control-feedback" v-if="errors.certificate"
+                               v-text="errors.certificate[0]"></small>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    * Los archivos .pem no necesitan contraseña
+                </div>
+                <div class="col-md-12">
                     <div class="form-group" :class="{'has-danger': errors.password}">
                         <label class="control-label">Contraseña</label>
                         <el-input v-model="form.password"></el-input>
                         <small class="form-control-feedback" v-if="errors.password" v-text="errors.password[0]"></small>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group" :class="{'has-danger': errors.certificate}">
-                        <label class="control-label">Certificado pfx</label>
-                        <el-upload
-                                   ref="upload"
-                                   :headers="headers"
-                                   :data="{'password': form.password}"
-                                   action="/certificates/uploads"
-                                   :show-file-list="false"
-                                   :auto-upload="false"
-                                   :multiple="false"
-                                   :on-error="errorUpload"
-                                   :on-success="successUpload">
-                            <el-button slot="trigger" type="primary">Selecciona un archivo</el-button>
-                        </el-upload>
-                        <small class="form-control-feedback" v-if="errors.certificate" v-text="errors.certificate[0]"></small>
                     </div>
                 </div>
             </div>
@@ -40,35 +49,35 @@
 
 <script>
 
-    import {EventBus} from '../../../helpers/bus'
+import {EventBus} from '../../../helpers/bus'
 
-    export default {
-        props: ['showDialog', 'recordId'],
-        data() {
-            return {
-                loading_submit: false,
-                headers: headers_token,
-                titleDialog: null,
-                resource: 'items',
-                errors: {},
-                form: {}
+export default {
+    props: ['showDialog', 'recordId'],
+    data() {
+        return {
+            loading_submit: false,
+            headers: headers_token,
+            titleDialog: null,
+            resource: 'items',
+            errors: {},
+            form: {}
+        }
+    },
+    created() {
+        this.initForm()
+    },
+    methods: {
+        initForm() {
+            this.errors = {}
+            this.form = {
+                id: null,
+                certificate: null,
+                password: null,
             }
         },
-        created() {
-            this.initForm()
+        create() {
+            this.titleDialog = 'Generar Certificado PEM'
         },
-        methods: {
-            initForm() {
-                this.errors = {}
-                this.form = {
-                    id: null,
-                    certificate: null,
-                    password: null,
-                }
-            },
-            create() {
-                this.titleDialog = 'Generar Certificado PEM'
-            },
 //            submit() {
 //                this.loading_submit = true
 //                this.$http.post(`/${this.resource}`, this.form)
@@ -92,28 +101,28 @@
 //                        this.loading_submit = false
 //                    })
 //            },
-            clickUpload() {
-                this.$refs.upload.submit();
-            },
-            close() {
-                this.$emit('update:showDialog', false)
-                this.initForm()
-            },
-            successUpload(response, file, fileList) {
-                if (response.success) {
+        clickUpload() {
+            this.$refs.upload.submit();
+        },
+        close() {
+            this.$emit('update:showDialog', false)
+            this.initForm()
+        },
+        successUpload(response, file, fileList) {
+            if (response.success) {
 
-                    this.$message.success(response.message)
-                    this.$eventHub.$emit('reloadData')
-                    this.$eventHub.$emit('reloadDataCompany')
-                    this.close()
-                    
-                } else {
-                    this.$message({message:response.message, type: 'error'})
-                }
-            },
-            errorUpload(response) {
-                console.log(response)
+                this.$message.success(response.message)
+                this.$eventHub.$emit('reloadData')
+                this.$eventHub.$emit('reloadDataCompany')
+                this.close()
+
+            } else {
+                this.$message({message: response.message, type: 'error'})
             }
+        },
+        errorUpload(response) {
+            console.log(response)
         }
     }
+}
 </script>

@@ -4091,6 +4091,8 @@ export default {
                     address: customer.address
                 })
             }
+            this.form.has_retention = customer.is_agent_retention
+            this.changeRetention();
 
             this.setCustomerAccumulatedPoints(customer.id, this.config.enabled_point_system)
 

@@ -27,6 +27,8 @@ class Company extends ModelTenant
         'soap_password',
         'soap_url',
         'certificate',
+        'certificate_date_of_issue',
+        'certificate_date_of_due',
         'certificate_due',
         'logo',
         'detraction_account',
@@ -56,7 +58,9 @@ class Company extends ModelTenant
     ];
 
     protected $casts = [
-        'send_document_to_pse' => 'bool'
+        'send_document_to_pse' => 'bool',
+        'certificate_date_of_issue' => 'date',
+        'certificate_date_of_due' => 'date'
     ];
 
     /**

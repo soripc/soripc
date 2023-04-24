@@ -14,11 +14,7 @@ class DocumentaryProcedureServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
@@ -29,21 +25,6 @@ class DocumentaryProcedureServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('documentaryprocedure.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'documentaryprocedure'
-        );
     }
 
     /**
@@ -64,34 +45,6 @@ class DocumentaryProcedureServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/documentaryprocedure';
         }, \Config::get('view.paths')), [$sourcePath]), 'documentaryprocedure');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/documentaryprocedure');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'documentaryprocedure');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'documentaryprocedure');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
     }
 
     /**

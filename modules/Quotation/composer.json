@@ -1,0 +1,25 @@
+{
+    "name": "qpos/quotation",
+    "description": "",
+    "authors": [
+        {
+            "name": "QPos",
+            "email": "desarrollo@qpos.pe"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Quotation\\Providers\\QuotationServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Quotation\\": ""
+        }
+    }
+}

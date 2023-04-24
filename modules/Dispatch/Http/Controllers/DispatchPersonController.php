@@ -14,7 +14,7 @@ class DispatchPersonController extends Controller
 {
     public function tables()
     {
-        $locations = func_get_locations();
+        $locations = func_get_table_locations();
         $identity_document_types = IdentityDocumentType::query()
             ->where('active', true)
             ->get()

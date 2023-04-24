@@ -25,7 +25,7 @@ class OriginAddressController extends Controller
 
     public function tables()
     {
-        $locations = func_get_locations();
+        $locations = func_get_table_locations();
 
         return [
             'locations' => $locations

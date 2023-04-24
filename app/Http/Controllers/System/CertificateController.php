@@ -7,8 +7,6 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\System\Configuration;
 
-
-
 class CertificateController extends Controller
 {
     public function record()

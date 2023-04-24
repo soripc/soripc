@@ -1,37 +1,11 @@
 <?php
 
-/**
- *
- */
-
 namespace Modules\DocumentaryProcedure\Models;
 
 use App\Models\Tenant\ModelTenant;
-use Carbon\Carbon;
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 
-/**
- * Class DocumentaryProcessesRelFile
- *
- * @property int $id
- * @property int|null $doc_processes_id
- * @property int|null $doc_file_id
- * @property int|null $doc_office_id
- * @property string|null $stages
- * @property int $complete
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- *
- * @property DocumentaryFile|null $doc_file
- * @property DocumentaryOffice|null $doc_office
- * @property DocumentaryProcess|null $doc_processes
- *
- *@package App\Models\Tenant\ModelTenant
-     * @mixin  \Eloquent
- */
 class DocumentaryProcessesRelFile extends ModelTenant
 {
-    use UsesTenantConnection;
     protected $table = 'documentary_processes_rel_file';
     protected $perPage = 25;
 

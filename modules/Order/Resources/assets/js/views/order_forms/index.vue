@@ -41,7 +41,7 @@
                 </data-table>
             </div>
 
-            
+
             <order-form-options :showDialog.sync="showDialogOptions"
                               :recordId="recordId"
                               :showClose="true"></order-form-options>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-    import DataTable from '@components/DataTable.vue'
+    import DataTable from '../../components/DataTable.vue'
     import OrderFormOptions from './partials/options.vue'
 
     export default {

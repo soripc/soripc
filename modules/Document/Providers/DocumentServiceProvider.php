@@ -2,8 +2,10 @@
 
 namespace Modules\Document\Providers;
 
+use App\Models\Tenant\Document;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Document\Observers\DocumentObserver;
 
 class DocumentServiceProvider extends ServiceProvider
 {
@@ -14,11 +16,8 @@ class DocumentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerTranslations();
-        $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        Document::observe(DocumentObserver::class);
     }
 
     /**
@@ -29,21 +28,6 @@ class DocumentServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
-    }
-
-    /**
-     * Register config.
-     *
-     * @return void
-     */
-    protected function registerConfig()
-    {
-        $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('document.php'),
-        ], 'config');
-        $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'document'
-        );
     }
 
     /**
@@ -64,34 +48,6 @@ class DocumentServiceProvider extends ServiceProvider
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/document';
         }, \Config::get('view.paths')), [$sourcePath]), 'document');
-    }
-
-    /**
-     * Register translations.
-     *
-     * @return void
-     */
-    public function registerTranslations()
-    {
-        $langPath = resource_path('lang/modules/document');
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'document');
-        } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'document');
-        }
-    }
-
-    /**
-     * Register an additional directory of factories.
-     *
-     * @return void
-     */
-    public function registerFactories()
-    {
-        if (! app()->environment('production')) {
-            app(Factory::class)->load(__DIR__ . '/../Database/factories');
-        }
     }
 
     /**
