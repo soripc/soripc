@@ -16,7 +16,7 @@ class TenantChangeColumnsToDocuments extends Migration
         Schema::table('documents', function (Blueprint $table) {
             $table->string('ubl_version', 3)->change();
             $table->string('filename', 50)->change();
-            $table->string('purchase_order', 250)->change();
+            $table->string('purchase_order', 200)->change();
             $table->string('plate_number', 150)->change();
         });
     }

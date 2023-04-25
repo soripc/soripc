@@ -812,7 +812,10 @@ class DocumentController extends Controller
 
     public function show($documentId)
     {
-        $document = Document::findOrFail($documentId);
+        $document = Document::query()
+            ->with('payments', 'invoice', 'note', 'fee', 'items', 'items.affectation_igv_type')
+            ->findOrFail($documentId);
+
         foreach ($document->items as &$item) {
             $discounts = [];
             if($item->discounts) {

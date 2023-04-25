@@ -2,18 +2,12 @@
 
 namespace Modules\Payment\Models;
 
-use Carbon\Carbon;
-use Eloquent;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Models\Tenant\{
-    DocumentPayment,
-    ModelTenant,
-    SoapType,
-    User,
-};
+use App\Models\Tenant\DocumentPayment;
+use App\Models\Tenant\ModelTenant;
+use App\Models\Tenant\SoapType;
+use App\Models\Tenant\User;
 use Modules\MercadoPago\Models\Transaction;
 
 
@@ -49,8 +43,8 @@ class PaymentLink extends ModelTenant
     {
         return $this->belongsTo(SoapType::class);
     }
- 
-    
+
+
     /**
      * @return BelongsTo
      */
@@ -137,8 +131,8 @@ class PaymentLink extends ModelTenant
 
         return (object)$person;
     }
- 
-    
+
+
     /**
      * @return string
      */
@@ -156,10 +150,10 @@ class PaymentLink extends ModelTenant
         return $this->uploaded_filename ? asset('storage'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'payment_links'.DIRECTORY_SEPARATOR.$this->uploaded_filename) : null;
     }
 
-    
+
     /**
      * Usado para mostrar el link de pago al generarlo desde pagos (cpe)
-     * 
+     *
      * @return array
      */
     public function getRowResource()
@@ -186,7 +180,7 @@ class PaymentLink extends ModelTenant
 
     /**
      * Usado para mostrar el link de pago al generarlo desde el listado
-     * 
+     *
      * @return array
      */
     public function getRowResourceWithoutPayment()
@@ -220,10 +214,10 @@ class PaymentLink extends ModelTenant
             'payment_number_full' => $this->getPaymentNumberFull(),
         ];
     }
-    
-    
+
+
     /**
-     * 
+     *
      * Obtener descripción del pago asociado
      *
      * @return string
@@ -240,7 +234,7 @@ class PaymentLink extends ModelTenant
 
 
     /**
-     * 
+     *
      * Obtener path del modelo en base al tipo de instancia definida
      *
      * @param  string $instance_type
@@ -258,10 +252,10 @@ class PaymentLink extends ModelTenant
 
         return $model;
     }
-    
+
 
     /**
-     * 
+     *
      * Filtros para buscar link de pago en url publica
      *
      * @param $query
@@ -270,7 +264,7 @@ class PaymentLink extends ModelTenant
     {
         return $query->where('payment_link_type_id', $payment_link_type_id)->where('uuid', $uuid);
     }
-    
+
 
     /**
      * Validar si tiene asociado un pago
@@ -282,9 +276,9 @@ class PaymentLink extends ModelTenant
         return !is_null($this->payment);
     }
 
-    
+
     /**
-     * 
+     *
      * Obtener datos de registro origen del pago
      *
      * @param  bool $has_payment
@@ -305,9 +299,9 @@ class PaymentLink extends ModelTenant
         return null;
     }
 
-        
+
     /**
-     * 
+     *
      * Obtener datps del link de pago para url publica
      *
      * @return array
@@ -327,11 +321,11 @@ class PaymentLink extends ModelTenant
         ];
 
     }
-        
-    
+
+
     /**
-     * 
-     * Datos para mostrar transacción en vista 
+     *
+     * Datos para mostrar transacción en vista
      *
      * @return array
      */
@@ -353,9 +347,9 @@ class PaymentLink extends ModelTenant
         ];
     }
 
-    
+
     /**
-     * 
+     *
      * Obtener transacción aceptada
      *
      * @param  bool $with_select
@@ -372,7 +366,7 @@ class PaymentLink extends ModelTenant
 
 
     /**
-     * 
+     *
      * Validar si el link de pago tiene transaccion aceptada de mercado pago
      *
      * @return bool

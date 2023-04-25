@@ -25,7 +25,6 @@ use Modules\Document\Helpers\DocumentHelper;
 use Modules\MobileApp\Models\System\AppModule;
 use App\CoreFacturalo\ClientHelper;
 
-
 class ClientController extends Controller
 {
     public function index()
@@ -168,7 +167,7 @@ class ClientController extends Controller
             $current_month_start = $current_day->startOfMonth()->format('Y-m-d');
             $current_month_end = $current_day->endOfMonth()->format('Y-m-d');
             $row->current_count_doc_month = DB::connection('tenant')->table('documents')->whereBetween('date_of_issue', [$current_month_start, $current_month_end])->count(); // contador mensual
-            $row->count_doc_pse = DB::connection('tenant')->table('documents')->where('send_to_pse', true)->count();
+            $row->count_doc_pse = 0; //DB::connection('tenant')->table('documents')->where('send_to_pse', true)->count();
             // dd($row->count_doc_pse);
 
             $row->count_doc = DB::connection('tenant')
@@ -251,7 +250,6 @@ class ClientController extends Controller
 
     private function getQuantityPendingDocuments()
     {
-
         return [
             'document_regularize_shipping' => DB::connection('tenant')->table('documents')->where('state_type_id', '01')->where('regularize_shipping', true)->count(),
             'document_not_sent' => DB::connection('tenant')->table('documents')->whereIn('state_type_id', ['01', '03'])->where('date_of_issue', '<=', date('Y-m-d'))->count(),

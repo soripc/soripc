@@ -603,9 +603,12 @@ class SaleNoteController extends Controller
 
     public function record2($id)
     {
-        $record = new SaleNoteResource2(SaleNote::findOrFail($id));
+        $record = SaleNote::query()
+            ->with('items', 'items.affectation_igv_type')
+//            ->with('items', 'items.relation_item', 'items.relation_item.sale_affectation_igv_type')
+            ->findOrFail($id);
 
-        return $record;
+        return new SaleNoteResource2($record);
     }
 
     public function store(SaleNoteRequest $request)

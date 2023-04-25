@@ -53,14 +53,15 @@ class Company extends ModelTenant
         'soap_sunat_username',
         'soap_sunat_password',
         'api_sunat_id',
-        'api_sunat_secret'
-
+        'api_sunat_secret',
+        'is_demo_platform'
     ];
 
     protected $casts = [
         'send_document_to_pse' => 'bool',
         'certificate_date_of_issue' => 'date',
-        'certificate_date_of_due' => 'date'
+        'certificate_date_of_due' => 'date',
+        'is_demo_platform' => 'boolean',
     ];
 
     /**

@@ -87,3 +87,13 @@ if (!function_exists('func_is_windows')) {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
     }
 }
+
+if (!function_exists('func_is_demo_platform')) {
+    function func_is_demo_platform()
+    {
+        $company = Company::query()->select('id', 'is_demo_platform')->first();
+        if ($company->is_demo_platform) {
+            throw new Exception('Se encuentra en una plataforma DEMO, no es posible realizar la operación solicitada');
+        }
+    }
+}

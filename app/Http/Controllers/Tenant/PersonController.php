@@ -17,6 +17,7 @@ use App\Models\Tenant\PersonType;
 use App\Models\Tenant\Zone;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Excel;
 use Carbon\Carbon;
 use App\Exports\ClientExport;
@@ -85,78 +86,101 @@ class PersonController extends Controller
 
     public function store(PersonRequest $request)
     {
-        /* dd($request->all()); */
-
-        if (!$request->barcode) {
-            if ($request->internal_id) {
-                $request->merge(['barcode' => $request->internal_id]);
+        DB::connection('tenant')->beginTransaction();
+        try {
+            if (!$request->barcode) {
+                if ($request->internal_id) {
+                    $request->merge(['barcode' => $request->internal_id]);
+                }
             }
-        }
 
-        if ($request->state) {
-            if ($request->state != "ACTIVO") {
-                return [
-                    'success' => false,
-                    'message' => 'El estado del contribuyente no es activo, no puede registrarlo',
-                ];
+            if ($request->state) {
+                if ($request->state != "ACTIVO") {
+                    return [
+                        'success' => false,
+                        'message' => 'El estado del contribuyente no es activo, no puede registrarlo',
+                    ];
+                }
             }
+
+            $id = $request->input('id');
+            $person = Person::firstOrNew(['id' => $id]);
+            $data = $request->all();
+            unset($data['optional_email'], $data['id']);
+            $person->fill($data);
+
+            $location_id = $request->input('location_id');
+            if(is_array($location_id) && count($location_id) === 3) {
+                $person->district_id = $location_id[2];
+                $person->province_id = $location_id[1];
+                $person->department_id = $location_id[0];
+            }
+
+            $person->save();
+
+            $person->addresses()->delete();
+            $addresses = $request->input('addresses');
+            foreach ($addresses as $row) {
+                $person->addresses()->updateOrCreate(['id' => $row['id']], $row);
+            }
+
+            $optional_email = $request->optional_email;
+            if (!empty($optional_email)) {
+                $person->setOptionalEmailArray($optional_email)->push();
+            }
+
+            $msg = '';
+            if ($request->type === 'suppliers') {
+                $msg = ($id) ? 'Proveedor editado con éxito' : 'Proveedor registrado con éxito';
+            } else {
+                $msg = ($id) ? 'Cliente editado con éxito' : 'Cliente registrado con éxito';
+            }
+
+            func_is_demo_platform();
+
+            DB::connection('tenant')->commit();
+
+            return [
+                'success' => true,
+                'message' => $msg,
+                'id' => $person->id
+            ];
+        } catch (Exception $e) {
+            DB::connection('tenant')->rollBack();
+
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
         }
-
-        $id = $request->input('id');
-        $person = Person::firstOrNew(['id' => $id]);
-        $data = $request->all();
-        unset($data['optional_email'], $data['id']);
-        $person->fill($data);
-
-        $location_id = $request->input('location_id');
-        if(is_array($location_id) && count($location_id) === 3) {
-            $person->district_id = $location_id[2];
-            $person->province_id = $location_id[1];
-            $person->department_id = $location_id[0];
-        }
-
-        $person->save();
-
-        $person->addresses()->delete();
-        $addresses = $request->input('addresses');
-        foreach ($addresses as $row) {
-            $person->addresses()->updateOrCreate(['id' => $row['id']], $row);
-        }
-
-        $optional_email = $request->optional_email;
-        if (!empty($optional_email)) {
-            $person->setOptionalEmailArray($optional_email)->push();
-        }
-
-        $msg = '';
-        if ($request->type === 'suppliers') {
-            $msg = ($id) ? 'Proveedor editado con éxito' : 'Proveedor registrado con éxito';
-        } else {
-            $msg = ($id) ? 'Cliente editado con éxito' : 'Cliente registrado con éxito';
-        }
-        return [
-            'success' => true,
-            'message' => $msg,
-            'id' => $person->id
-        ];
     }
 
     public function destroy($id)
     {
+        DB::connection('tenant')->beginTransaction();
         try {
 
             $person = Person::findOrFail($id);
             $person_type = ($person->type == 'customers') ? 'Cliente' : 'Proveedor';
             $person->delete();
 
+            func_is_demo_platform();
+
+            DB::connection('tenant')->commit();
             return [
                 'success' => true,
                 'message' => $person_type . ' eliminado con éxito'
             ];
 
         } catch (Exception $e) {
-
-            return ($e->getCode() == '23000') ? ['success' => false, 'message' => "El {$person_type} esta siendo usado por otros registros, no puede eliminar"] : ['success' => false, 'message' => "Error inesperado, no se pudo eliminar el {$person_type}"];
+            DB::connection('tenant')->rollBack();
+            return ($e->getCode() == '23000') ? [
+                'success' => false,
+                'message' => "El {$person_type} esta siendo usado por otros registros, no puede eliminar"
+            ] : [
+                'success' => false,
+                'message' => "Error inesperado, no se pudo eliminar el {$person_type}"
+            ];
 
         }
 

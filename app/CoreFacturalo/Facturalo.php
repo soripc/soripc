@@ -39,7 +39,6 @@ use App\Models\Tenant\PurchaseSettlement;
 use App\CoreFacturalo\Services\Helpers\SendDocumentPse;
 use Modules\Finance\Traits\FilePaymentTrait;
 
-
 /**
  * Class Facturalo
  *

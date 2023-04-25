@@ -4,21 +4,18 @@ namespace Modules\Document\Helpers;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\Tenant\{
-    Configuration,
-    Document,
-    SaleNote,
-};
+use App\Models\Tenant\Configuration;
+use App\Models\Tenant\Document;
+use App\Models\Tenant\SaleNote;
 use Hyn\Tenancy\Environment;
 use App\Models\System\Client;
 use App\Traits\LockedEmissionTrait;
-
 
 class DocumentHelper
 {
 
     use LockedEmissionTrait;
-    
+
     /**
      * Obtener fecha de ciclo de facturacion desde client (system), relacionado al tenant
      */
@@ -31,18 +28,18 @@ class DocumentHelper
         return $client->start_billing_cycle;
     }
 
-            
+
     /**
-     * 
+     *
      * Validar si los documentos emitidos superan el limite permitido por el plan (ciclo facturacion)
      *
-     * Usado en: 
+     * Usado en:
      * App\Providers\LockedEmissionProvider
      * App\Http\Controllers\Tenant\DocumentController
-     * 
+     *
      * @param  string $type
      * @return array
-     */     
+     */
     public function exceedLimitDocuments($type = 'document')
     {
         /*
@@ -62,15 +59,15 @@ class DocumentHelper
         {
             if($type === 'document' || ($type === 'sale-note' && $plan->includeSaleNotesLimitDocuments()))
             {
-                
+
             //fecha de inicio del ciclo de facturacion
             $start_billing_cycle = self::getStartBillingCycleFromSystem();
-            
+
             if($start_billing_cycle){
 
                 //obtener fecha inicio y fin
                 $start_end_date = self::getStartEndDateForFilterDocument($start_billing_cycle);
-    
+
                 //cantidad de documentos emitidos en el rango de fechas obtenido desde el ciclo de facturacion
                 $quantity_documents = Document::whereBetween('date_of_issue', [ $start_end_date['start_date'], $start_end_date['end_date'] ])->count();
 
@@ -78,7 +75,7 @@ class DocumentHelper
                 {
                     $quantity_documents += $this->getQuantitySaleNotesByDates($start_end_date['start_date']->format('Y-m-d'), $start_end_date['end_date']->format('Y-m-d'));
                 }
-    
+
                 if($quantity_documents > $limit_documents)
                 {
                     return [
@@ -101,19 +98,19 @@ class DocumentHelper
 
 
     /**
-     * 
-     * Obtener fecha de inicio y fin para filtrar documentos en base 
+     *
+     * Obtener fecha de inicio y fin para filtrar documentos en base
      * a la fecha de inicio del ciclo de facturacion (planes) del cliente
      *
-     * Usado en: 
+     * Usado en:
      * App\Http\Controllers\System\ClientController
-     * 
+     *
      * @param  $start_billing_cycle
      * @return array
      */
     public static function getStartEndDateForFilterDocument($start_billing_cycle)
-    { 
-        
+    {
+
         $day_start_billing = date_format($start_billing_cycle, 'j');
         $day_now = (int) date('j');
         $end = Carbon::parse(date('Y-m-d'));
@@ -127,7 +124,7 @@ class DocumentHelper
         } else {
 
             $init = Carbon::parse(date('Y') . '-' . ((int)date('n')) . '-' . $day_start_billing);
-            
+
         }
 
         return [
@@ -137,7 +134,7 @@ class DocumentHelper
 
     }
 
-        
+
     /**
      * Obtener modelo por tipo de documento
      *
@@ -154,7 +151,7 @@ class DocumentHelper
             case '03':
                 $model = Document::class;
                 break;
-            
+
             case '80':
                 $model = SaleNote::class;
                 break;
@@ -165,9 +162,9 @@ class DocumentHelper
         return $model;
     }
 
-    
+
     /**
-     * 
+     *
      * Obtener documento para envio de mensaje por ws
      *
      * @param  string $model
@@ -179,7 +176,7 @@ class DocumentHelper
         return $model::filterDataForSendMessage()->findOrFail($id);
     }
 
-    
+
     /**
      *
      *  Obtener parametros para envio de mensaje por ws
@@ -201,5 +198,5 @@ class DocumentHelper
             ]
         ];
     }
- 
+
 }

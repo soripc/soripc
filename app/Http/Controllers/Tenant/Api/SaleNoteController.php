@@ -145,15 +145,15 @@ class SaleNoteController extends Controller
     public function mergeData($inputs)
     {
         $this->company = Company::active();
-        // self::ExtraLog(__FILE__."::".__LINE__."  \n Campos ".__FUNCTION__." \n". json_encode($inputs) ."\n\n\n\n"); 
+        // self::ExtraLog(__FILE__."::".__LINE__."  \n Campos ".__FUNCTION__." \n". json_encode($inputs) ."\n\n\n\n");
 
         // agregado por loretosoft para terminos y condiciones
         $configuration = Configuration::first();
         if ($configuration->terms_condition_sale!=null || $configuration->terms_condition_sale != '') {
             $inputs['terms_condition'] = $configuration->terms_condition_sale;
         }
-        //termina aqui  
-        
+        //termina aqui
+
         $type_period = $inputs['type_period'];
         $quantity_period = $inputs['quantity_period'];
         $force_create_if_not_exist = isset($inputs['force_create_if_not_exist']) ? (bool)$inputs['force_create_if_not_exist'] : false;
@@ -582,7 +582,7 @@ class SaleNoteController extends Controller
         }
         $saleNote->items = $saleNote->items
             ->each(function ($item) {
-                $itemBD = Item::without(['item_type', 'unit_type', 'currency_type', 'warehouses', 'item_unit_types', 'tags'])
+                $itemBD = Item::query()
                     ->findOrFail($item->item_id);
 
                 $itemToArray = json_decode(json_encode($item->item), true);

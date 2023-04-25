@@ -18,12 +18,12 @@ class ClientCollection extends ResourceCollection
     {
         $currentDay = Carbon::now();
         return $this->collection->transform(function(\App\Models\System\Client $row, $key) use ($currentDay) {
-            $apiPeruAsk = TrackApiPeruServices::where('client_id',$row->id)
-                ->where('date_of_issue','>=',$currentDay->firstOfMonth()->format('Y-m-d'))
-                ->where('date_of_issue','<=',$currentDay->lastOfMonth()->format('Y-m-d'))
-                // ->whereBetween('date_of_issue',[$currentDay->firstOfMonth(),$currentDay->lastOfMonth()])
-                ->get()
-                ->count();
+//            $apiPeruAsk = TrackApiPeruServices::where('client_id',$row->id)
+//                ->where('date_of_issue','>=',$currentDay->firstOfMonth()->format('Y-m-d'))
+//                ->where('date_of_issue','<=',$currentDay->lastOfMonth()->format('Y-m-d'))
+//                // ->whereBetween('date_of_issue',[$currentDay->firstOfMonth(),$currentDay->lastOfMonth()])
+//                ->get()
+//                ->count();
             return [
                 'id' => $row->id,
                 'hostname' => $row->hostname->fqdn,
@@ -58,7 +58,7 @@ class ClientCollection extends ResourceCollection
                 'document_regularize_shipping' => $row->document_regularize_shipping,
                 'document_not_sent' => $row->document_not_sent,
                 'document_to_be_canceled' => $row->document_to_be_canceled,
-                'queries_to_apiperu' => $apiPeruAsk,
+                'queries_to_apiperu' => 0,
                 'locked_create_establishments' => $row->locked_create_establishments,
                 'restrict_sales_limit' => $row->restrict_sales_limit,
 
