@@ -13,11 +13,11 @@ class TenantOthersToDocuments extends Migration
      */
     public function up()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('payment_condition_id', 2)->change();
-            $table->string('currency_type_id', 3)->change();
-            $table->string('document_type_id', 4)->change();
-        });
+//        Schema::table('documents', function (Blueprint $table) {
+//            $table->string('payment_condition_id', 2)->change();
+//            $table->string('currency_type_id', 3)->change();
+//            $table->string('document_type_id', 4)->change();
+//        });
     }
 
     /**
@@ -27,10 +27,10 @@ class TenantOthersToDocuments extends Migration
      */
     public function down()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('currency_type_id')->change();
-            $table->string('payment_condition_id')->change();
-            $table->string('document_type_id')->change();
-        });
+//        Schema::table('documents', function (Blueprint $table) {
+//            $table->string('currency_type_id')->change();
+//            $table->string('payment_condition_id')->change();
+//            $table->string('document_type_id')->change();
+//        });
     }
 }
