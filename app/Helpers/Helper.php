@@ -2,6 +2,7 @@
 
 use App\CoreFacturalo\Helpers\Certificate\GenerateCertificate;
 use App\Models\Tenant\Company;
+use App\Models\Tenant\Establishment;
 use Carbon\Carbon;
 
 if (!function_exists('func_str_to_upper_utf8')) {
@@ -55,6 +56,28 @@ if (!function_exists('function_certificate_update_dates')) {
             $company->certificate_date_of_due = $date_of_due;
             $company->save();
         }
+    }
+}
+
+if (!function_exists('func_get_establishments_show')) {
+    function func_get_establishments_show()
+    {
+        return Establishment::query()
+            ->with('district', 'province', 'department')
+            ->where('id', auth()->user()->establishment_id)
+            ->get()
+            ->transform(function ($row) {
+                return [
+                    'id' => $row->id,
+                    'description' => $row->description,
+                    'address' => $row->address .
+                        ', ' . optional($row->department)->description .
+                        ' - ' . optional($row->province)->description .
+                        ' - ' . optional($row->district)->description,
+                    'email' => $row->email,
+                    'telephone' => $row->telephone,
+                ];
+            });
     }
 }
 

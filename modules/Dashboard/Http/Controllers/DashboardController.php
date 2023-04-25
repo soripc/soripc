@@ -20,12 +20,6 @@ use Illuminate\Support\Arr;
 use Modules\Dashboard\Helpers\DashboardInventory;
 use App\Models\Tenant\Configuration;
 
-/**
- * Class DashboardController
- *
- * @package Modules\Dashboard\Http\Controllers
- * @mixin Controller
- */
 class DashboardController extends Controller
 {
     public function index()
@@ -33,7 +27,7 @@ class DashboardController extends Controller
         if(auth()->user()->type != 'admin' || !auth()->user()->searchModule('dashboard'))
             return redirect()->route('tenant.documents.index');
 
-        $company = Company::select('soap_type_id')->first();
+        $company = Company::query()->select('soap_type_id')->first();
         $soap_company  = $company->soap_type_id;
         $configuration = Configuration::first();
 
@@ -138,7 +132,7 @@ class DashboardController extends Controller
     {
         return view('dashboard::sales_by_product');
     }
-    
+
     public function productOfDue(Request $request)
     {
         return  (new DashboardInventory())->data($request);

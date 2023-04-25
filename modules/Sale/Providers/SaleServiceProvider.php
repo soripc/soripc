@@ -3,7 +3,6 @@
 namespace Modules\Sale\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
 class SaleServiceProvider extends ServiceProvider
 {

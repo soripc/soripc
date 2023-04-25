@@ -418,7 +418,7 @@
             'order_node_advanced' => 'boolean',
             'remove_validation_email_establishments'=>'bool',
         ];
-        
+
         protected $hidden = [
             'smtp_password'
         ];
@@ -579,7 +579,7 @@
                 'enabled_global_igv_to_purchase' => $this->isEnabledGlobalIgvToPurchase(),
                 'show_pdf_name' => $this->isShowPdfName(),
                 'item_name_pdf_description' => $this->isItemNamePdfDescription(),
-                'api_service_token' => self::getApiServiceToken(),
+                //'api_service_token' => self::getApiServiceToken(),
                 'user' => [
                     'serie' => $serie,
                     'document_id' => $document_id,
@@ -776,14 +776,14 @@
          *
          * @return Repository|Application|mixed
          */
-        public static function getApiServiceToken()
-        {
-            $api_service_token = \App\Models\System\Configuration::getApiServiceToken();
-            // $api_service_token = $configuration->token_apiruc =! '' ? $configuration->token_apiruc : config('configuration.api_service_token');
-            // $api_service_token = $configuration->token_apiruc === 'false' ? config('configuration.api_service_token') : $configuration->token_apiruc;
-
-            return $api_service_token;
-        }
+//        public static function getApiServiceToken()
+//        {
+//            $api_service_token = \App\Models\System\Configuration::getApiServiceToken();
+//            // $api_service_token = $configuration->token_apiruc =! '' ? $configuration->token_apiruc : config('configuration.api_service_token');
+//            // $api_service_token = $configuration->token_apiruc === 'false' ? config('configuration.api_service_token') : $configuration->token_apiruc;
+//
+//            return $api_service_token;
+//        }
 
         /**
          * @return bool

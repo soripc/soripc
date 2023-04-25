@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('generate_token', 'Tenant\Api\AppController@getSeries');
 $hostname = app(Hyn\Tenancy\Contracts\CurrentHostname::class);
 if ($hostname) {
@@ -15,7 +17,7 @@ if ($hostname) {
                 // Route::post('document/emailLS', 'Tenant\Api\ClinicaController@document_email');
                 // Route::get('document/tipo_doc', 'Tenant\Api\ClinicaController@getTypeDoc');
             // });
-        
+
             // Route::get('items/barcode/print', 'Tenant\Api\AppController@printBarCode')->name('tenant.items.export.barcode.print.x');
 
 
@@ -24,7 +26,7 @@ if ($hostname) {
         Route::get('cash/report/products/{cash}', 'Tenant\CashController@report_products');
         Route::get('cash/report/income-summary/{cash}', '\Modules\Report\Http\Controllers\ReportIncomeSummaryController@pdf');
         Route::get('cash/report/products/{cash}/ticket', 'Tenant\Api\AppController@report_products_ticket');
-        
+
         Route::get('cash/report/report-ticket/{cash}', 'Tenant\Api\AppController@reportTicket');
         Route::get('cash/report/report-a4/{cash}', 'Tenant\Api\AppController@reportA4');
         // Route::get('cash/report/income-summary/{cash}', 'Tenant\Api\AppController@pdf');
@@ -32,7 +34,7 @@ if ($hostname) {
         Route::middleware(['auth:api', 'locked.tenant'])->group(function () {
 
             Route::get('items/barcode/print', 'Tenant\Api\AppController@printBarCode');
-            
+
             //reorte general
             Route::get('report/format/download', 'Tenant\Api\ClinicaController@download_report');
             // Route::get('report/format/download', 'Modules\Account\Http\Controllers\FormatController@download');
@@ -43,7 +45,7 @@ if ($hostname) {
             Route::get('categories', 'Tenant\Api\AppController@categories');
             Route::post('categories', 'Tenant\Api\AppController@category');
 
-            //guias        
+            //guias
             Route::get('dispatch/list', 'Tenant\Api\AppController@dispatches_list');
             Route::post('dispatch/create', 'Tenant\Api\AppController@dispatches_create');
             Route::post('dispatch/email', 'Tenant\Api\AppController@dispatches_email');
@@ -62,7 +64,7 @@ if ($hostname) {
             Route::get('/record/{id}', 'Tenant\Api\AppController@dispatchesCarrierRecordId');
             Route::get('/status_ticketLS/{id}', 'Tenant\Api\DispatchController@statusTicketCarrier');
 
-            
+
             // Route::get('', 'Tenant\DispatchCarrierController@index')->name('tenant.dispatch_carrier.index');
             // Route::get('/columns', 'Tenant\DispatchCarrierController@columns');
             // Route::get('/create/{document?}/{type?}/{dispatch?}', 'Tenant\DispatchCarrierController@create');
@@ -86,7 +88,7 @@ if ($hostname) {
             // Route::get('/get_delivery_addresses/{person_id}', 'Tenant\DispatchCarrierController@getDeliveryAddresses');
         });
 
-            //guias transportistas 
+            //guias transportistas
             Route::get('dispatch/list', 'Tenant\Api\AppController@dispatches_list');
             Route::post('dispatch/create', 'Tenant\Api\AppController@dispatches_create');
             Route::post('dispatch/email', 'Tenant\Api\AppController@dispatches_email');
@@ -128,7 +130,7 @@ if ($hostname) {
             //buscador de documentos
             Route::get('document/search/{id}', 'Tenant\Api\AppController@search_document');
             Route::get('documents/light', 'Tenant\Api\AppController@document_light');
-            
+
             //buscador de notas de venta
             Route::get('sale-note/search/{id}', 'Tenant\Api\AppController@search_notesale');
 

@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('template')->group(function() {
     Route::get('/', 'TemplateController@index');
 });

@@ -37,8 +37,8 @@ class DispatcherController extends Controller
     {
         $identity_document_types = IdentityDocumentType::whereActive()->get();
         // $api_service_token = config('configuration.api_service_token');
-        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
-        return compact('identity_document_types', 'api_service_token');
+//        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
+        return compact('identity_document_types');
     }
 
     public function record($id)

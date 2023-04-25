@@ -43,12 +43,12 @@ class DashboardSalePurchase
 
         switch ($period) {
             case 'month':
-                $d_start = Carbon::parse($month_start.'-01')->format('Y-m-d');
-                $d_end = Carbon::parse($month_start.'-01')->endOfMonth()->format('Y-m-d');
+                $d_start = Carbon::parse($month_start . '-01')->format('Y-m-d');
+                $d_end = Carbon::parse($month_start . '-01')->endOfMonth()->format('Y-m-d');
                 break;
             case 'between_months':
-                $d_start = Carbon::parse($month_start.'-01')->format('Y-m-d');
-                $d_end = Carbon::parse($month_end.'-01')->endOfMonth()->format('Y-m-d');
+                $d_start = Carbon::parse($month_start . '-01')->format('Y-m-d');
+                $d_end = Carbon::parse($month_end . '-01')->endOfMonth()->format('Y-m-d');
                 break;
             case 'date':
                 $d_start = $date_start;
@@ -71,28 +71,29 @@ class DashboardSalePurchase
         ];
     }
 
-    private function top_customers($establishment_id, $d_start, $d_end, $enabled_transaction_customer){
+    private function top_customers($establishment_id, $d_start, $d_end, $enabled_transaction_customer)
+    {
 
         // $documents = Document::get();
         // $sale_notes = SaleNote::get();
-        if($d_start && $d_end){
+        if ($d_start && $d_end) {
 
             $documents = Document::query()->where('establishment_id', $establishment_id)
-                                    ->whereIn('state_type_id', ['01','03','05','07','13'])
-                                    ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])
+                ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
 
 
-            $sale_notes = SaleNote::query()->where([['establishment_id', $establishment_id],['changed',false]])
-                                    ->whereIn('state_type_id', ['01','03','05','07','13'])
-                                    ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
-        }else{
+            $sale_notes = SaleNote::query()->where([['establishment_id', $establishment_id], ['changed', false]])
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])
+                ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
+        } else {
 
             $documents = Document::query()->where('establishment_id', $establishment_id)
-                    ->whereIn('state_type_id', ['01','03','05','07','13'])->get();
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])->get();
 
 
-            $sale_notes = SaleNote::query()->where([['establishment_id', $establishment_id],['changed',false]])
-                    ->whereIn('state_type_id', ['01','03','05','07','13'])->get();
+            $sale_notes = SaleNote::query()->where([['establishment_id', $establishment_id], ['changed', false]])
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])->get();
 
         }
 
@@ -111,21 +112,21 @@ class DashboardSalePurchase
             // $customers es un cliente con todos sus documentos generados
             // dd($customers[0]->total);
 
-            $transaction_quantity_sale = $customers->whereIn('document_type_id', ['01','03','08'])->count() + $customers->where('prefix', 'NV')->count();
-            $transaction_quantity_credit_note =$customers->where('document_type_id', '07')->count();
+            $transaction_quantity_sale = $customers->whereIn('document_type_id', ['01', '03', '08'])->count() + $customers->where('prefix', 'NV')->count();
+            $transaction_quantity_credit_note = $customers->where('document_type_id', '07')->count();
 
             $transaction_quantity = $transaction_quantity_sale - $transaction_quantity_credit_note;
 
-            $customer = Person::where('type','customers')->find($customers[0]->customer_id);
-            if(empty($customer)){
+            $customer = Person::where('type', 'customers')->find($customers[0]->customer_id);
+            if (empty($customer)) {
                 // Cuando es eliminado un cliente, dara error en el dashboard, por eso se coloca uno nuevo
                 $customer = new Person([
-                    'name'=>'',
-                    'number'=>'',
+                    'name' => '',
+                    'number' => '',
                 ]);
             }
 
-            $totals = $customers->whereIn('document_type_id', ['01','03','08'])->sum(function ($row) {
+            $totals = $customers->whereIn('document_type_id', ['01', '03', '08'])->sum(function ($row) {
                 return $this->calculateTotalCurrency($row->currency_type_id, $row->exchange_rate_sale, $row->total);//count($product['colors']);
             });    //('total');
 
@@ -136,13 +137,13 @@ class DashboardSalePurchase
             });
 
 
-            $total_credit_note = $customers->where('document_type_id','07')->sum('total');
+            $total_credit_note = $customers->where('document_type_id', '07')->sum('total');
 
             $difference = ($totals + $totals_sale_note) - $total_credit_note;
 
-            if($difference > 0)
+            if ($difference > 0)
                 $top_customers->push([
-                    'total' => number_format($difference,2, ".", ""),
+                    'total' => number_format($difference, 2, ".", ""),
                     'name' => $customer->name,
                     'number' => $customer->number,
                     'transaction_quantity' => $transaction_quantity,
@@ -183,35 +184,35 @@ class DashboardSalePurchase
         }
         $purchases_total_perception = round($purchases->sum('total_perception'),2);
         */
-         $purchases = Purchase::DasboardSalePurchase($establishment_id)->OnlyDateOfIssueByYear()->get();
-         /*
-         if(!empty($d_start)){
-             $purchases->where('date_of_issue','>=',$d_start);
-         }
-         if(!empty($d_end)){
-             $purchases->where('date_of_issue','<=',$d_end);
-         }
-         $purchases = $purchases->get();
-         */
+        $purchases = Purchase::DasboardSalePurchase($establishment_id)->OnlyDateOfIssueByYear()->get();
+        /*
+        if(!empty($d_start)){
+            $purchases->where('date_of_issue','>=',$d_start);
+        }
+        if(!empty($d_end)){
+            $purchases->where('date_of_issue','<=',$d_end);
+        }
+        $purchases = $purchases->get();
+        */
 
         $purchases_total = $purchases->sum('total_purchase');
         $purchases_total_perception = $purchases->sum('total_perception_purchase');
 
-        $data_array = ['Ene', 'Feb','Mar', 'Abr','May', 'Jun','Jul', 'Ago','Sep', 'Oct', 'Nov', 'Dic'];
+        $data_array = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-        $purchases_by_month = $purchases->groupBy(function($date) {
-                                return Carbon::parse($date->date_of_issue)->format('m');
-                            });
+        $purchases_by_month = $purchases->groupBy(function ($date) {
+            return Carbon::parse($date->date_of_issue)->format('m');
+        });
 
 
         return [
             'totals' => [
-                'purchases_total_perception' => number_format($purchases_total_perception,2),
-                'purchases_total' => number_format( round($purchases_total, 2),2),
-                'total' => number_format($purchases_total + $purchases_total_perception,2),
-                'date_of_issue'=>[
-                    'start'=>$d_start,
-                    'end'=>$d_end,
+                'purchases_total_perception' => number_format($purchases_total_perception, 2),
+                'purchases_total' => number_format(round($purchases_total, 2), 2),
+                'total' => number_format($purchases_total + $purchases_total_perception, 2),
+                'date_of_issue' => [
+                    'start' => $d_start,
+                    'end' => $d_end,
                 ]
             ],
             'graph' => [
@@ -251,31 +252,31 @@ class DashboardSalePurchase
     }
 
 
-
-    private function items_by_sales($establishment_id, $d_start, $d_end, $enabled_move_item, $no_take = false, $page) 
+    private function items_by_sales($establishment_id, $d_start, $d_end, $enabled_move_item, $no_take = false, $page)
     {
         if ($d_start && $d_end) {
 
-            $documents = Document::without(['user', 'soap_type', 'state_type', 'document_type', 'currency_type', 'group', 'items', 'invoice', 'note', 'payments'])
-                        ->where('establishment_id', $establishment_id)
-                        ->whereIn('state_type_id', ['01','03','05','07','13'])
-                        ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
+            $documents = Document::query()
+                ->with('items', 'items.relation_item')
+                ->where('establishment_id', $establishment_id)
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])
+                ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
 
-
-            $sale_notes = SaleNote::without(['user', 'soap_type', 'state_type', 'currency_type', 'items', 'payments'])
-                        ->where([['establishment_id', $establishment_id],['changed',false]])
-                        ->whereIn('state_type_id', ['01','03','05','07','13'])
-                        ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
+            $sale_notes = SaleNote::query()
+                ->with('items', 'items.relation_item')
+                ->where([['establishment_id', $establishment_id], ['changed', false]])
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])
+                ->whereBetween('date_of_issue', [$d_start, $d_end])->get();
         } else {
+            $documents = Document::query()
+                ->with('items', 'items.relation_item')
+                ->where('establishment_id', $establishment_id)
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])->get();
 
-            $documents = Document::without(['user', 'soap_type', 'state_type', 'document_type', 'currency_type', 'group', 'items', 'invoice', 'note', 'payments'])
-                        ->where('establishment_id', $establishment_id)
-                        ->whereIn('state_type_id', ['01','03','05','07','13'])->get();
-
-
-            $sale_notes = SaleNote::without(['user', 'soap_type', 'state_type', 'currency_type', 'items', 'payments'])
-                        ->where([['establishment_id', $establishment_id],['changed',false]])
-                        ->whereIn('state_type_id', ['01','03','05','07','13'])->get();
+            $sale_notes = SaleNote::query()
+                ->with('items', 'items.relation_item')
+                ->where([['establishment_id', $establishment_id], ['changed', false]])
+                ->whereIn('state_type_id', ['01', '03', '05', '07', '13'])->get();
 
         }
 
@@ -306,8 +307,8 @@ class DashboardSalePurchase
         // dd($group_items);
 
         foreach ($group_items as $items) {
-            $item = Item::without(['item_type', 'unit_type', 'currency_type', 'warehouses','item_unit_types', 'tags'])
-                ->where('status',true)->find($items[0]->item_id);
+//            $item = $items->relation_item;
+                Item::query()->where('status', true)->find($items[0]->item_id);
 
             $totals = 0;
             $total_credit_note = 0;
@@ -315,16 +316,16 @@ class DashboardSalePurchase
 
             foreach ($items as $it) {
 
-                if($it->document){
+                if ($it->document) {
 
-                    if(in_array($it->document->document_type_id,['01','03','08'])){
+                    if (in_array($it->document->document_type_id, ['01', '03', '08'])) {
 
 
                         $totals += $this->calculateTotalCurrency($it->document->currency_type_id, $it->document->exchange_rate_sale, $it->total);
                         // $totals += $this->calculateTotalCurrency($it->document->currency_type_id, $it->document->exchange_rate_sale, $it->document->total);
                         $move_quantity += $it->quantity;
 
-                    }else{
+                    } else {
 
                         $total_credit_note += $this->calculateTotalCurrency($it->document->currency_type_id, $it->document->exchange_rate_sale, $it->total);
                         // $total_credit_note += $this->calculateTotalCurrency($it->document->currency_type_id, $it->document->exchange_rate_sale, $it->document->total);
@@ -332,19 +333,19 @@ class DashboardSalePurchase
 
                     }
 
-                }else{
+                } else {
 
                     $totals += $this->calculateTotalCurrency($it->sale_note->currency_type_id, $it->sale_note->exchange_rate_sale, $it->total);
                     // $totals += $this->calculateTotalCurrency($it->sale_note->currency_type_id, $it->sale_note->exchange_rate_sale, $it->sale_note->total);
                     $move_quantity += $it->quantity;
 
                 }
-                
+
             }
 
             $difference = $totals - $total_credit_note;
 
-            if($item && $difference > 0){
+            if ($item && $difference > 0) {
                 $items_by_sales->push([
                     'total' => number_format($difference, 2, ".", ""),
                     'description' => $item->description,
@@ -357,7 +358,7 @@ class DashboardSalePurchase
         $order_column = ($enabled_move_item) ? 'move_quantity' : 'total';
         $sorted = $items_by_sales->sortByDesc($order_column);
 
-        if($no_take) {
+        if ($no_take) {
             $collect = $sorted->values();
             return new LengthAwarePaginator($collect->forPage($page, 10), $collect->count(), 10, $page);
             //config('tenant.items_per_page_simple_d_table')
@@ -370,7 +371,8 @@ class DashboardSalePurchase
      * @param $purchases
      * @return array
      */
-    private function arrayPurchasesbyMonth($purchases_by_month, $total){
+    private function arrayPurchasesbyMonth($purchases_by_month, $total)
+    {
 
         return [
             isset($purchases_by_month['01']) ? round($purchases_by_month['01']->sum($total), 2) : 0,
@@ -389,18 +391,14 @@ class DashboardSalePurchase
 
     }
 
-    private function calculateTotalCurrency($currency_type_id, $exchange_rate_sale,  $total)
+    private function calculateTotalCurrency($currency_type_id, $exchange_rate_sale, $total)
     {
-        if($currency_type_id == 'USD')
-        {
+        if ($currency_type_id == 'USD') {
             return $total * $exchange_rate_sale;
-        }
-        else{
+        } else {
             return $total;
         }
     }
-
-
 
 
 }

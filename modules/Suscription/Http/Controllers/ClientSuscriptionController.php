@@ -66,19 +66,16 @@
 
         public function Tables()
         {
-
-            $countries = Country::whereActive()->orderByDescription()->get();
+            $countries = func_get_table_countries();
             $departments = Department::whereActive()->orderByDescription()->get();
             $provinces = Province::whereActive()->orderByDescription()->get();
             $districts = District::whereActive()->orderByDescription()->get();
-            $identity_document_types = IdentityDocumentType::whereActive()->get();
+            $identity_document_types = func_get_table_identity_document_types();
             $person_types = PersonType::get();
             $locations = $this->getLocationCascade();
-            // $configuration = Configuration::first();
-            // $api_service_token = $configuration->token_apiruc === 'false' ? config('configuration.api_service_token') : $configuration->token_apiruc;
-            $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
 
-            return compact('countries', 'departments', 'provinces', 'districts', 'identity_document_types', 'locations', 'person_types', 'api_service_token');
+            return compact('countries', 'departments', 'provinces', 'districts', 'identity_document_types',
+                'locations', 'person_types');
         }
 
 

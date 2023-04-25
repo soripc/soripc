@@ -30,33 +30,32 @@ class ServiceData
 
     public function __construct()
     {
-        $prefix = env('PREFIX_URL', null);
-        $prefix = !empty($prefix) ? $prefix . "." : '';
-        $app_url = $prefix . config('configuration.app_url_base');
-        // $app_url = $prefix. env('APP_URL_BASE');
-        $url = $_SERVER['HTTP_HOST'] ?? null;
-        $company = null;
+//        $prefix = env('PREFIX_URL', null);
+//        $prefix = !empty($prefix) ? $prefix . "." : '';
+//        $app_url = $prefix . config('configuration.app_url_base');
+//         $app_url = $prefix. env('APP_URL_BASE');
+//        $url = $_SERVER['HTTP_HOST'] ?? null;
+//        $company = null;
         // Desde admin
         $configuration = SystemConfiguration::query()->first();
         $trackApi = new SystemTrackApiPeruService();
 
-        if ($url !== $app_url) {
-            // desde cliente
-            $configuration = TenantConfig::query()->first();
-            $trackApi = new TenantTrackApiPeruService();
-            $company = Company::first();
-            if ($configuration->UseCustomApiPeruToken() == false) {
-                $configuration = SystemConfiguration::query()->first();
-                $trackApi = new SystemTrackApiPeruService();
-            }
-        }
+//        if ($url !== $app_url) {
+//            // desde cliente
+//            $configuration = TenantConfig::query()->first();
+//            $trackApi = new TenantTrackApiPeruService();
+//            $company = Company::first();
+//            if ($configuration->UseCustomApiPeruToken() == false) {
+//                $configuration = SystemConfiguration::query()->first();
+//                $trackApi = new SystemTrackApiPeruService();
+//            }
+//        }
 
-        $url = $configuration->url_apiruc = !'' ? $configuration->url_apiruc : config('configuration.api_service_url');
-        $token = $configuration->token_apiruc = !'' ? $configuration->token_apiruc : config('configuration.api_service_token');
+        $url = $configuration->url_apiruc;
+        $token = $configuration->token_apiruc;// = !'' ? $configuration->token_apiruc : config('qpos.api_service_token');
         $this->configuration = $configuration;
         $this->trackApi = $trackApi;
-        $this->company = $company;
-
+//        $this->company = $company;
 
         $this->client = new Client(['base_uri' => $url]);
         $this->parameters = [
@@ -125,7 +124,7 @@ class ServiceData
                     $district_id = $data['ubigeo'][2];
                     $address = $data['direccion'];
                 }
-                $update_location = $this->updateLocation($department_id, $province_id, $district_id, $data);
+                //$update_location = $this->updateLocation($department_id, $province_id, $district_id, $data);
 
                 $res_data = [
                     'name' => $data['nombre_completo'],
@@ -141,7 +140,7 @@ class ServiceData
                     'district_id' => $district_id,
                     'condition' => '',
                     'state' => '',
-                    'update_location' => $update_location
+                    'update_location' => false //$update_location
                 ];
             }
 
@@ -164,7 +163,7 @@ class ServiceData
                     $address = $data['direccion'];
                 }
 
-                $update_location = $this->updateLocation($department_id, $province_id, $district_id, $data);
+                //$update_location = $this->updateLocation($department_id, $province_id, $district_id, $data);
                 $is_agent_retention = ($data['es_agente_de_retencion'] === 'SI');
 
                 $res_data = [
@@ -177,7 +176,7 @@ class ServiceData
                     'location_id' => $data['ubigeo'],
                     'condition' => $data['condicion'],
                     'state' => $data['estado'],
-                    'update_location' => $update_location,
+                    'update_location' => false, //$update_location,
                     'is_agent_retention' => $is_agent_retention,
                 ];
             }

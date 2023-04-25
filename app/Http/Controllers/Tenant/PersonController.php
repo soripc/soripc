@@ -32,9 +32,9 @@ class PersonController extends Controller
     {
         // $configuration = Configuration::first();
         // $api_service_token = $configuration->token_apiruc =! '' ? $configuration->token_apiruc : config('configuration.api_service_token');
-        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
+//        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
 
-        return view('tenant.persons.index', compact('type', 'api_service_token'));
+        return view('tenant.persons.index', compact('type'));
     }
 
     public function columns()
@@ -65,16 +65,15 @@ class PersonController extends Controller
 
     public function tables()
     {
-        $countries = Country::whereActive()->orderByDescription()->get();
-        $identity_document_types = IdentityDocumentType::whereActive()->get();
+        $countries = func_get_table_countries();
+        $identity_document_types = func_get_table_identity_document_types();
         $person_types = PersonType::get();
         $locations = func_get_table_locations();
         $zones = Zone::all();
         $sellers = $this->getSellers();
-        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
+        //$api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
 
-        return compact('countries', 'identity_document_types', 'locations','person_types','api_service_token'
-        ,'zones','sellers');
+        return compact('countries', 'identity_document_types', 'locations','person_types','zones','sellers');
     }
 
     public function record($id)

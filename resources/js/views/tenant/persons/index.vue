@@ -123,8 +123,7 @@
                 </data-table>
             </div>
 
-            <persons-form :api_service_token="api_service_token"
-                          :recordId="recordId"
+            <persons-form :recordId="recordId"
                           :showDialog.sync="showDialog"
                           :type="type"></persons-form>
 
@@ -148,7 +147,7 @@ import {deletable} from '../../../mixins/deletable'
 
 export default {
     mixins: [deletable],
-    props: ['type', 'typeUser', 'api_service_token', 'configuration'],
+    props: ['type', 'typeUser', 'configuration'],
     components: {PersonsForm, PersonsImport, PersonsExport, DataTable},
     data() {
         return {

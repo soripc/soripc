@@ -183,20 +183,16 @@
         public function Tables()
         {
 
-            $countries = Country::whereActive()->orderByDescription()->get();
+            $countries = func_get_table_countries();
             $departments = Department::whereActive()->orderByDescription()->get();
             $provinces = Province::whereActive()->orderByDescription()->get();
             $districts = District::whereActive()->orderByDescription()->get();
-            $identity_document_types = IdentityDocumentType::whereActive()->get();
+            $identity_document_types = func_get_table_identity_document_types();
             $person_types = PersonType::get();
             $locations = $this->getLocationCascade();
-            // $configuration = Configuration::first();
-            // $api_service_token = $configuration->token_apiruc == 'false' ? config('configuration.api_service_token') : $configuration->token_apiruc;
-            $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
-
             $unit_types = UnitType::whereActive()->orderByDescription()->get();
-            $currency_types = CurrencyType::whereActive()->orderByDescription()->get();
-            $affectation_igv_types = AffectationIgvType::whereActive()->get();
+            $currency_types = func_get_table_currency_types();
+            $affectation_igv_types = func_get_table_affectation_igv_types();
 
             $payments_credit = PaymentMethodType::select('id')->NonCredit()->get()->toArray();
             $payments_credit = PaymentMethodType:: getPaymentMethodTypes($payments_credit);

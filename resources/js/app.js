@@ -229,9 +229,10 @@ Vue.component('tenant-report-kardex-master', require('../../modules/Inventory/Re
 Vue.component('tenant-report-kardex-lots', require('../../modules/Inventory/Resources/assets/js/kardex/lots.vue'));
 Vue.component('tenant-report-kardex-series', require('../../modules/Inventory/Resources/assets/js/kardex/series.vue'));
 
-Vue.component('tenant-order-notes-index', require('../../modules/Order/Resources/assets/js/views/order_notes/index.vue'));
-Vue.component('tenant-order-notes-form', require('../../modules/Order/Resources/assets/js/views/order_notes/form.vue'));
-Vue.component('tenant-order-notes-edit', require('../../modules/Order/Resources/assets/js/views/order_notes/form_edit.vue'));
+Vue.component('tenant-order-notes-index', require('./views/tenant/OrderNotes/index.vue'));
+Vue.component('tenant-order-notes-form', require('./views/tenant/OrderNotes/form.vue'));
+Vue.component('tenant-order-notes-edit', require('./views/tenant/OrderNotes/form_edit.vue'));
+
 Vue.component('tenant-report-valued-kardex', require('../../modules/Inventory/Resources/assets/js/valued_kardex/index.vue'));
 Vue.component('tenant-mitiendape-config', require('../../modules/Order/Resources/assets/js/views/mi_tienda_pe/form.vue'));
 
@@ -252,11 +253,11 @@ Vue.component('tenant-finance-movements-index', require('@viewsModuleFinance/mov
 
 
 //Sale
-Vue.component('tenant-sale-opportunities-index', require('@viewsModuleSale/sale_opportunities/index.vue'));
-Vue.component('tenant-sale-opportunities-form', require('@viewsModuleSale/sale_opportunities/form.vue'));
+Vue.component('tenant-sale-opportunities-index', require('./views/tenant/SaleOpportunities/index.vue'));
+Vue.component('tenant-sale-opportunities-form', require('./views/tenant/SaleOpportunities/form.vue'));
 Vue.component('tenant-payment-method-types-index', require('@viewsModuleSale/payment_method_types/index.vue'));
-Vue.component('tenant-contracts-index', require('@viewsModuleSale/contracts/index.vue'));
-Vue.component('tenant-contracts-form', require('@viewsModuleSale/contracts/form.vue'));
+Vue.component('tenant-contracts-index', require('./views/tenant/Contracts/index.vue'));
+Vue.component('tenant-contracts-form', require('./views/tenant/Contracts/form.vue'));
 Vue.component('tenant-production-orders-index', require('@viewsModuleSale/production_orders/index.vue'));
 Vue.component('tenant-agents-index', require('@viewsModuleSale/agents/index.vue'));
 
@@ -425,12 +426,12 @@ Vue.component('tenant-packaging-index', require('../../modules/Production/Resour
 Vue.component('tenant-packaging-form', require('../../modules/Production/Resources/assets/js/view/packaging/form.vue'));
 
 /* Restaurante */
-Vue.component('tenant-restaurant-list-items', require('../../modules/Restaurant/Resources/assets/js/views/items/index.vue'));
-Vue.component('tenant-restaurant-promotions-index', require('../../modules/Restaurant/Resources/assets/js/views/promotions/index.vue'));
-Vue.component('tenant-restaurant-orders-index', require('../../modules/Restaurant/Resources/assets/js/views/orders/index.vue'));
-Vue.component('tenant-restaurant-cash-index', require('../../modules/Restaurant/Resources/assets/js/views/cash/index.vue'));
-Vue.component('tenant-restaurant-cash-filter-pos', require('../../modules/Restaurant/Resources/assets/js/views/cash/filter-pos.vue'));
-Vue.component('tenant-restaurant-configuration', require('../../modules/Restaurant/Resources/assets/js/views/configuration/index.vue'));
+Vue.component('tenant-restaurant-list-items', require('./views/tenant/Restaurant/items/index.vue'));
+Vue.component('tenant-restaurant-promotions-index', require('./views/tenant/Restaurant/promotions/index.vue'));
+Vue.component('tenant-restaurant-orders-index', require('./views/tenant/Restaurant/orders/index.vue'));
+Vue.component('tenant-restaurant-cash-index', require('./views/tenant/Restaurant/cash/index.vue'));
+Vue.component('tenant-restaurant-cash-filter-pos', require('./views/tenant/Restaurant/cash/filter-pos.vue'));
+Vue.component('tenant-restaurant-configuration', require('./views/tenant/Restaurant/configuration/index.vue'));
 
 
 //Pagos

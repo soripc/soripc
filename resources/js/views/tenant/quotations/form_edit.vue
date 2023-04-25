@@ -3,26 +3,29 @@
         <div class="tab-content" v-if="loading_form">
             <div class="invoice">
                 <header class="clearfix">
-                    <div class="row">
-                        <div class="col-sm-2 text-center mt-3 mb-0">
-                            <logo url="/"
-                                  :path_logo="(company.logo != null) ? `/storage/uploads/logos/${company.logo}` : ''"></logo>
-                        </div>
-                        <div class="col-sm-6 text-left mt-3 mb-0">
-                            <address class="ib mr-2">
-                                <span class="font-weight-bold d-block">COTIZACIÓN</span>
-                                <span class="font-weight-bold d-block">COT-XXX</span>
-                                <span class="font-weight-bold">{{ company.name }}</span>
-                                <br>
-                                <div v-if="establishment.address != '-'">{{ establishment.address }},</div>
-                                {{ establishment.district.description }}, {{ establishment.province.description }},
-                                {{ establishment.department.description }} - {{ establishment.country.description }}
-                                <br>
-                                {{ establishment.email }} - <span
-                                v-if="establishment.telephone != '-'">{{ establishment.telephone }}</span>
-                            </address>
-                        </div>
-                    </div>
+                    <header-form :company="company"
+                                 :establishment="establishment">
+                    </header-form>
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-2 text-center mt-3 mb-0">-->
+<!--                            <logo url="/"-->
+<!--                                  :path_logo="(company.logo != null) ? `/storage/uploads/logos/${company.logo}` : ''"></logo>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-6 text-left mt-3 mb-0">-->
+<!--                            <address class="ib mr-2">-->
+<!--                                <span class="font-weight-bold d-block">COTIZACIÓN</span>-->
+<!--                                <span class="font-weight-bold d-block">COT-XXX</span>-->
+<!--                                <span class="font-weight-bold">{{ company.name }}</span>-->
+<!--                                <br>-->
+<!--                                <div v-if="establishment.address != '-'">{{ establishment.address }},</div>-->
+<!--                                {{ establishment.district.description }}, {{ establishment.province.description }},-->
+<!--                                {{ establishment.department.description }} - {{ establishment.country.description }}-->
+<!--                                <br>-->
+<!--                                {{ establishment.email }} - <span-->
+<!--                                v-if="establishment.telephone != '-'">{{ establishment.telephone }}</span>-->
+<!--                            </address>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </header>
                 <form autocomplete="off" @submit.prevent="submit">
                     <div class="form-body">
@@ -416,9 +419,10 @@ import {exchangeRate, functions} from '../../../mixins/functions'
 import {calculateRowItem, showNamePdfOfDescription, sumAmountDiscountsNoBaseByItem} from '../../../helpers/functions'
 import Logo from '../companies/logo.vue'
 import {mapActions, mapState} from "vuex/dist/vuex.mjs";
+import HeaderForm from "../../../components/Form/HeaderForm";
 
 export default {
-    components: {QuotationFormItem, PersonForm, QuotationOptions, Logo, TermsCondition},
+    components: {HeaderForm, QuotationFormItem, PersonForm, QuotationOptions, Logo, TermsCondition},
     props: {
         'resourceId': {
             required: true,

@@ -187,13 +187,11 @@ class QuotationController extends Controller
 
     public function tables()
     {
-
         $customers = $this->table('customers');
-        $establishments = Establishment::where('id', auth()->user()->establishment_id)->get();
-        $currency_types = CurrencyType::whereActive()->get();
-        // $document_types_invoice = DocumentType::whereIn('id', ['01', '03'])->get();
-        $discount_types = ChargeDiscountType::whereType('discount')->whereLevel('item')->get();
-        $charge_types = ChargeDiscountType::whereType('charge')->whereLevel('item')->get();
+        $establishments = func_get_establishments_show();
+        $currency_types = func_get_table_currency_types();
+        $discount_types = func_get_table_discount_types_item();
+        $charge_types = func_get_table_charge_types_item();
         $company = Company::active();
         $document_type_03_filter = config('tenant.document_type_03_filter');
         $payment_method_types = PaymentMethodType::orderBy('id', 'desc')->get();

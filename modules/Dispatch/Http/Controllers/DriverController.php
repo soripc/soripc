@@ -37,9 +37,9 @@ class DriverController extends Controller
     public function tables()
     {
         $identity_document_types = IdentityDocumentType::whereActive()->get();
-        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
+//        $api_service_token = \App\Models\Tenant\Configuration::getApiServiceToken();
 
-        return compact('identity_document_types', 'api_service_token');
+        return compact('identity_document_types');
     }
 
     public function record($id)

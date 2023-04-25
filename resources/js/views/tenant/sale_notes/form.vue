@@ -12,26 +12,29 @@
         <div class="tab-content" v-if="company && establishment">
             <div class="invoice">
                 <header class="clearfix">
-                    <div class="row">
-                        <div class="col-sm-2 text-center mt-3 mb-0">
-                            <logo url="/"
-                                  :path_logo="(company.logo != null) ? `/storage/uploads/logos/${company.logo}` : ''"></logo>
-                        </div>
-                        <div class="col-sm-10 text-left mt-3 mb-0">
-                            <address class="ib mr-2">
-                                <span class="font-weight-bold d-block">NOTA DE VENTA</span>
-                                <span class="font-weight-bold d-block">NV-XXX</span>
-                                <span class="font-weight-bold">{{ company.name }}</span>
-                                <br>
-                                <div v-if="establishment.address != '-'">{{ establishment.address }},</div>
-                                {{ establishment.district.description }}, {{ establishment.province.description }},
-                                {{ establishment.department.description }} - {{ establishment.country.description }}
-                                <br>
-                                {{ establishment.email }} - <span
-                                v-if="establishment.telephone != '-'">{{ establishment.telephone }}</span>
-                            </address>
-                        </div>
-                    </div>
+                    <header-form :company="company"
+                                 :establishment="establishment">
+                    </header-form>
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-2 text-center mt-3 mb-0">-->
+<!--                            <logo url="/"-->
+<!--                                  :path_logo="(company.logo != null) ? `/storage/uploads/logos/${company.logo}` : ''"></logo>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-10 text-left mt-3 mb-0">-->
+<!--                            <address class="ib mr-2">-->
+<!--                                <span class="font-weight-bold d-block">NOTA DE VENTA</span>-->
+<!--                                <span class="font-weight-bold d-block">NV-XXX</span>-->
+<!--                                <span class="font-weight-bold">{{ company.name }}</span>-->
+<!--                                <br>-->
+<!--                                <div v-if="establishment.address != '-'">{{ establishment.address }},</div>-->
+<!--                                {{ establishment.district.description }}, {{ establishment.province.description }},-->
+<!--                                {{ establishment.department.description }} - {{ establishment.country.description }}-->
+<!--                                <br>-->
+<!--                                {{ establishment.email }} - <span-->
+<!--                                v-if="establishment.telephone != '-'">{{ establishment.telephone }}</span>-->
+<!--                            </address>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </header>
                 <form autocomplete="off" @submit.prevent="submit">
                     <div class="form-body">
@@ -229,7 +232,7 @@
                                             </th>
                                             <th v-if="form.payments.length>0">Referencia</th>
                                             <th v-if="form.payments.length>0">Monto</th>
-                                            
+
                                             <template v-if="showLoadVoucher && form.payments.length>0">
                                                 <th style="width:50px">Voucher</th>
                                             </template>
@@ -284,7 +287,7 @@
                                                     <el-input v-model="row.payment"></el-input>
                                                 </div>
                                             </td>
-                                            
+
                                             <template v-if="showLoadVoucher">
                                                 <td class="" style="width: 50px">
                                                     <!-- <el-tooltip class="item" content="Cargar voucher" effect="dark" placement="top-start"> -->
@@ -350,7 +353,7 @@
                                             <td>
                                                 <!-- {{ row.item.description }} -->
                                                 {{ setDescriptionOfItem (row.item) }}
-                                                
+
                                                 <template v-if="row.item.presentation">
                                                     {{ row.item.presentation.hasOwnProperty('description') ? row.item.presentation.description : '' }}
                                                 </template>
@@ -572,6 +575,7 @@
     import Logo from '../companies/logo.vue'
     import {mapActions, mapState} from "vuex/dist/vuex.mjs";
     import Keypress from "vue-keypress";
+    import HeaderForm from "../../../components/Form/HeaderForm";
 
     export default {
         props: [
@@ -581,6 +585,7 @@
             'authUser',
         ],
         components: {
+            HeaderForm,
             SaleNotesFormItem,
             PersonForm,
             SaleNotesOptions,
@@ -617,7 +622,7 @@
             {
                 return !_.isEmpty(this.id)
             },
-            isGlobalDiscountBase() 
+            isGlobalDiscountBase()
             {
                 return (this.config.global_discount_type_id === '02')
             },
@@ -678,7 +683,7 @@
             total_global_charge: 0,
             global_charge_types: [],
             recordItem: null,
-            headers_token: headers_token,            
+            headers_token: headers_token,
             global_discount_types: [],
             global_discount_type: {},
             is_amount: true,
@@ -735,15 +740,15 @@
         {
             return showNamePdfOfDescription(item, this.config.show_pdf_name)
         },
-        onSuccessUploadVoucher(response, file, fileList, index) 
+        onSuccessUploadVoucher(response, file, fileList, index)
         {
             if (response.success)
             {
                 this.form.payments[index].filename = response.data.filename
                 this.form.payments[index].temp_path = response.data.temp_path
                 this.form.payments[index].file_list = fileList
-            } 
-            else 
+            }
+            else
             {
                 this.cleanFileListUploadVoucher(index)
                 this.$message.error(response.message)
@@ -754,7 +759,7 @@
         {
             this.form.payments[index].file_list = []
         },
-        handleRemoveUploadVoucher(file, fileList, index) 
+        handleRemoveUploadVoucher(file, fileList, index)
         {
             this.form.payments[index].filename = null
             this.form.payments[index].temp_path = null
@@ -769,7 +774,7 @@
             if(this.authUser.multiple_default_document_types)
             {
                 const default_document_type_serie = _.find(this.authUser.default_document_types, { document_type_id : '80'})
-    
+
                 if(default_document_type_serie)
                 {
                     const exist_serie = _.find(this.series, { id : default_document_type_serie.series_id})
@@ -911,13 +916,13 @@
             }
 
         },
-        setDataUpdate() 
+        setDataUpdate()
         {
             if (this.form.total_charge > 0) this.total_global_charge = this.form.total_charge
 
             this.form.charges = (this.form.charges) ? Object.values(this.form.charges) : []
 
-            this.form.discounts = this.getDataGlobalDiscount() 
+            this.form.discounts = this.getDataGlobalDiscount()
 
         },
         getDataGlobalDiscount()
@@ -941,7 +946,7 @@
                 reference: null,
                 payment_destination_id: this.getPaymentDestinationId(),
                 payment: 0,
-                
+
                 filename: null,
                 temp_path: null,
                 file_list: [],
@@ -1211,12 +1216,12 @@
             this.setTotalDefaultPayment()
 
         },
-        deleteDiscountGlobal() 
+        deleteDiscountGlobal()
         {
             let discount = _.find(this.form.discounts, {'discount_type_id': this.config.global_discount_type_id})
             let index = this.form.discounts.indexOf(discount)
 
-            if (index > -1) 
+            if (index > -1)
             {
                 this.form.discounts.splice(index, 1)
                 this.form.total_discount = 0
@@ -1277,11 +1282,11 @@
             }
 
         },
-        changeTypeDiscount() 
+        changeTypeDiscount()
         {
             this.calculateTotal()
         },
-        changeTotalGlobalDiscount() 
+        changeTotalGlobalDiscount()
         {
             this.calculateTotal()
         },

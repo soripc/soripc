@@ -14,7 +14,7 @@ use Modules\Inventory\Models\Warehouse;
 class SaleNoteItem extends ModelTenant
 {
     use AttributePerItems;
-    protected $with = ['affectation_igv_type', 'system_isc_type', 'price_type'];
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -216,7 +216,7 @@ class SaleNoteItem extends ModelTenant
      */
     public function getModelItem(){ return Item::find($this->item_id);}
 
-    
+
     /**
      * Validar si es venta en dolares
      *
@@ -228,7 +228,7 @@ class SaleNoteItem extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener total y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -239,7 +239,7 @@ class SaleNoteItem extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener valor unitario y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -250,7 +250,7 @@ class SaleNoteItem extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener precio unitario y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -261,7 +261,7 @@ class SaleNoteItem extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener total valor y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -270,9 +270,9 @@ class SaleNoteItem extends ModelTenant
     {
         return $this->generalConvertValueToPen($this->total_value, $this->sale_note->exchange_rate_sale);
     }
-    
+
     /**
-     * 
+     *
      * Obtener total igv y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -281,9 +281,9 @@ class SaleNoteItem extends ModelTenant
     {
         return $this->generalConvertValueToPen($this->total_igv, $this->sale_note->exchange_rate_sale);
     }
-    
+
     /**
-     * 
+     *
      * Obtener total isc y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -292,15 +292,15 @@ class SaleNoteItem extends ModelTenant
     {
         return $this->generalConvertValueToPen($this->total_isc, $this->sale_note->exchange_rate_sale);
     }
-    
-    
+
+
     /**
-     * 
+     *
      * Filtro para no incluir relaciones en consulta
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
-     */  
+     */
     public function scopeWhereFilterWithOutRelations($query)
     {
         return $query->withOut(['affectation_igv_type', 'system_isc_type', 'price_type']);
@@ -308,12 +308,12 @@ class SaleNoteItem extends ModelTenant
 
 
     /**
-     * 
+     *
      * Filtro para reporte de ventas grifo
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
-     */  
+     */
     public function scopeFilterSaleGarageGLL($query, $d_start, $d_end)
     {
         return $query->whereHas('relation_item', function($query){

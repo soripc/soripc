@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Controller;
@@ -36,28 +37,29 @@ class ConfigurationController extends Controller
     {
         $configuration = Configuration::first();
 
-        if($request->token_public_culqui)
-        {
+        if ($request->token_public_culqui) {
             $configuration->token_public_culqui = $request->token_public_culqui;
         }
 
-        if($request->token_private_culqui)
-        {
+        if ($request->token_private_culqui) {
             $configuration->token_private_culqui = $request->token_private_culqui;
         }
 
-        if($request->url_apiruc)
-        {
-            $configuration->url_apiruc = $request->url_apiruc;
-        }
+//        if ($request->url_apiruc) {
+//            $configuration->url_apiruc = $request->url_apiruc;
+//        }
+//
+//        $token_apiruc = $request->input('token_apiruc', '');
+//        $token_apiruc = ($token_apiruc === '') ? null : $token_apiruc;
+//
+//        if ($configuration->token_apiruc !== $token_apiruc) {
+//            $configuration->token_apiruc = $request->token_apiruc;
+//        }
+////        if ($request->token_apiruc) {
+////            $configuration->token_apiruc = $request->token_apiruc;
+////        }
 
-        if($request->token_apiruc)
-        {
-            $configuration->token_apiruc = $request->token_apiruc;
-        }
-
-        if($request->apk_url)
-        {
+        if ($request->apk_url) {
             $configuration->apk_url = $request->apk_url;
             $this->updateApkUrl($request->apk_url);
         }
@@ -70,16 +72,40 @@ class ConfigurationController extends Controller
         ];
     }
 
-    public function apiruc()
+    public function getApiRucDni()
     {
-
-        $configuration = Configuration::first();
+        $configuration = Configuration::query()->select('id', 'token_apiruc')->first();
+        $token_api_text = '';
+        if ($configuration->token_apiruc !== '') {
+            $token_api_text = strlen($configuration->token_apiruc) > 10 ? substr($configuration->token_apiruc, 0, 10) . '...' : '...';
+        }
 
         return [
             'url_apiruc' => $configuration->url_apiruc,
-            'token_apiruc' => $configuration->token_apiruc,
+            'token_api_text' => $token_api_text,
         ];
     }
+
+    public function storeApiRucDni(Request $request)
+    {
+        $configuration = Configuration::query()->select('id', 'token_apiruc')->first();
+        $token_api = $request->input('token_api');
+        if(is_null($token_api) || $token_api === ''){
+            return [
+                'success' => false,
+                'message' => 'El token es inválido'
+            ];
+        }
+
+        $configuration->token_apiruc = $token_api;
+        $configuration->save();
+
+        return [
+            'success' => true,
+            'message' => 'El token fue guardado con exito'
+        ];
+    }
+
 
     public function storeLoginSettings()
     {
@@ -93,7 +119,7 @@ class ConfigurationController extends Controller
 
         $config = Configuration::first();
         $loginConfig = $config->login;
-        foreach(request()->all() as $key => $option) {
+        foreach (request()->all() as $key => $option) {
             $loginConfig->$key = $option;
         }
 
@@ -126,10 +152,10 @@ class ConfigurationController extends Controller
 
             $loginConfig = $config->login;
             $basePathStorage = 'storage/uploads/login/';
-			if (request('type') === 'bg') {
+            if (request('type') === 'bg') {
                 $loginConfig->type = 'image';
-				$loginConfig->image = asset($basePathStorage . $name);
-			} else {
+                $loginConfig->image = asset($basePathStorage . $name);
+            } else {
                 $loginConfig->logo = asset($basePathStorage . $name);
             }
             $config->login = $loginConfig;
@@ -142,17 +168,18 @@ class ConfigurationController extends Controller
         ], 200);
     }
 
-    public function InfoIndex(){
+    public function InfoIndex()
+    {
         $memory_limit = ini_get('memory_limit');
-        $memory_in_byte = number_format(self::return_bytes($memory_limit),'2',',','.');
+        $memory_in_byte = $memory_limit > 0 ? number_format(self::return_bytes($memory_limit), '2', ',', '.') : -1;
         $pcre_backtrack_limit = ini_get('pcre.backtrack_limit');
         $all_config = [
-            'max_execution_time' =>ini_get('max_execution_time'),
-            'max_input_time' =>ini_get('max_input_time'),
-            'post_max_size' =>ini_get('post_max_size'),
-            'upload_max_filesize' =>ini_get('upload_max_filesize'),
-            'request_terminate_timeout' =>ini_get('request_terminate_timeout'),
-            'date_timezone' =>ini_get('date.timezone'),
+            'max_execution_time' => ini_get('max_execution_time'),
+            'max_input_time' => ini_get('max_input_time'),
+            'post_max_size' => ini_get('post_max_size'),
+            'upload_max_filesize' => ini_get('upload_max_filesize'),
+            'request_terminate_timeout' => ini_get('request_terminate_timeout'),
+            'date_timezone' => ini_get('date.timezone'),
             'version_laravel' => app()->version(),
         ];
 
@@ -165,11 +192,12 @@ class ConfigurationController extends Controller
 
     }
 
-    private  static function return_bytes($val) {
+    private static function return_bytes($val)
+    {
         $val = trim($val);
-        $last = strtolower($val[strlen($val)-1]);
+        $last = strtolower($val[strlen($val) - 1]);
         $val = substr($val, 0, -1);
-        switch($last) {
+        switch ($last) {
             // The 'G' modifier is available since PHP 5.1.0
             case 'g':
                 $val *= 1024;
@@ -191,7 +219,7 @@ class ConfigurationController extends Controller
         ];
     }
 
-    public function updateApkUrl ($apk_url)
+    public function updateApkUrl($apk_url)
     {
         DB::connection('system')->transaction(function () use ($apk_url) {
 
@@ -209,9 +237,9 @@ class ConfigurationController extends Controller
         });
     }
 
-    
+
     /**
-     * 
+     *
      * Actualizar el descuento global a 02 (Afecta la base) en todos los clientes
      *
      * @return array
@@ -219,12 +247,11 @@ class ConfigurationController extends Controller
     public function updateTenantDiscountTypeBase()
     {
 
-        DB::connection('system')->transaction(function (){
+        DB::connection('system')->transaction(function () {
 
             $records = Client::get();
 
-            foreach ($records as $row) 
-            {
+            foreach ($records as $row) {
                 $tenancy = app(Environment::class);
                 $tenancy->tenant($row->hostname->website);
 
@@ -239,10 +266,10 @@ class ConfigurationController extends Controller
         ];
     }
 
-    
+
     /**
      *
-     * @param  Request $request
+     * @param Request $request
      * @return array
      */
     public function storeOtherConfiguration(Request $request)
@@ -266,28 +293,27 @@ class ConfigurationController extends Controller
     public function getOtherConfiguration()
     {
         return Configuration::select([
-                                'regex_password_client',
-                                'tenant_show_ads',
-                                'tenant_image_ads'
-                            ])
-                            ->firstOrFail();
+            'regex_password_client',
+            'tenant_show_ads',
+            'tenant_image_ads'
+        ])
+            ->firstOrFail();
     }
 
 
     /**
      *
-     * @param  Request $request
+     * @param Request $request
      * @return array
      */
     public function uploadTenantAds(Request $request)
     {
-        if ($request->hasFile('file')) 
-        {
+        if ($request->hasFile('file')) {
             $configuration = Configuration::firstOrFail();
 
             $file = $request->file('file');
             $ext = $file->getClientOriginalExtension();
-            $name = 'tenant_image_ads_'.date('YmdHis').'.'.$ext;
+            $name = 'tenant_image_ads_' . date('YmdHis') . '.' . $ext;
 
             request()->validate(['file' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048']);
             UploadFileHelper::checkIfValidFile($name, $file->getPathName(), true);
@@ -305,7 +331,7 @@ class ConfigurationController extends Controller
 
         return [
             'success' => false,
-            'message' =>  __('app.actions.upload.error'),
+            'message' => __('app.actions.upload.error'),
         ];
     }
 

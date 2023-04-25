@@ -1,14 +1,17 @@
 <?php
 
 
+use Illuminate\Support\Facades\Route;
+
 $current_hostname = app(Hyn\Tenancy\Contracts\CurrentHostname::class);
 
 if($current_hostname) {
     Route::domain($current_hostname->fqdn)->group(function () {
         Route::middleware(['auth', 'locked.tenant'])->group(function () {
-
             Route::prefix('documents/not-sent')->group(function() {
-                Route::get('', 'DocumentController@index')->name('tenant.documents.not_sent')->middleware('redirect.level','tenant.internal.mode');
+                Route::get('', 'DocumentController@index')
+                    ->name('tenant.documents.not_sent')
+                    ->middleware('redirect.level','tenant.internal.mode');
                 Route::get('records', 'DocumentController@records');
                 Route::get('data_table', 'DocumentController@data_table');
 
@@ -46,7 +49,9 @@ if($current_hostname) {
 
             Route::prefix('series-configurations')->group(function() {
 
-                Route::get('', 'SeriesConfigurationController@index')->name('tenant.series_configurations.index')->middleware('redirect.level');
+                Route::get('', 'SeriesConfigurationController@index')
+                    ->name('tenant.series_configurations.index')
+                    ->middleware('redirect.level');
                 Route::get('records', 'SeriesConfigurationController@records');
                 Route::get('tables', 'SeriesConfigurationController@tables');
                 Route::post('', 'SeriesConfigurationController@store');

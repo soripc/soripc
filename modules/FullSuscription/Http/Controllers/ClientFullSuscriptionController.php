@@ -71,7 +71,7 @@
              $configuration = Configuration::first();
             $configuration = $configuration->getCollectionData();
             // $api_service_token = $configuration->token_apiruc === 'false' ? config('configuration.api_service_token') : $configuration->token_apiruc;
-            $api_service_token = Configuration::getApiServiceToken();
+//            $api_service_token = Configuration::getApiServiceToken();
 
             return compact('countries',
                 'departments',
@@ -81,7 +81,6 @@
                 'identity_document_types',
                 'locations',
                 'person_types',
-                'api_service_token'
             );
         }
 

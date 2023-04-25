@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 $hostname = app(Hyn\Tenancy\Contracts\CurrentHostname::class);
@@ -860,7 +861,8 @@ Route::post('purchase-settlements', 'Tenant\PurchaseSettlementController@store')
             Route::get('status/history', 'System\StatusController@history')->name('system.status');
             Route::get('status/memory', 'System\StatusController@memory')->name('system.status.memory');
             Route::get('status/cpu', 'System\StatusController@cpu')->name('system.status.cpu');
-            Route::get('configurations/apiruc', 'System\ConfigurationController@apiruc');
+            Route::get('configurations/get_api_ruc_dni', 'System\ConfigurationController@getApiRucDni');
+            Route::post('configurations/store_api_ruc_dni', 'System\ConfigurationController@storeApiRucDni');
             Route::get('configurations/apkurl', 'System\ConfigurationController@apkurl');
 
             Route::get('configurations/update-tenant-discount-type-base', 'System\ConfigurationController@updateTenantDiscountTypeBase');

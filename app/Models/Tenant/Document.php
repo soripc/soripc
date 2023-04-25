@@ -39,20 +39,6 @@ class Document extends ModelTenant
 
     public const GROUP_TICKET = '02';
 
-    protected $with = [
-        'user',
-        'soap_type',
-        'state_type',
-        'document_type',
-        'currency_type',
-        'group',
-        'items',
-        'invoice',
-        'note',
-        'payments',
-        'fee'
-    ];
-
     protected $fillable = [
         'user_id',
         'external_id',

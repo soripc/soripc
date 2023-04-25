@@ -1,14 +1,14 @@
 <?php
 
 
-    use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
-    $current_hostname = app(Hyn\Tenancy\Contracts\CurrentHostname::class);
+$current_hostname = app(Hyn\Tenancy\Contracts\CurrentHostname::class);
 
-    if ($current_hostname) {
-        Route::domain($current_hostname->fqdn)
-            ->middleware(['redirect.level'])
-            ->group(function () {
+if ($current_hostname) {
+    Route::domain($current_hostname->fqdn)
+        ->middleware(['redirect.level'])
+        ->group(function () {
             Route::middleware(['auth', 'locked.tenant'])
                 ->prefix('suscription')
                 ->group(function () {
@@ -16,7 +16,7 @@
                      * suscription/client
                      */
                     Route::prefix('client')->group(function () {
-                        Route::get('/', 'ClientSuscriptionController@index') ->name('tenant.suscription.client.index');
+                        Route::get('/', 'ClientSuscriptionController@index')->name('tenant.suscription.client.index');
                         Route::get('/childrens', 'ClientSuscriptionController@indexChildren')->name('tenant.suscription.client_children.index');
                         Route::post('/', 'ClientSuscriptionController@store');
 
@@ -93,13 +93,13 @@
                             ->name('tenant.suscription.payment_receipt.index');
 
                     });
-                    
+
 
                     // grados y secciones
                     Route::get('grade_section', 'SuscriptionController@indexGradeSection')->name('tenant.suscription.grade_section.index');
 
                     Route::prefix('grades')->group(function () {
-                        
+
                         Route::get('records', 'GradeController@records');
                         Route::get('columns', 'GradeController@columns');
                         Route::get('record/{id}', 'GradeController@record');
@@ -107,9 +107,9 @@
                         Route::delete('{id}', 'GradeController@destroy');
 
                     });
-                    
+
                     Route::prefix('sections')->group(function () {
-                        
+
                         Route::get('records', 'SectionController@records');
                         Route::get('columns', 'SectionController@columns');
                         Route::get('record/{id}', 'SectionController@record');
@@ -119,9 +119,8 @@
                     });
                     // grados y secciones
 
-                    
-                    Route::post('CommonData','SuscriptionController@Tables');
+
+                    Route::post('CommonData', 'SuscriptionController@Tables');
                 });
-        })
-        ;
-    }
+        });
+}

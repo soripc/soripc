@@ -104,7 +104,6 @@ export default {
             loading_submit: false,
             titleDialog: '',
             resource: 'dispatch_persons',
-            api_service_token: false,
             errors: {},
             form: {},
             identity_document_types: [],

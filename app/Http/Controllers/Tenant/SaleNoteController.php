@@ -532,10 +532,10 @@ class SaleNoteController extends Controller
         $establishment_id =  $user->establishment_id;
         $userId =  $user->id;
         $customers = $this->table('customers');
-        $establishments = Establishment::where('id', auth()->user()->establishment_id)->get();
-        $currency_types = CurrencyType::whereActive()->get();
-        $discount_types = ChargeDiscountType::whereType('discount')->whereLevel('item')->get();
-        $charge_types = ChargeDiscountType::whereType('charge')->whereLevel('item')->get();
+        $establishments = func_get_establishments_show();
+        $currency_types = func_get_table_currency_types();
+        $discount_types = func_get_table_discount_types_item();
+        $charge_types = func_get_table_charge_types_item();
         $global_charge_types = ChargeDiscountType::whereIn('id', ['50'])->get();
         $company = Company::active();
         $payment_method_types = PaymentMethodType::all();

@@ -20,31 +20,10 @@
                     <div class="col-md-6">
                         <div class="form-group" :class="{'has-danger': errors.number}">
                             <label class="control-label">Número <span class="text-danger">*</span></label>
-
-                            <!-- <el-input v-model="form.number" :maxlength="maxLength" dusk="number">
-                            </el-input> -->
-
-                            <div v-if="api_service_token != false">
+                            <div>
                                 <x-input-service :identity_document_type_id="form.identity_document_type_id"
                                                  v-model="form.number" @search="searchNumber"></x-input-service>
                             </div>
-                            <div v-else>
-                                <el-input v-model="form.number" :maxlength="maxLength" dusk="number">
-                                    <template
-                                        v-if="form.identity_document_type_id === '6' || form.identity_document_type_id === '1'">
-                                        <el-button type="primary" slot="append" :loading="loading_search"
-                                                   icon="el-icon-search" @click.prevent="searchCustomer">
-                                            <template v-if="form.identity_document_type_id === '6'">
-                                                SUNAT
-                                            </template>
-                                            <template v-if="form.identity_document_type_id === '1'">
-                                                RENIEC
-                                            </template>
-                                        </el-button>
-                                    </template>
-                                </el-input>
-                            </div>
-
                             <small class="form-control-feedback" v-if="errors.number" v-text="errors.number[0]"></small>
                         </div>
                     </div>
@@ -108,7 +87,6 @@ export default {
             resource: 'dispatchers',
             errors: {},
             form: {},
-            api_service_token: false,
             identity_document_types: []
         }
     },
@@ -116,7 +94,6 @@ export default {
         await this.initForm()
         await this.$http.get(`/${this.resource}/tables`)
             .then(response => {
-                this.api_service_token = response.data.api_service_token
                 this.identity_document_types = response.data.identity_document_types;
             })
 

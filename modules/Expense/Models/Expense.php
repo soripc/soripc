@@ -15,52 +15,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * Class Modules\Expense\Models\Expense
- *
- * @property int $id
- * @property int $user_id
- * @property string|null $soap_type_id
- * @property int $expense_type_id
- * @property int $establishment_id
- * @property int $supplier_id
- * @property int $expense_reason_id
- * @property string $currency_type_id
- * @property string $external_id
- * @property string|null $state_type_id
- * @property string|null $number
- * @property Carbon $date_of_issue
- * @property Carbon $time_of_issue
- * @property string $supplier
- * @property float $exchange_rate_sale
- * @property float $total
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property CurrencyType $currency_type
- * @property Establishment $establishment
- * @property ExpenseReason $expense_reason
- * @property ExpenseType $expense_type
- * @property SoapType|null $soap_type
- * @property StateType|null $state_type
- * @property User $user
- * @property Collection|ExpenseItem[] $expense_items
- * @property Collection|ExpensePayment[] $expense_payments
- * @mixin ModelTenant
- * @package Modules\Expense\Models
- * @property-read ExpenseType $document_type
- * @property-read mixed $number_full
- * @property-read Collection|ExpenseItem[] $items
- * @property-read int|null $items_count
- * @property-read Collection|ExpensePayment[] $payments
- * @property-read int|null $payments_count
- * @property-read int|null $expense_items_count
- * @property-read int|null $expense_payments_count
- * @method static Builder|Expense newModelQuery()
- * @method static Builder|Expense newQuery()
- * @method static Builder|Expense query()
- * @method static Builder|Expense whereStateTypeAccepted()
- * @method static Builder|Expense whereTypeUser()
- */
 class Expense extends ModelTenant
 {
     protected $fillable = [

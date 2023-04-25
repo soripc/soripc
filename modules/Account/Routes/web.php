@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 $hostname = app(Hyn\Tenancy\Contracts\CurrentHostname::class);
 
-if($hostname) {
+if ($hostname) {
     Route::domain($hostname->fqdn)->group(function () {
-        Route::middleware(['auth', 'redirect.module', 'locked.tenant'])->group(function() {
-
+        Route::middleware(['auth', 'redirect.module', 'locked.tenant'])->group(function () {
             /**
              * account/
              * account/download
@@ -45,16 +46,15 @@ if($hostname) {
 
         });
     });
-}
-else {
+} else {
 
-    $prefix = env('PREFIX_URL',null);
-    $prefix = !empty($prefix)?$prefix.".":'';
-    $app_url = $prefix. env('APP_URL_BASE');
+    $prefix = env('PREFIX_URL', null);
+    $prefix = !empty($prefix) ? $prefix . "." : '';
+    $app_url = $prefix . env('APP_URL_BASE');
 
     Route::domain($app_url)->group(function () {
 
-        Route::middleware('auth:admin')->group(function() {
+        Route::middleware('auth:admin')->group(function () {
 
             Route::prefix('accounting')->group(function () {
 
