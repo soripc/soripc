@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
@@ -9,7 +10,9 @@ class NoteController extends Controller
 {
     public function create($document_id)
     {
-        $document_affected = Document::find($document_id);
+        $document_affected = Document::query()
+            ->with('invoice', 'items', 'payments', 'fee', 'items.affectation_igv_type')
+            ->find($document_id);
         $configuration = Configuration::first();
 
         return view('tenant.documents.note', compact('document_affected', 'configuration'));
@@ -17,7 +20,8 @@ class NoteController extends Controller
 
     public function record($document_id)
     {
-        $record = Document::find($document_id);
+        $record = Document::query()
+            ->find($document_id);
 
         return $record;
     }
@@ -27,20 +31,20 @@ class NoteController extends Controller
 
         $record = Document::wherehas('affected_documents')->find($document_id);
 
-        if($record){
+        if ($record) {
 
             return [
                 'success' => true,
-                'data' => $record->affected_documents->transform(function($row, $key) {
-                            return [
-                                'id' => $row->id,
-                                'document_id' => $row->document_id,
-                                'document_type_description' => $row->document->document_type->description,
-                                'description' => $row->document->number_full,
-                            ];
-                        })
+                'data' => $record->affected_documents->transform(function ($row, $key) {
+                    return [
+                        'id' => $row->id,
+                        'document_id' => $row->document_id,
+                        'document_type_description' => $row->document->document_type->description,
+                        'description' => $row->document->number_full,
+                    ];
+                })
             ];
-            
+
         }
 
         return [

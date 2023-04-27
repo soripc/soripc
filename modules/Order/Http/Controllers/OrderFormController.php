@@ -1,35 +1,31 @@
 <?php
+
 namespace Modules\Order\Http\Controllers;
 
 use App\CoreFacturalo\Helpers\Storage\StorageDocument;
 use App\Http\Controllers\Tenant\EmailController;
+use Modules\Dispatch\Models\Dispatcher;
+use Modules\Dispatch\Models\Driver;
 use Modules\Order\Http\Resources\OrderFormCollection;
 use Modules\Order\Http\Resources\OrderFormResource;
 use App\Http\Controllers\Controller;
-use App\CoreFacturalo\Facturalo;
-use App\Models\Tenant\Catalogs\{
-    IdentityDocumentType,
-    TransferReasonType,
-    TransportModeType,
-    Department,
-    Province,
-    District,
-    UnitType,
-    Country
-};
+use App\Models\Tenant\Catalogs\IdentityDocumentType;
+use App\Models\Tenant\Catalogs\TransferReasonType;
+use App\Models\Tenant\Catalogs\TransportModeType;
+use App\Models\Tenant\Catalogs\Department;
+use App\Models\Tenant\Catalogs\Province;
+use App\Models\Tenant\Catalogs\District;
+use App\Models\Tenant\Catalogs\UnitType;
+use App\Models\Tenant\Catalogs\Country;
 use Illuminate\Http\Request;
-use App\Models\Tenant\{
-    Establishment,
-    Dispatch,
-    Person,
-    Series,
-    Item
-};
+use App\Models\Tenant\Establishment;
+use App\Models\Tenant\Dispatch;
+use App\Models\Tenant\Person;
+use App\Models\Tenant\Series;
+use App\Models\Tenant\Item;
 use Modules\Order\Http\Requests\OrderFormRequest;
 use Exception, Illuminate\Support\Facades\DB;
 use Modules\Order\Models\OrderForm;
-use Modules\Order\Models\Dispatcher;
-use Modules\Order\Models\Driver;
 use Modules\Order\Helpers\OrderFormHelper;
 use App\Models\Tenant\Company;
 use App\Models\Tenant\Configuration;
@@ -39,9 +35,7 @@ use Mpdf\HTMLParserMode;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
 use Modules\Order\Mail\OrderFormEmail;
-use Illuminate\Support\Facades\Mail;
 use App\CoreFacturalo\Helpers\QrCode\QrCodeGenerate;
-
 
 class OrderFormController extends Controller
 {
@@ -50,21 +44,24 @@ class OrderFormController extends Controller
     protected $company;
     protected $order_form;
 
-    public function index() {
+    public function index()
+    {
         return view('order::order_forms.index');
     }
 
-    public function columns() {
+    public function columns()
+    {
         return [
             'date_of_issue' => 'Fecha de emisión',
             'id' => 'Número'
         ];
     }
 
-    public function records(Request $request) {
+    public function records(Request $request)
+    {
 
         $records = OrderForm::where($request->column, 'like', "%{$request->value}%")
-                            ->latest();
+            ->latest();
 
         return new OrderFormCollection($records->paginate(config('tenant.items_per_page')));
     }
@@ -88,14 +85,15 @@ class OrderFormController extends Controller
         return $record;
     }
 
-    public function store(OrderFormRequest $request) {
+    public function store(OrderFormRequest $request)
+    {
 
-        DB::connection('tenant')->transaction(function () use($request) {
+        DB::connection('tenant')->transaction(function () use ($request) {
 
             $data = OrderFormHelper::set($request->all());
             // dd($data);
 
-            $this->order_form =  OrderForm::updateOrCreate(['id' => $request->input('id')], $data);
+            $this->order_form = OrderForm::updateOrCreate(['id' => $request->input('id')], $data);
 
             $this->order_form->items()->delete();
 
@@ -118,20 +116,16 @@ class OrderFormController extends Controller
         ];
     }
 
-    /**
-     * Tables
-     * @param  Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function tables(Request $request) {
-
+    public function tables(Request $request)
+    {
         $items = Item::query()
+            ->with('currency_type')
             ->where('item_type_id', '01')
             ->orderBy('description')
+            ->take(20)
             ->get()
-            ->transform(function($row) {
-                $full_description = ($row->internal_id) ? $row->internal_id.' - '.$row->description : $row->description;
-
+            ->transform(function ($row) {
+                $full_description = ($row->internal_id) ? $row->internal_id . ' - ' . $row->description : $row->description;
                 return [
                     'id' => $row->id,
                     'full_description' => $full_description,
@@ -155,10 +149,10 @@ class OrderFormController extends Controller
             ->orderBy('name')
             ->whereIsEnabled()
             ->get()
-            ->transform(function($row) {
+            ->transform(function ($row) {
                 return [
                     'id' => $row->id,
-                    'description' => $row->number.' - '.$row->name,
+                    'description' => $row->number . ' - ' . $row->name,
                     'name' => $row->name,
                     'trade_name' => $row->trade_name,
                     'country_id' => $row->country_id,
@@ -175,14 +169,11 @@ class OrderFormController extends Controller
 
         $locations = [];
         $departments = Department::whereActive()->get();
-        foreach ($departments as $department)
-        {
+        foreach ($departments as $department) {
             $children_provinces = [];
-            foreach ($department->provinces as $province)
-            {
+            foreach ($department->provinces as $province) {
                 $children_districts = [];
-                foreach ($province->districts as $district)
-                {
+                foreach ($province->districts as $district) {
                     $children_districts[] = [
                         'value' => $district->id,
                         'label' => $district->description
@@ -213,51 +204,52 @@ class OrderFormController extends Controller
         $establishments = Establishment::all();
 
         $drivers = Driver::query()->orderBy('name')->get()
-                                ->transform(function($row) {
-                                    return [
-                                        'id' => $row->id,
-                                        'description' => $row->number.' - '.$row->name,
-                                    ];
-                                });
+            ->transform(function ($row) {
+                return [
+                    'id' => $row->id,
+                    'description' => $row->number . ' - ' . $row->name,
+                ];
+            });
 
         $dispatchers = Dispatcher::query()->orderBy('name')->get()
-                                ->transform(function($row) {
-                                    return [
-                                        'id' => $row->id,
-                                        'description' => $row->number.' - '.$row->name,
-                                    ];
-                                });
+            ->transform(function ($row) {
+                return [
+                    'id' => $row->id,
+                    'description' => $row->number . ' - ' . $row->name,
+                ];
+            });
 
         return compact('establishments', 'customers', 'transportModeTypes', 'transferReasonTypes', 'unitTypes',
-                            'countries', 'departments', 'provinces', 'districts', 'identityDocumentTypes', 'items',
-                            'locations', 'dispatchers', 'drivers');
+            'countries', 'departments', 'provinces', 'districts', 'identityDocumentTypes', 'items',
+            'locations', 'dispatchers', 'drivers');
     }
 
 
-    public function table($table){
+    public function table($table)
+    {
 
 
-        if($table == 'drivers'){
+        if ($table == 'drivers') {
 
             return Driver::query()->orderBy('name')->get()
-                            ->transform(function($row) {
-                                return [
-                                    'id' => $row->id,
-                                    'description' => $row->number.' - '.$row->name,
-                                ];
-                            });
+                ->transform(function ($row) {
+                    return [
+                        'id' => $row->id,
+                        'description' => $row->number . ' - ' . $row->name,
+                    ];
+                });
 
         }
 
-        if($table == 'dispatchers'){
+        if ($table == 'dispatchers') {
 
             return Dispatcher::query()->orderBy('name')->get()
-                                ->transform(function($row) {
-                                    return [
-                                        'id' => $row->id,
-                                        'description' => $row->number.' - '.$row->name,
-                                    ];
-                                });
+                ->transform(function ($row) {
+                    return [
+                        'id' => $row->id,
+                        'description' => $row->number . ' - ' . $row->name,
+                    ];
+                });
 
         }
 
@@ -274,8 +266,8 @@ class OrderFormController extends Controller
 
         $email = $customer_email;
         $mailable = new OrderFormEmail($company, $record);
-        $id = (int) $record->id;
-        $model = __FILE__.";;".__LINE__;
+        $id = (int)$record->id;
+        $model = __FILE__ . ";;" . __LINE__;
         $sendIt = EmailController::SendMail($email, $mailable, $id, $model);
         /*
         Configuration::setConfigSmtpMail();
@@ -297,15 +289,17 @@ class OrderFormController extends Controller
         ];
     }
 
-    private function setFilename(){
+    private function setFilename()
+    {
 
-        $name = [$this->order_form->prefix,$this->order_form->id,date('Ymd')];
+        $name = [$this->order_form->prefix, $this->order_form->id, date('Ymd')];
         $this->order_form->filename = join('-', $name);
         $this->order_form->save();
 
     }
 
-    public function download($external_id, $format) {
+    public function download($external_id, $format)
+    {
 
         $order_form = OrderForm::where('external_id', $external_id)->first();
 
@@ -317,7 +311,8 @@ class OrderFormController extends Controller
 
     }
 
-    public function toPrint($external_id, $format) {
+    public function toPrint($external_id, $format)
+    {
 
         $order_form = OrderForm::where('external_id', $external_id)->first();
 
@@ -339,11 +334,13 @@ class OrderFormController extends Controller
     }
 
 
-    private function reloadPDF($order_form, $format, $filename) {
+    private function reloadPDF($order_form, $format, $filename)
+    {
         $this->createPdf($order_form, $format, $filename);
     }
 
-    public function createPdf($order_form = null, $format_pdf = null, $filename = null) {
+    public function createPdf($order_form = null, $format_pdf = null, $filename = null)
+    {
 
         ini_set("pcre.backtrack_limit", "5000000");
         $template = new Template();
@@ -370,26 +367,26 @@ class OrderFormController extends Controller
 
             $pdf = new Mpdf([
                 'fontDir' => array_merge($fontDirs, [
-                    app_path('CoreFacturalo'.DIRECTORY_SEPARATOR.'Templates'.
-                                            DIRECTORY_SEPARATOR.'pdf'.
-                                            DIRECTORY_SEPARATOR.$base_template.
-                                            DIRECTORY_SEPARATOR.'font')
+                    app_path('CoreFacturalo' . DIRECTORY_SEPARATOR . 'Templates' .
+                        DIRECTORY_SEPARATOR . 'pdf' .
+                        DIRECTORY_SEPARATOR . $base_template .
+                        DIRECTORY_SEPARATOR . 'font')
                 ]),
                 'fontdata' => $fontData + [
-                    'custom_bold' => [
-                        'R' => $pdf_font_bold.'.ttf',
-                    ],
-                    'custom_regular' => [
-                        'R' => $pdf_font_regular.'.ttf',
-                    ],
-                ]
+                        'custom_bold' => [
+                            'R' => $pdf_font_bold . '.ttf',
+                        ],
+                        'custom_regular' => [
+                            'R' => $pdf_font_regular . '.ttf',
+                        ],
+                    ]
             ]);
         }
 
-        $path_css = app_path('CoreFacturalo'.DIRECTORY_SEPARATOR.'Templates'.
-                                             DIRECTORY_SEPARATOR.'pdf'.
-                                             DIRECTORY_SEPARATOR.$base_template.
-                                             DIRECTORY_SEPARATOR.'style.css');
+        $path_css = app_path('CoreFacturalo' . DIRECTORY_SEPARATOR . 'Templates' .
+            DIRECTORY_SEPARATOR . 'pdf' .
+            DIRECTORY_SEPARATOR . $base_template .
+            DIRECTORY_SEPARATOR . 'style.css');
 
         $stylesheet = file_get_contents($path_css);
 
@@ -403,6 +400,7 @@ class OrderFormController extends Controller
     {
         $this->uploadStorage($filename, $file_content, $file_type);
     }
+
     public function updateQr($url)
     {
         $qrCode = new QrCodeGenerate();

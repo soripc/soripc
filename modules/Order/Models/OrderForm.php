@@ -2,7 +2,6 @@
 
 namespace Modules\Order\Models;
 
-use App\Models\Tenant\Catalogs\DocumentType;
 use App\Models\Tenant\Catalogs\TransferReasonType;
 use App\Models\Tenant\Catalogs\TransportModeType;
 use App\Models\Tenant\Catalogs\UnitType;
@@ -13,6 +12,8 @@ use App\Models\Tenant\Person;
 use App\Models\Tenant\Establishment;
 use App\Models\Tenant\ModelTenant;
 use App\Models\Tenant\Dispatch;
+use Modules\Dispatch\Models\Dispatcher;
+use Modules\Dispatch\Models\Driver;
 
 
 class OrderForm extends ModelTenant

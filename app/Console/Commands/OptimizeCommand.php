@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Tenant\Document;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class OptimizeCommand extends Command
 {

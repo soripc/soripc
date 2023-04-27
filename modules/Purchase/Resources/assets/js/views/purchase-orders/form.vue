@@ -6,26 +6,29 @@
         <div class="tab-content" v-if="loading_form">
             <div class="invoice">
                 <header class="clearfix">
-                    <div class="row">
-                        <div class="col-sm-2 text-center mt-3 mb-0">
-                            <logo url="/"
-                                  :path_logo="(company.logo != null) ? `/storage/uploads/logos/${company.logo}` : ''"></logo>
-                        </div>
-                        <div class="col-sm-10 text-left mt-3 mb-0">
-                            <address class="ib mr-2">
-                                <span class="font-weight-bold d-block">ORDEN DE COMPRA</span>
-                                <span class="font-weight-bold d-block">OC-XXX</span>
-                                <span class="font-weight-bold">{{ company.name }}</span>
-                                <br>
-                                <div v-if="establishment.address != '-'">{{ establishment.address }},</div>
-                                {{ establishment.district.description }}, {{ establishment.province.description }},
-                                {{ establishment.department.description }} - {{ establishment.country.description }}
-                                <br>
-                                {{ establishment.email }} - <span
-                                v-if="establishment.telephone != '-'">{{ establishment.telephone }}</span>
-                            </address>
-                        </div>
-                    </div>
+                    <header-form :company="company"
+                                 :establishment="establishment">
+                    </header-form>
+<!--                    <div class="row">-->
+<!--                        <div class="col-sm-2 text-center mt-3 mb-0">-->
+<!--                            <logo url="/"-->
+<!--                                  :path_logo="(company.logo != null) ? `/storage/uploads/logos/${company.logo}` : ''"></logo>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-10 text-left mt-3 mb-0">-->
+<!--                            <address class="ib mr-2">-->
+<!--                                <span class="font-weight-bold d-block">ORDEN DE COMPRA</span>-->
+<!--                                <span class="font-weight-bold d-block">OC-XXX</span>-->
+<!--                                <span class="font-weight-bold">{{ company.name }}</span>-->
+<!--                                <br>-->
+<!--                                <div v-if="establishment.address != '-'">{{ establishment.address }},</div>-->
+<!--                                {{ establishment.district.description }}, {{ establishment.province.description }},-->
+<!--                                {{ establishment.department.description }} - {{ establishment.country.description }}-->
+<!--                                <br>-->
+<!--                                {{ establishment.email }} - <span-->
+<!--                                v-if="establishment.telephone != '-'">{{ establishment.telephone }}</span>-->
+<!--                            </address>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </header>
                 <form autocomplete="off" @submit.prevent="submit">
                     <div class="form-body">
@@ -334,10 +337,11 @@ import {functions, exchangeRate} from '../../../../../../../resources/js/mixins/
 import {calculateRowItem} from '../../../../../../../resources/js/helpers/functions'
 import Logo from '../../../../../../../resources/js/views/tenant/companies/logo.vue'
 import PersonForm from '../../../../../../../resources/js/views/tenant/persons/form.vue'
+import HeaderForm from "../../../../../../../resources/js/components/Form/HeaderForm";
 
 export default {
     props: ['id', 'saleOpportunity'],
-    components: {PurchaseFormItem, PersonForm, PurchaseOptions, Logo},
+    components: {PurchaseFormItem, PersonForm, PurchaseOptions, Logo, HeaderForm},
     mixins: [functions, exchangeRate],
     data() {
         return {
