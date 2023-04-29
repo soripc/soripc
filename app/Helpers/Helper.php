@@ -1,9 +1,11 @@
 <?php
 
 use App\CoreFacturalo\Helpers\Certificate\GenerateCertificate;
+use App\Models\System\Client;
 use App\Models\Tenant\Company;
 use App\Models\Tenant\Establishment;
 use Carbon\Carbon;
+use Hyn\Tenancy\Contracts\CurrentHostname;
 
 if (!function_exists('func_str_to_upper_utf8')) {
     function func_str_to_upper_utf8($text)
@@ -95,5 +97,13 @@ if (!function_exists('func_is_demo_platform')) {
         if ($company->is_demo_platform) {
             throw new Exception('Se encuentra en una plataforma DEMO, no es posible realizar la operación solicitada');
         }
+    }
+}
+
+if (!function_exists('update_client_data')) {
+    function update_client_data($data)
+    {
+        $hostname = app(CurrentHostname::class);
+        Client::query()->where('hostname_id', $hostname->id)->first()->update($data);
     }
 }

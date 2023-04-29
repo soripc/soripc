@@ -22,6 +22,7 @@ class DocumentObserver
         $filename = join('-', [$company->number, $document->document_type_id, $document->series, $number]);
         $document->number = $number;
         $document->filename = $filename;
+        $document->unique_filename = $document->filename; //campo único para evitar duplicados
     }
 
     private function getNewNumber($document)

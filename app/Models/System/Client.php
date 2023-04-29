@@ -11,7 +11,7 @@ class Client extends Model
 {
     use UsesSystemConnection;
 
-    protected $with = ['hostname','plan'];
+    protected $with = ['hostname', 'plan'];
 
     protected $fillable = [
         'hostname_id',
@@ -32,6 +32,8 @@ class Client extends Model
         'smtp_encryption',
         'locked_create_establishments',
         'restrict_sales_limit',
+        'soap_type_id',
+        'tasks'
     ];
 
 
@@ -40,7 +42,8 @@ class Client extends Model
         'smtp_port' => 'int',
         'locked_create_establishments' => 'boolean',
         'restrict_sales_limit' => 'boolean',
-        'is_demo_platform' => 'boolean'
+        'is_demo_platform' => 'boolean',
+        'tasks' => 'array'
     ];
 
 
@@ -49,7 +52,7 @@ class Client extends Model
      */
     public function getSmtpHost()
     {
-        return empty($this->smtp_host)?Config::get('mail.host'):$this->smtp_host;
+        return empty($this->smtp_host) ? Config::get('mail.host') : $this->smtp_host;
     }
 
     /**
@@ -68,8 +71,8 @@ class Client extends Model
      */
     public function getSmtpPort()
     {
-        if($this->smtp_port == 0)$this->smtp_port = null;
-        return empty($this->smtp_port)?Config::get('mail.port'):$this->smtp_port;
+        if ($this->smtp_port == 0) $this->smtp_port = null;
+        return empty($this->smtp_port) ? Config::get('mail.port') : $this->smtp_port;
     }
 
     /**
@@ -79,7 +82,7 @@ class Client extends Model
      */
     public function setSmtpPort($smtp_port)
     {
-        $this->smtp_port = (int) trim($smtp_port);
+        $this->smtp_port = (int)trim($smtp_port);
         return $this;
     }
 
@@ -88,7 +91,7 @@ class Client extends Model
      */
     public function getSmtpUser()
     {
-        return empty($this->smtp_user)?Config::get('mail.username'):$this->smtp_user;
+        return empty($this->smtp_user) ? Config::get('mail.username') : $this->smtp_user;
     }
 
     /**
@@ -107,7 +110,7 @@ class Client extends Model
      */
     public function getSmtpPassword()
     {
-        return empty($this->smtp_password)?Config::get('mail.password'):$this->smtp_password;
+        return empty($this->smtp_password) ? Config::get('mail.password') : $this->smtp_password;
     }
 
     /**
@@ -126,7 +129,7 @@ class Client extends Model
      */
     public function getSmtpEncryption()
     {
-        return empty($this->smtp_encryption)?Config::get('mail.encryption'):$this->smtp_encryption;
+        return empty($this->smtp_encryption) ? Config::get('mail.encryption') : $this->smtp_encryption;
     }
 
     /**
@@ -165,7 +168,7 @@ class Client extends Model
      */
     public function scopeWhereFilterWithOutRelations($query)
     {
-        return $query->withOut(['hostname','plan']);
+        return $query->withOut(['hostname', 'plan']);
     }
 
 

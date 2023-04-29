@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Facades\App\Http\Controllers\Tenant\DocumentController;
+use App\Http\Controllers\Tenant\DocumentController;
+use App\Models\Tenant\Company;
 use Illuminate\Console\Command;
 use App\Traits\CommandTrait;
-use App\Models\Tenant\{
-    Configuration,
-    Document
-};
+use App\Models\Tenant\Configuration;
+use App\Models\Tenant\Document;
+use Illuminate\Support\Facades\Log;
 
 class SendAllSunatCommand extends Command
 {
@@ -43,6 +43,12 @@ class SendAllSunatCommand extends Command
      * @return mixed
      */
     public function handle() {
+
+        $c = Company::query()->first();
+
+        $this->info('a: '.$c->name);
+        Log::info('a: '.$c->name);
+
         if (Configuration::firstOrFail()->cron) {
             if ($this->isOffline()) {
                 $this->info('Offline service is enabled');
@@ -60,7 +66,7 @@ class SendAllSunatCommand extends Command
 
             foreach ($documents as $document) {
                 try {
-                    $response = DocumentController::send($document->id);
+                    $response = (new DocumentController())->send($document->id);
 
                     $document->sunat_shipping_status = json_encode($response);
                     $document->success_sunat_shipping_status = true;

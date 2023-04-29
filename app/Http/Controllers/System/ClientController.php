@@ -488,6 +488,7 @@ class ClientController extends Controller
                 $client->setSmtpPassword($smtp_password);
             }
             $client->plan_id = $request->plan_id;
+            $client->soap_type_id = $request->input('soap_type_id');
             $client->save();
 
             $plan = Plan::find($request->plan_id);
@@ -709,6 +710,7 @@ class ClientController extends Controller
             $client->number = $request->input('number');
             $client->plan_id = $request->input('plan_id');
             $client->locked_emission = $request->input('locked_emission');
+            $client->soap_type_id = $request->input('soap_type_id');
             $client->save();
 
             DB::connection('system')->commit();

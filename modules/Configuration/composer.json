@@ -1,0 +1,25 @@
+{
+    "name": "qpos/configuration",
+    "description": "",
+    "authors": [
+        {
+            "name": "QPos",
+            "email": "desarrollo@qpos.pe"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Configuration\\Providers\\ConfigurationServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Configuration\\": ""
+        }
+    }
+}

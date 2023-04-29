@@ -1,0 +1,25 @@
+{
+    "name": "qpos/company",
+    "description": "",
+    "authors": [
+        {
+            "name": "QPos",
+            "email": "desarrollo@qpos.pe"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Company\\Providers\\CompanyServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Company\\": ""
+        }
+    }
+}
