@@ -104,6 +104,8 @@ if (!function_exists('update_client_data')) {
     function update_client_data($data)
     {
         $hostname = app(CurrentHostname::class);
-        Client::query()->where('hostname_id', $hostname->id)->first()->update($data);
+        if (isset($hostname->id)) {
+            Client::query()->where('hostname_id', $hostname->id)->first()->update($data);
+        }
     }
 }
