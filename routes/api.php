@@ -20,8 +20,6 @@ if ($hostname) {
 
             // Route::get('items/barcode/print', 'Tenant\Api\AppController@printBarCode')->name('tenant.items.export.barcode.print.x');
 
-
-
         //reportes caja
         Route::get('cash/report/products/{cash}', 'Tenant\CashController@report_products');
         Route::get('cash/report/income-summary/{cash}', '\Modules\Report\Http\Controllers\ReportIncomeSummaryController@pdf');
@@ -35,6 +33,9 @@ if ($hostname) {
 
             Route::get('items/barcode/print', 'Tenant\Api\AppController@printBarCode');
 
+            /////para obtener info de resumen mediante boleta
+            Route::get('summaries/{series}/{number}', 'Tenant\Api\ConsultController@summarieCpe');
+            
             //reorte general
             Route::get('report/format/download', 'Tenant\Api\ClinicaController@download_report');
             // Route::get('report/format/download', 'Modules\Account\Http\Controllers\FormatController@download');
@@ -55,38 +56,36 @@ if ($hostname) {
             Route::get('dispatch/{id}', 'Tenant\Api\AppController@dispatches_id');
 
 
-        // guia transportista
-        Route::prefix('dispatch_carrier')->group(function () {
-            Route::get('/records', 'Tenant\Api\AppController@dispatchesCarrierRecords');
-            Route::get('/data', 'Tenant\Api\AppController@dispatchesCarrierData');
-            Route::post('', 'Tenant\DispatchCarrierController@store');
-            Route::get('/send/{id}', 'Tenant\Api\AppController@sendDispatchCarrier');
-            Route::get('/record/{id}', 'Tenant\Api\AppController@dispatchesCarrierRecordId');
-            Route::get('/status_ticketLS/{id}', 'Tenant\Api\DispatchController@statusTicketCarrier');
-
-
-            // Route::get('', 'Tenant\DispatchCarrierController@index')->name('tenant.dispatch_carrier.index');
-            // Route::get('/columns', 'Tenant\DispatchCarrierController@columns');
-            // Route::get('/create/{document?}/{type?}/{dispatch?}', 'Tenant\DispatchCarrierController@create');
-            // Route::post('/tables', 'Tenant\DispatchCarrierController@tables');
-            // Route::post('', 'Tenant\DispatchCarrierController@store');
-            // Route::get('/record/{id}', 'Tenant\DispatchCarrierController@record');
-            // Route::post('/sendSunat/{document}', 'Tenant\DispatchCarrierController@sendDispatchToSunat');
-            // Route::post('/email', 'Tenant\DispatchCarrierController@email');
-            // Route::get('/generate/{sale_note}', 'Tenant\DispatchCarrierController@generate');
-            // Route::get('/record/{id}/tables', 'Tenant\DispatchCarrierController@generateDocumentTables');
-            // Route::post('/record/{id}/set-document-id', 'Tenant\DispatchCarrierController@setDocumentId');
-            // Route::get('/client/{id}', 'Tenant\DispatchCarrierController@dispatchesByClient');
-            // Route::post('/items', 'Tenant\DispatchCarrierController@getItemsFromDispatches');
-            // Route::post('/getDocumentType', 'Tenant\DispatchCarrierController@getDocumentTypeToDispatches');
-            // Route::get('/data_table', 'Tenant\DispatchCarrierController@data_table');
-            // Route::get('/search/customers', 'Tenant\DispatchCarrierController@searchCustomers');
-            // Route::get('/search/customer/{id}', 'Tenant\DispatchCarrierController@searchClientById');
-            // Route::post('/status_ticket', 'Tenant\Api\DispatchCarrierController@statusTicket');
-            // Route::get('create_new/{table}/{id}', 'Tenant\DispatchCarrierController@createNew');
-            // Route::get('/get_origin_addresses/{establishment_id}', 'Tenant\DispatchCarrierController@getOriginAddresses');
-            // Route::get('/get_delivery_addresses/{person_id}', 'Tenant\DispatchCarrierController@getDeliveryAddresses');
-        });
+            // guia transportista
+            Route::prefix('dispatch_carrier')->group(function () {
+                Route::get('/records', 'Tenant\Api\AppController@dispatchesCarrierRecords');
+                Route::get('/data', 'Tenant\Api\AppController@dispatchesCarrierData');
+                Route::post('', 'Tenant\DispatchCarrierController@store');
+                Route::get('/send/{id}', 'Tenant\Api\AppController@sendDispatchCarrier');
+                Route::get('/record/{id}', 'Tenant\Api\AppController@dispatchesCarrierRecordId');
+                Route::get('/status_ticketLS/{id}', 'Tenant\Api\DispatchController@statusTicketCarrier');
+                // Route::get('', 'Tenant\DispatchCarrierController@index')->name('tenant.dispatch_carrier.index');
+                // Route::get('/columns', 'Tenant\DispatchCarrierController@columns');
+                // Route::get('/create/{document?}/{type?}/{dispatch?}', 'Tenant\DispatchCarrierController@create');
+                // Route::post('/tables', 'Tenant\DispatchCarrierController@tables');
+                // Route::post('', 'Tenant\DispatchCarrierController@store');
+                // Route::get('/record/{id}', 'Tenant\DispatchCarrierController@record');
+                // Route::post('/sendSunat/{document}', 'Tenant\DispatchCarrierController@sendDispatchToSunat');
+                // Route::post('/email', 'Tenant\DispatchCarrierController@email');
+                // Route::get('/generate/{sale_note}', 'Tenant\DispatchCarrierController@generate');
+                // Route::get('/record/{id}/tables', 'Tenant\DispatchCarrierController@generateDocumentTables');
+                // Route::post('/record/{id}/set-document-id', 'Tenant\DispatchCarrierController@setDocumentId');
+                // Route::get('/client/{id}', 'Tenant\DispatchCarrierController@dispatchesByClient');
+                // Route::post('/items', 'Tenant\DispatchCarrierController@getItemsFromDispatches');
+                // Route::post('/getDocumentType', 'Tenant\DispatchCarrierController@getDocumentTypeToDispatches');
+                // Route::get('/data_table', 'Tenant\DispatchCarrierController@data_table');
+                // Route::get('/search/customers', 'Tenant\DispatchCarrierController@searchCustomers');
+                // Route::get('/search/customer/{id}', 'Tenant\DispatchCarrierController@searchClientById');
+                // Route::post('/status_ticket', 'Tenant\Api\DispatchCarrierController@statusTicket');
+                // Route::get('create_new/{table}/{id}', 'Tenant\DispatchCarrierController@createNew');
+                // Route::get('/get_origin_addresses/{establishment_id}', 'Tenant\DispatchCarrierController@getOriginAddresses');
+                // Route::get('/get_delivery_addresses/{person_id}', 'Tenant\DispatchCarrierController@getDeliveryAddresses');
+            });
 
             //guias transportistas
             Route::get('dispatch/list', 'Tenant\Api\AppController@dispatches_list');
@@ -240,6 +239,7 @@ if ($hostname) {
 
             Route::post('documents_server', 'Tenant\Api\DocumentController@storeServer');
             Route::get('document_check_server/{external_id}', 'Tenant\Api\DocumentController@documentCheckServer');
+            Route::get('document_check_server_serie_number/{series}/{number}', 'Tenant\Api\DocumentController@documentCheckServerSerieNumber');
 
             //liquidacion de compra
             Route::post('purchase-settlements', 'Tenant\Api\PurchaseSettlementController@store');
@@ -259,6 +259,10 @@ if ($hostname) {
             //Caja
             Route::post('cash/restaurant', 'Tenant\Api\CashController@storeRestaurant');
 
+            Route::prefix('general-items')->group(function () {
+                Route::get('/excel', 'Tenant\Api\ReportsController@generalItemsExcel');
+            });
+        
         });
 
         Route::get('documents/search/customers', 'Tenant\DocumentController@searchCustomers');

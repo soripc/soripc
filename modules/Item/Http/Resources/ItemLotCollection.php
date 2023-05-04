@@ -14,7 +14,7 @@ class ItemLotCollection extends ResourceCollection
      */
     public function toArray($request) {
         return $this->collection->transform(function($row, $key) {
-             
+
             $status = '';
 
             if($row->has_sale){
@@ -28,6 +28,7 @@ class ItemLotCollection extends ResourceCollection
                 'id' => $row->id,
                 'series' => $row->series,
                 'item_description' => $row->item->description,
+                'item_warehouse' => $row->warehouse->description,
                 'date' => $row->date,
                 'state' => $row->state,
                 'item_id' => $row->item_id,

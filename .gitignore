@@ -31,3 +31,6 @@ composer.lock
 app/CoreFacturalo/Templates/pdf/personalizada*
 public/templates/pdf/personalizada*
 supervisor.conf
+/resources/js/
+/resources/js/*
+/qpos_frontend

@@ -157,6 +157,25 @@ if ($cash!=null) {
         ];
     }
 
+    public function documentCheckServerSerieNumber($series, $number)
+    {
+        $document = Document::where('series', $series)->where('number', $number)->first();
+
+        // echo $document;
+        // return;
+        if ($document->state_type_id === '05' && $document->group_id === '01') {
+            $file_cdr = base64_encode($this->getStorage($document->filename, 'cdr'));
+        } else {
+            $file_cdr = null;
+        }
+
+        return [
+            'success' => true,
+            'state_type_id' => $document->state_type_id,
+            'file_cdr' => $file_cdr,
+        ];
+    }
+
     private function getStateTypeDescription($id)
     {
         return StateType::find($id)->description;

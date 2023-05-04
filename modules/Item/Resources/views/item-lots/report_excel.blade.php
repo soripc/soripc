@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Series</title>
     </head>
-    <body>  
+    <body>
         @if(!empty($records))
             <div class="">
                 <div class=" ">
@@ -17,6 +17,7 @@
                                 <th>#</th>
                                 <th>Serie</th>
                                 <th>Producto</th>
+                                <th>Establecimiento</th>
                                 <th>Fecha</th>
                                 <th>Estado</th>
                                 <th>Vendido</th>
@@ -26,7 +27,7 @@
                             @foreach($records as $key => $value)
 
                             @php
-                                
+
                                 $status = '';
 
                                 if($value->has_sale){
@@ -35,18 +36,18 @@
                                     $status = 'NO';
                                 }
 
-                            @endphp 
+                            @endphp
 
                             <tr>
                                 <td class="celda">{{$loop->iteration}}</td>
                                 <td class="celda">{{$value->series}}</td>
                                 <td class="celda">{{$value->item->description}}</td>
+                                <td class="celda">{{$value->warehouse->description}}</td>
                                 <td class="celda">{{$value->date}}</td>
                                 <td class="celda">{{$value->state}}</td>
                                 <td class="celda">{{$status}}</td>
- 
-                            </tr> 
-                            @endforeach 
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

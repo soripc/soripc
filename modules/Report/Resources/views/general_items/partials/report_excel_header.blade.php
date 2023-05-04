@@ -40,6 +40,7 @@
 <th> CANTIDAD</th>
 @if($type == 'sale')
     <th> MÉTODO DE PAGO </th>
+    <th> CONDICIÓN DE PAGO </th>
 @endif
 <th> SERIES</th>
 

@@ -11,36 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/style.scss', 'public/css/app.css')
-   .sass('resources/sass/auth.scss', 'public/css/auth.css')
+mix.js('qpos_frontend/js/app.js', 'public/js')
+   .sass('qpos_frontend/sass/style.scss', 'public/css/app.css')
+   .sass('qpos_frontend/sass/auth.scss', 'public/css/auth.css')
    .extract(['vue'])
    .version();
 
 mix.webpackConfig({
     resolve: {
         alias: {
-            '@components': path.resolve(__dirname, 'resources/js/components'),
-            '@views': path.resolve(__dirname, 'resources/js/views/tenant'),
-            '@helpers': path.resolve(__dirname, 'resources/js/helpers'),
-            '@mixins': path.resolve(__dirname, 'resources/js/mixins'),
-
-            '@viewsModuleSale': path.resolve(__dirname, 'modules/Sale/Resources/assets/js/views'),
-            '@viewsModuleFinance': path.resolve(__dirname, 'modules/Finance/Resources/assets/js/views'),
-            '@viewsModulePurchase': path.resolve(__dirname, 'modules/Purchase/Resources/assets/js/views'),
-            '@viewsModuleExpense': path.resolve(__dirname, 'modules/Expense/Resources/assets/js/views'),
-            '@viewsModuleOrder': path.resolve(__dirname, 'modules/Order/Resources/assets/js/views'),
-            '@viewsModuleAccount': path.resolve(__dirname, 'modules/Account/Resources/assets/js/views'),
-            '@viewsModuleItem': path.resolve(__dirname, 'modules/Item/Resources/assets/js/views'),
-            '@viewsModuleHotel': path.resolve(__dirname, 'modules/Hotel/Resources/assets/js/views'),
-            '@viewsModuleDocumentary': path.resolve(__dirname, 'modules/DocumentaryProcedure/Resources/assets/js/views'),
-            '@viewsModulePayment': path.resolve(__dirname, 'modules/Payment/Resources/assets/js/views'),
-            '@viewsModuleMercadoPago': path.resolve(__dirname, 'modules/MercadoPago/Resources/assets/js/views'),
-            '@viewsModuleSuscription': path.resolve(__dirname, 'modules/Suscription/Resources/assets/js/views'),
-            '@viewsModuleMobileApp': path.resolve(__dirname, 'modules/MobileApp/Resources/assets/js/views'),
-            '@viewsModuleLevelAccess': path.resolve(__dirname, 'modules/LevelAccess/Resources/assets/js/views'),
-            '@viewsModuleReport': path.resolve(__dirname, 'modules/Report/Resources/assets/js/views'),
-            '@viewsModuleInventory': path.resolve(__dirname, 'modules/Inventory/Resources/assets/js'),
+            '@components': path.resolve(__dirname, 'qpos_frontend/js/components'),
+            '@views': path.resolve(__dirname, 'qpos_frontend/js/views/tenant'),
+            '@helpers': path.resolve(__dirname, 'qpos_frontend/js/helpers'),
+            '@mixins': path.resolve(__dirname, 'qpos_frontend/js/mixins'),
         }
     }
 }).sourceMaps()

@@ -83,9 +83,7 @@
         @endif
     @endif
 
-
     @stack('styles')
-
 
     <script src="{{ asset('porto-light/vendor/modernizr/modernizr.js') }}"></script>
 

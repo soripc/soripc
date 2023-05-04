@@ -205,6 +205,12 @@ $isSaleNote = ($document_type_id != '80' && $type == 'sale') ? true : false;
             @endforeach
         @endforeach
     </td>
+    <td>
+        @php
+            $paymentCondition = \App\CoreFacturalo\Helpers\Template\TemplateHelper::getDocumentPaymentCondition($document);
+        @endphp
+        {{ $paymentCondition }}
+    </td>
     <td class="celda">{{ $series }}</td>
 
     <td class="celda">
