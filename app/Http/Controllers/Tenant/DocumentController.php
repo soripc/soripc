@@ -781,14 +781,12 @@ class DocumentController extends Controller
      */
     public function update(DocumentUpdateRequest $request, $id)
     {
-
         $validate = $this->validateDocument($request);
         if (!$validate['success']) return $validate;
 
         $fact = DB::connection('tenant')->transaction(function () use ($request, $id) {
             $facturalo = new Facturalo();
             $facturalo->update($request->all(), $id);
-
             $facturalo->createXmlUnsigned();
             $facturalo->signXmlUnsigned();
             $facturalo->updateHash();
