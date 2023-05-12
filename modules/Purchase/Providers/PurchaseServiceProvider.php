@@ -2,8 +2,9 @@
 
 namespace Modules\Purchase\Providers;
 
+use App\Models\Tenant\Purchase;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
+use Modules\Purchase\Observers\PurchaseObserver;
 use Modules\Purchase\Traits\PurchaseTrait;
 
 class PurchaseServiceProvider extends ServiceProvider
@@ -18,8 +19,9 @@ class PurchaseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->createCashDocument();
         $this->registerViews();
+        $this->createCashDocument();
+        Purchase::observe(PurchaseObserver::class);
     }
 
     /**

@@ -10,54 +10,6 @@ use Modules\Purchase\Models\PurchaseOrder;
 use stdClass;
 use Illuminate\Database\Eloquent\Collection;
 
-/**
- * Class Purchase
- *
- * @package App\Models\Tenant
- * @mixin ModelTenant
- * @property CurrencyType $currency_type
- * @property \App\Models\Tenant\Person $customer
- * @property DocumentType $document_type
- * @property \App\Models\Tenant\Establishment $establishment
- * @property mixed $charges
- * @property string $additional_information
- * @property mixed $detraction
- * @property mixed $discounts
- * @property mixed $guides
- * @property mixed $legends
- * @property mixed $number_full
- * @property mixed $number_to_letter
- * @property mixed $perception
- * @property mixed $prepayments
- * @property mixed $related
- * @property string|null $observation
- * @property \App\Models\Tenant\Person $supplier
- * @property \App\Models\Tenant\Group $group
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Tenant\InventoryKardex[] $inventory_kardex
- * @property int|null $inventory_kardex_count
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Tenant\PurchaseItem[] $items
- * @property int|null $items_count
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Tenant\Kardex[] $kardex
- * @property int|null $kardex_count
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Tenant\PurchasePayment[] $payments
- * @property int|null $payments_count
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Tenant\PurchaseItem[] $purchase_items
- * @property int|null $purchase_items_count
- * @property PurchaseOrder $purchase_order
- * @property \Illuminate\Database\Eloquent\Collection|\App\Models\Tenant\PurchasePayment[] $purchase_payments
- * @property int|null $purchase_payments_count
- * @property mixed $related_documents
- * @property \App\Models\Tenant\SoapType $soap_type
- * @property \App\Models\Tenant\StateType $state_type
- * @property \App\Models\Tenant\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase dasboardSalePurchase($establishment_id = 0)
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase onlyDateOfIssueByYear($year = 0)
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase query()
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereStateTypeAccepted()
- * @method static \Illuminate\Database\Eloquent\Builder|Purchase whereTypeUser()
- */
 class Purchase extends ModelTenant
 {
     // use SoftDeletes;
@@ -75,6 +27,7 @@ class Purchase extends ModelTenant
         'document_type_id',
         'series',
         'number',
+        'number_unique',
         'date_of_issue',
         'time_of_issue',
         'supplier_id',
@@ -381,7 +334,7 @@ class Purchase extends ModelTenant
                 $user = new User();
             }
         }
-        else { 
+        else {
             $user = auth()->user();
         }
         return ($user->type === 'seller') ? $query->where('user_id', $user->id) : null;
@@ -623,7 +576,7 @@ class Purchase extends ModelTenant
     {
         return $this->hasMany(GuideFile::class);
     }
-    
+
     /**
      * Validar si es compra en dolares
      *
@@ -640,7 +593,7 @@ class Purchase extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener total y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -651,7 +604,7 @@ class Purchase extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener total isc y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -660,9 +613,9 @@ class Purchase extends ModelTenant
     {
         return $this->convertValueToPen($this->total_isc);
     }
-    
+
     /**
-     * 
+     *
      * Obtener total igv y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -672,7 +625,7 @@ class Purchase extends ModelTenant
         return $this->convertValueToPen($this->total_igv);
     }
     /**
-     * 
+     *
      * Obtener total base y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -681,9 +634,9 @@ class Purchase extends ModelTenant
     {
         return $this->convertValueToPen($this->total_taxed);
     }
-    
+
     /**
-     * 
+     *
      * Obtener total exonerado y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -694,7 +647,7 @@ class Purchase extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener total inafecto y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -705,7 +658,7 @@ class Purchase extends ModelTenant
     }
 
     /**
-     * 
+     *
      * Obtener total gratuito y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -714,9 +667,9 @@ class Purchase extends ModelTenant
     {
         return $this->convertValueToPen($this->total_free);
     }
-    
+
     /**
-     * 
+     *
      * Obtener total exportacion y realizar conversión a soles de acuerdo al tipo de cambio
      *
      * @return float
@@ -728,7 +681,7 @@ class Purchase extends ModelTenant
 
 
     /**
-     * 
+     *
      * Obtener pagos en efectivo
      *
      * @return Collection
@@ -740,11 +693,11 @@ class Purchase extends ModelTenant
         }});
     }
 
-    
+
     /**
-     * 
+     *
      * Validar si el registro esta rechazado o anulado
-     * 
+     *
      * @return bool
      */
     public function isVoidedOrRejected()
@@ -752,9 +705,9 @@ class Purchase extends ModelTenant
         return in_array($this->state_type_id, self::VOIDED_REJECTED_IDS);
     }
 
-        
+
     /**
-     * 
+     *
      * Obtener url para impresión
      *
      * @param  string $format
@@ -764,15 +717,15 @@ class Purchase extends ModelTenant
     {
         return url("purchases/print/{$this->external_id}/{$format}");
     }
-        
+
 
     /**
-     * 
+     *
      * Filtro para no incluir relaciones en consulta
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
-     */  
+     */
     public function scopeWhereFilterWithOutRelations($query)
     {
         return $query->withOut(['user', 'soap_type', 'state_type', 'document_type', 'currency_type', 'group', 'items', 'purchase_payments']);
@@ -780,7 +733,7 @@ class Purchase extends ModelTenant
 
 
     /**
-     * 
+     *
      * Obtener relaciones necesarias o aplicar filtros para reporte pagos - finanzas
      *
      * @param  Builder $query
@@ -792,13 +745,13 @@ class Purchase extends ModelTenant
                     ->with([
                         'document_type'=> function($q){
                             $q->select('id', 'description');
-                        }, 
+                        },
                     ]);
     }
-    
+
 
     /**
-     * 
+     *
      * Tipo de transaccion para caja
      *
      * @return string
@@ -810,7 +763,7 @@ class Purchase extends ModelTenant
 
 
     /**
-     * 
+     *
      * Tipo de documento para caja
      *
      * @return string
@@ -820,9 +773,9 @@ class Purchase extends ModelTenant
         return $this->getTable();
     }
 
-    
+
     /**
-     * 
+     *
      * Datos para resumen diario de operaciones
      *
      * @return array
@@ -848,7 +801,7 @@ class Purchase extends ModelTenant
         return $this->payments()->filterCashPaymentWithoutDestination()->sum('payment');
     }
 
-    
+
     /**
      *
      * Obtener total de pagos en transferencia
@@ -862,7 +815,7 @@ class Purchase extends ModelTenant
 
 
     /**
-     * 
+     *
      * Validar si tiene estado permitido para calculos/etc
      *
      * @return bool
@@ -872,9 +825,9 @@ class Purchase extends ModelTenant
         return in_array($this->state_type_id, self::STATE_TYPES_ACCEPTED, true);
     }
 
-        
+
     /**
-     * 
+     *
      * Es compra por pagar
      *
      * @return bool

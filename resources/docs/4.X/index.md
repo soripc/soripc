@@ -3,6 +3,8 @@
 - ## Migración
     - [Documento individual](/{{route}}/{{version}}/migracion-de-documento-individual)
     - [Servidor con docker](/{{route}}/{{version}}/migracion-server-docker)
+- ## Certificado Digital
+    - [Conversión P12 a PFX](/{{route}}/{{version}}/conversion-p12-a-pfx)
 - ## PDF
     - [Plantilla personalizada](/{{route}}/{{version}}/plantilla-pdf-personalizada)
     - [Impresión automática](/{{route}}/{{version}}/impresion-automatica)

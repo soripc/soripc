@@ -30,6 +30,7 @@ class ConsultController extends Controller
                     return [
                         'success' => false,
                         'document_external_id' => $document->external_id,
+                        'document_state_type' => $document->state_type_id,
                         'data' => "No se encuentra Resumen con la boleta ingresada"
                     ];
                 }else {
@@ -37,6 +38,7 @@ class ConsultController extends Controller
                     return [
                         'success' => true,
                         'document_external_id' => $document->external_id,
+                        'document_state_type' => $document->state_type_id,
                         'message' => "Resumen encontrado",
                         'data' => $summarie
                     ];

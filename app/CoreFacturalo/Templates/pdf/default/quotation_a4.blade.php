@@ -203,7 +203,7 @@
     @foreach($document->items as $row)
         @php
             $brand =  \App\CoreFacturalo\Helpers\Template\TemplateHelper::getBrandFormItem($row);;
-
+// dd($row->item->lots_group);
         @endphp
         <tr>
             <td class="text-center align-top">
@@ -244,8 +244,10 @@
             <td class="text-left">{{ $brand }}</td>
             <td class="text-left">{{ $row->item->model ?? '' }}</td>
             <td class="text-center align-top">
-                @inject('itemLotGroup', 'App\Services\ItemLotsGroupService')
-                {{ $itemLotGroup->getLote($row->item->lots_group) }}
+               {{--  @if(!isset($row->item->lots_group))
+                    @inject('itemLotGroup', 'App\Services\ItemLotsGroupService')
+                    {{ $itemLotGroup->getLote($row->item->lots_group) }}
+                @endif --}}
             </td>
             <td class="text-right align-top">{{ number_format($row->unit_price, 2) }}</td>
             <td class="text-right align-top">

@@ -57,6 +57,7 @@ class SaleNoteController extends Controller
             $q->where('series', 'like', "%{$request->input}%")
                 ->orWhere('number', 'like', "%{$request->input}%");
         })
+            ->whereTypeUser()
             ->latest()
             ->take(config('tenant.items_per_page'))
             ->get();
@@ -142,160 +143,141 @@ class SaleNoteController extends Controller
         ];
     }
 
-    public function store(SaleNoteRequest $request)
+    public function mergeData($inputs)
     {
+        $this->company = Company::active();
+        // self::ExtraLog(__FILE__."::".__LINE__."  \n Campos ".__FUNCTION__." \n". json_encode($inputs) ."\n\n\n\n"); 
 
-        $facturalo = new \App\Http\Controllers\Tenant\SaleNoteController();
-        $request['establishment_id'] = $request['establishment_id'] ? $request['establishment_id'] : auth()->user()->establishment_id;
-
-        $resultado = json_encode($facturalo->store($request));
-
-        $data = json_decode($resultado);
-
-        if ($data->success == 1) {
-            $pago = new \App\Http\Controllers\Tenant\CashController();
-            $DataSaleNote = array(
-                "document_id" => null,
-                "sale_note_id" => $data->data->id,
-            );          
-            return  $pago->cash_document(new SaleNoteRequest($DataSaleNote));
-        }else{
-            return $resultado;
+        // agregado por loretosoft para terminos y condiciones
+        $configuration = Configuration::first();
+        if ($configuration->terms_condition_sale!=null || $configuration->terms_condition_sale != '') {
+            $inputs['terms_condition'] = $configuration->terms_condition_sale;
         }
+        //termina aqui  
         
-        // $this->company = Company::active();
-        // // self::ExtraLog(__FILE__."::".__LINE__."  \n Campos ".__FUNCTION__." \n". json_encode($inputs) ."\n\n\n\n");
+        $type_period = $inputs['type_period'];
+        $quantity_period = $inputs['quantity_period'];
+        $force_create_if_not_exist = isset($inputs['force_create_if_not_exist']) ? (bool)$inputs['force_create_if_not_exist'] : false;
+        $d_of_issue = new Carbon($inputs['date_of_issue']);
+        $automatic_date_of_issue = null;
 
-        // // agregado por loretosoft para terminos y condiciones
-        // $configuration = Configuration::first();
-        // if ($configuration->terms_condition_sale!=null || $configuration->terms_condition_sale != '') {
-        //     $inputs['terms_condition'] = $configuration->terms_condition_sale;
-        // }
-        // //termina aqui
+        if ($type_period && $quantity_period > 0) {
+            $add_period_date = ($type_period == 'month') ? $d_of_issue->addMonths($quantity_period) : $d_of_issue->addYears($quantity_period);
+            $automatic_date_of_issue = $add_period_date->format('Y-m-d');
+        }
+        if ($force_create_if_not_exist === true) {
+            // busca la persona por id
+            $person = PersonModel::find($inputs['customer_id']);
+            $client_data = $inputs['datos_del_cliente_o_receptor'];
+            $client_number = isset($client_data['numero_documento']) ? $client_data['numero_documento'] : null;
+            // compara el numero con el id del cliente, Si es diferente, deberia crear el cliente
+            if ($person !== null && $client_number !== $person->number) {
+                $person = null;
+            }
+            if ($person === null) {
+                $person = PersonModel::where('number', $client_number)->first();
+            }
+            if ($person === null && !empty($client_number)) {
+                $data_person = [
+                    'number' => $client_number,
+                    'identity_document_type_id' => $client_data['codigo_tipo_documento_identidad'] ?? '6',
+                    'name' => $client_data['apellidos_y_nombres_o_razon_social'] ?? '',
+                    'country_id' => $client_data['codigo_pais'] ?? 'PE',
+                    'district_id' => $client_data['ubigeo'] ?? '',
+                    'address' => $client_data['direccion'] ?? '',
+                    'email' => $client_data['correo_electronico'] ?? '',
+                    'telephone' => $client_data['telefono'] ?? '',
+                ];
+                $person = new PersonModel($data_person);
+                $person->push();
+            }
+            $inputs['customer_id'] = $person->id;
+            $items = $inputs['items'];
+            self::ExtraLog(__FILE__ . "::" . __LINE__ . "   " . __FUNCTION__ . "  \n Buscando Items " . var_export($items, true) . "\n\n\n\n");
 
-        // $type_period = $inputs['type_period'];
-        // $quantity_period = $inputs['quantity_period'];
-        // $force_create_if_not_exist = isset($inputs['force_create_if_not_exist']) ? (bool)$inputs['force_create_if_not_exist'] : false;
-        // $d_of_issue = new Carbon($inputs['date_of_issue']);
-        // $automatic_date_of_issue = null;
+            foreach ($items as $key => $item) {
+                if(key_exists('full_item', $item)) {
+                    $item_in = $item['full_item'];
+                    self::ExtraLog('Item Antes \n\n\n\n\n' . var_export($item_in, true) . "\n<<<<<<<<<<<<<<<<<<<<<<<<");
+                    unset(
+                        $item_in['item_id'],
+                        $item_in['internal_id'],
+                        $item_in['id'],
+                        $item_in['barcode'],
+                        $item_in['tags'],
+                        $item_in['unit_type'],
+                        $item_in['item_type'],
+                        $item_in['currency_type'],
+                        $item_in['warehouses'],
+                        $item_in['item_unit_types']
+                    );
+                    foreach ($item_in as $k => $v) {
+                        if (empty($v)) {
+                            unset($item_in[$k]);
+                        }
+                    }
+                    self::ExtraLog('Item Despues \n\n\n\n\n' . var_export($item_in, true) . "\n<<<<<<<<<<<<<<<<<<<<<<<<");
+                    $identicalItem = Item::where($item_in)->first();
+                    if ($identicalItem === null) {
+                        $identicalItem = new Item($item_in);
+                        $identicalItem->stock = 1;
+                        $identicalItem->stock_min = 1;
+                        $identicalItem->push();
 
-        // if ($type_period && $quantity_period > 0) {
-        //     $add_period_date = ($type_period == 'month') ? $d_of_issue->addMonths($quantity_period) : $d_of_issue->addYears($quantity_period);
-        //     $automatic_date_of_issue = $add_period_date->format('Y-m-d');
-        // }
-        // if ($force_create_if_not_exist === true) {
-        //     // busca la persona por id
-        //     $person = PersonModel::find($inputs['customer_id']);
-        //     $client_data = $inputs['datos_del_cliente_o_receptor'];
-        //     $client_number = isset($client_data['numero_documento']) ? $client_data['numero_documento'] : null;
-        //     // compara el numero con el id del cliente, Si es diferente, deberia crear el cliente
-        //     if ($person !== null && $client_number !== $person->number) {
-        //         $person = null;
-        //     }
-        //     if ($person === null) {
-        //         $person = PersonModel::where('number', $client_number)->first();
-        //     }
-        //     if ($person === null && !empty($client_number)) {
-        //         $data_person = [
-        //             'number' => $client_number,
-        //             'identity_document_type_id' => $client_data['codigo_tipo_documento_identidad'] ?? '6',
-        //             'name' => $client_data['apellidos_y_nombres_o_razon_social'] ?? '',
-        //             'country_id' => $client_data['codigo_pais'] ?? 'PE',
-        //             'district_id' => $client_data['ubigeo'] ?? '',
-        //             'address' => $client_data['direccion'] ?? '',
-        //             'email' => $client_data['correo_electronico'] ?? '',
-        //             'telephone' => $client_data['telefono'] ?? '',
-        //         ];
-        //         $person = new PersonModel($data_person);
-        //         $person->push();
-        //     }
-        //     $inputs['customer_id'] = $person->id;
-        //     $items = $inputs['items'];
-        //     self::ExtraLog(__FILE__ . "::" . __LINE__ . "   " . __FUNCTION__ . "  \n Buscando Items " . var_export($items, true) . "\n\n\n\n");
+                    }
+                } else {
+                    $item_in = $item;
+                    $item_in['sale_unit_price'] = $item_in['unit_price'];
+                    $item_in['sale_affectation_igv_type_id'] = $item_in['affectation_igv_type_id'];
+                    $item_in['purchase_affectation_igv_type_id'] = $item_in['affectation_igv_type_id'];
+                   // $item_in['is_set'] = isset($item_in['is_set']) ? (bool)$item_in['is_set'] : false;
+                    $identicalItem = Item::query()
+                        ->where('internal_id', $item_in['internal_id'])->first();
+                    if ($identicalItem === null) {
+                        $identicalItem = new Item($item_in);
+                        $identicalItem->stock = 1;
+                        $identicalItem->stock_min = 1;
+                        $identicalItem->push();
+                    }
+                }
 
-        //     foreach ($items as $key => $item) {
-        //         if(key_exists('full_item', $item)) {
-        //             $item_in = $item['full_item'];
-        //             self::ExtraLog('Item Antes \n\n\n\n\n' . var_export($item_in, true) . "\n<<<<<<<<<<<<<<<<<<<<<<<<");
-        //             unset(
-        //                 $item_in['item_id'],
-        //                 $item_in['internal_id'],
-        //                 $item_in['id'],
-        //                 $item_in['barcode'],
-        //                 $item_in['tags'],
-        //                 $item_in['unit_type'],
-        //                 $item_in['item_type'],
-        //                 $item_in['currency_type'],
-        //                 $item_in['warehouses'],
-        //                 $item_in['item_unit_types']
-        //             );
-        //             foreach ($item_in as $k => $v) {
-        //                 if (empty($v)) {
-        //                     unset($item_in[$k]);
-        //                 }
-        //             }
-        //             self::ExtraLog('Item Despues \n\n\n\n\n' . var_export($item_in, true) . "\n<<<<<<<<<<<<<<<<<<<<<<<<");
-        //             $identicalItem = Item::where($item_in)->first();
-        //             if ($identicalItem === null) {
-        //                 $identicalItem = new Item($item_in);
-        //                 $identicalItem->stock = 1;
-        //                 $identicalItem->stock_min = 1;
-        //                 $identicalItem->push();
+                $items[$key]['id'] = $identicalItem->id;
+                $items[$key]['attributes'] = $identicalItem->attributes;
+                $items[$key]['item_id'] = $identicalItem->id;
+                $items[$key]['barcode'] = $identicalItem->barcode;
+                $items[$key]['item']['barcode'] = $identicalItem->barcode;
+                $items[$key]['item']['id'] = $identicalItem->id;
+                $items[$key]['item']['item_id'] = $identicalItem->id;
+                $items[$key]['item']['is_set'] = $identicalItem->is_set;
+                $items[$key]['item']['unit_type_id'] = $identicalItem->unit_type_id;
+                $items[$key]['item']['description'] = $identicalItem->description;
+            }
 
-        //             }
-        //         } else {
-        //             $item_in = $item;
-        //             $item_in['sale_unit_price'] = $item_in['unit_price'];
-        //             $item_in['sale_affectation_igv_type_id'] = $item_in['affectation_igv_type_id'];
-        //             $item_in['purchase_affectation_igv_type_id'] = $item_in['affectation_igv_type_id'];
-        //            // $item_in['is_set'] = isset($item_in['is_set']) ? (bool)$item_in['is_set'] : false;
-        //             $identicalItem = Item::query()
-        //                 ->where('internal_id', $item_in['internal_id'])->first();
-        //             if ($identicalItem === null) {
-        //                 $identicalItem = new Item($item_in);
-        //                 $identicalItem->stock = 1;
-        //                 $identicalItem->stock_min = 1;
-        //                 $identicalItem->push();
-        //             }
-        //         }
+            $inputs['items'] = $items;
 
-        //         $items[$key]['id'] = $identicalItem->id;
-        //         $items[$key]['attributes'] = $identicalItem->attributes;
-        //         $items[$key]['item_id'] = $identicalItem->id;
-        //         $items[$key]['barcode'] = $identicalItem->barcode;
-        //         $items[$key]['item']['barcode'] = $identicalItem->barcode;
-        //         $items[$key]['item']['id'] = $identicalItem->id;
-        //         $items[$key]['item']['item_id'] = $identicalItem->id;
-        //         $items[$key]['item']['is_set'] = $identicalItem->is_set;
-        //         $items[$key]['item']['unit_type_id'] = $identicalItem->unit_type_id;
-        //         $items[$key]['item']['description'] = $identicalItem->description;
-        //     }
+            if (!isset($inputs['establishment_id']) || empty($inputs['establishment_id'])) {
+                $inputs['establishment_id'] = $inputs['establishment_id'] ?: auth()->user()->establishment_id;
+            }
+        }
 
-        //     $inputs['items'] = $items;
+        $data_series = $this->getDataSeries($inputs['series_id'], $inputs['id'], $inputs['number']);
+        $customer = PersonInput::set($inputs['customer_id']);
 
-        //     if (!isset($inputs['establishment_id']) || empty($inputs['establishment_id'])) {
-        //         $inputs['establishment_id'] = $inputs['establishment_id'] ?: auth()->user()->establishment_id;
-        //     }
-        // }
+        $values = [
+            'automatic_date_of_issue' => $automatic_date_of_issue,
+            'user_id' => auth()->id(),
+            'external_id' => Str::uuid()->toString(),
+            'customer' => $customer,
+            'establishment' => EstablishmentInput::set($inputs['establishment_id']),
+            'soap_type_id' => $this->company->soap_type_id,
+            'state_type_id' => '01',
+            'series' => $data_series['series'],
+            'number' => $data_series['number']
+        ];
 
-        // $data_series = $this->getDataSeries($inputs['series_id'], $inputs['id'], $inputs['number']);
-        // $customer = PersonInput::set($inputs['customer_id']);
+        $inputs->merge($values);
 
-        // $values = [
-        //     'automatic_date_of_issue' => $automatic_date_of_issue,
-        //     'user_id' => auth()->id(),
-        //     'external_id' => Str::uuid()->toString(),
-        //     'customer' => $customer,
-        //     'establishment' => EstablishmentInput::set($inputs['establishment_id']),
-        //     'soap_type_id' => $this->company->soap_type_id,
-        //     'state_type_id' => '01',
-        //     'series' => $data_series['series'],
-        //     'number' => $data_series['number']
-        // ];
-
-        // $inputs->merge($values);
-
-        // return $inputs->all();
+        return $inputs->all();
     }
 
     private function getDataSeries($series_id, $id, $number)
@@ -601,7 +583,7 @@ class SaleNoteController extends Controller
         }
         $saleNote->items = $saleNote->items
             ->each(function ($item) {
-                $itemBD = Item::query()
+                $itemBD = Item::without(['item_type', 'unit_type', 'currency_type', 'warehouses', 'item_unit_types', 'tags'])
                     ->findOrFail($item->item_id);
 
                 $itemToArray = json_decode(json_encode($item->item), true);
