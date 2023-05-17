@@ -2317,8 +2317,8 @@ class AppController extends Controller
     //listar cajas
     public function records()
     {
-        $records = Cash::where('user_id', auth()->user()->id)
-                        // ->whereTypeUser()
+        // $records = Cash::where('user_id', auth()->user()->id)
+        $records = Cash::whereTypeUser()
                         ->orderBy('id', 'DESC')
                         ->get()->take(7);
                         // dd($records);

@@ -166,7 +166,7 @@ class StoreController extends Controller
 //                ->latest();
 //        }
 
-       return new ItemLotCollection($records->paginate(config('tenant.items_per_page')));
+        return new ItemLotCollection($records->paginate(config('tenant.items_per_page')));
     }
 
     public function getIgv(Request $request)
@@ -206,5 +206,24 @@ class StoreController extends Controller
             });
 
         return compact('customers');
+    }
+
+    public function getSimpleCustomers(Request $request)
+    {
+        $input = $request->input('input');
+        return Person::query()
+            ->where('number', 'like', "%{$input}%")
+            ->orWhere('name', 'like', "%{$input}%")
+            ->whereType('customers')
+            ->whereIsEnabled()
+            ->orderBy('name')
+            ->take(50)
+            ->get()
+            ->transform(function ($row) {
+                return [
+                    'id' => $row->id,
+                    'text' => $row->number.' - '.$row->name,
+                ];
+            });
     }
 }

@@ -66,10 +66,8 @@ use Modules\Finance\Traits\FilePaymentTrait;
 // use App\Models\Tenant\Warehouse;
 use App\CoreFacturalo\HelperFacturalo;
 
-
 class SaleNoteController extends Controller
 {
-
     use FinanceTrait;
     use InventoryTrait;
     use SearchTrait;
@@ -1842,8 +1840,8 @@ class SaleNoteController extends Controller
             'client_id' => 'required|numeric|min:1',
         ]);
         $clientId = $request->client_id;
-        $records = SaleNote::without(['user', 'soap_type', 'state_type', 'currency_type', 'payments'])
-                            ->select('series', 'number', 'id', 'date_of_issue', 'total')
+        $records = SaleNote::query()
+                            ->select('id', 'series', 'number', 'date_of_issue', 'total')
                             ->where('customer_id', $clientId)
                             ->whereNull('document_id')
                             ->whereIn('state_type_id', ['01', '03', '05'])
