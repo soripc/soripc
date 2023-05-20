@@ -1,7 +1,6 @@
 <img src="icon_pro3.jpg" width="120">
 
-# **Facturador PRO 4**
-
+# **Sorifact V5**
 
 ## Manuales de Instalación
 
@@ -134,8 +133,8 @@ Validador documentos: [Guía](https://docs.google.com/document/d/1v6XpJrEwCx3suR
 * Toda instalación es gestionada mediante los canales de Slack
 * Nuevas instalaciones o actualizaciones deben ser programadas y gestionadas, para ser ejecutada el mismo día debe haber un problema previo
 
-## FacturaloPeru
+## Sorifact v5
 
 [facturaloperu.com](http://facturaloperu.com "Clic")<br>
 soporte@facturaloperu.com<br>
-wsapp: 930 973 902<br>
+wsapp: 969979954    
